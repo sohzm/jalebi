@@ -28,12 +28,12 @@ class JalebiMarquee extends HTMLElement {
                         transform: translateX(0);
                     }
                     to {
-                        transform: translateX(-50%);
+                        transform: translateX(-100%);
                     }
                 }
                 @keyframes marquee-right {
                     from {
-                        transform: translateX(-50%);
+                        transform: translateX(-100%);
                     }
                     to {
                         transform: translateX(0);
@@ -57,7 +57,6 @@ class JalebiMarquee extends HTMLElement {
         });
 
         window.addEventListener('resize', (this._resizeHandler = () => this._updateMarquee()));
-
         requestAnimationFrame(() => this._updateMarquee());
     }
 
@@ -83,7 +82,6 @@ class JalebiMarquee extends HTMLElement {
         if (containerWidth <= 0) return;
 
         let totalWidth = this._group1.scrollWidth;
-
         while (totalWidth < containerWidth) {
             nodes.forEach(node => {
                 this._group1.appendChild(node.cloneNode(true));
@@ -93,21 +91,36 @@ class JalebiMarquee extends HTMLElement {
 
         this._group2.innerHTML = this._group1.innerHTML;
 
-        const animationDuration = this._calculateAnimationDuration(totalWidth);
+        const scrollDistance = this._group1.scrollWidth / 2;
 
-        const animationName = this.direction === 'to-right' ? 'marquee-right' : 'marquee-left';
-        this._marquee.style.animation = `${animationName} ${animationDuration} linear infinite`;
+        if (this._dynamicStyle) {
+            this._dynamicStyle.remove();
+        }
+        this._dynamicStyle = document.createElement('style');
+
+        let keyframes = '';
+        if (this.direction === 'to-right') {
+            keyframes = `
+            @keyframes marqueeAnimation {
+                from { transform: translateX(-${scrollDistance}px); }
+                to { transform: translateX(0); }
+            }
+        `;
+        } else {
+            // default to left
+            keyframes = `
+            @keyframes marqueeAnimation {
+                from { transform: translateX(0); }
+                to { transform: translateX(-${scrollDistance}px); }
+            }
+        `;
+        }
+        this._dynamicStyle.textContent = keyframes;
+        this.shadowRoot.appendChild(this._dynamicStyle);
 
         this._marquee.style.animation = 'none';
-        this._marquee.offsetWidth;
-        this._marquee.style.animation = `${animationName} ${animationDuration} linear infinite`;
-    }
-
-    _calculateAnimationDuration(totalWidth) {
-        const baseSpeed = 100; // pixels per second
-        const durationInSeconds = totalWidth / baseSpeed;
-
-        return `${durationInSeconds}s`;
+        void this._marquee.offsetWidth;
+        this._marquee.style.animation = `marqueeAnimation ${this.duration} linear infinite`;
     }
 
     static get observedAttributes() {
@@ -115,7 +128,7 @@ class JalebiMarquee extends HTMLElement {
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
-        if ((name === 'duration' || name === 'direction') && this.__group1 && this.__group2) {
+        if ((name === 'duration' || name === 'direction') && this._group1 && this._group2) {
             this[name] = newValue;
             this._updateMarquee();
         }
