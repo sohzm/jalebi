@@ -4,8 +4,46 @@
         <title>Jalebi Example</title>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+
+        <style>
+pre {
+    font-family: "IBM Plex Mono", serif;
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+}
+
+body {
+    font-family: "IBM Plex Sans", sans-serif;
+    padding: 1rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+a {
+    color: blue;
+}
+        
+        </style>
+
     </head>
     <body>
+        <h1>Jalebi</h1>
+        <p> Jalebi is just a collection of web components that I use in my projects. For more information, visit <a href="https://github.com/sohzm/jalebi">github.com/sohzm/jalebi</a>.</p>
+        
+        <br>
+
+        <h2>Marquee</h2>
+        <pre>&lt;jalebi-marquee direction="to-left" duration="10s"&gt;
+    &lt;span style="padding-right: 2rem"&gt;Hello, world!&lt;/span&gt;
+    &lt;span style="padding-right: 2rem"&gt;This is an infinite marquee.&lt;/span&gt;
+    &lt;span style="padding-right: 2rem"&gt;Enjoy scrolling text!&lt;/span&gt;
+&lt;/jalebi-marquee&gt;</pre>
         <jalebi-marquee direction="to-left" duration="10s">
             <span style="padding-right: 2rem">Hello, world!</span>
             <span style="padding-right: 2rem">This is an infinite marquee.</span>
