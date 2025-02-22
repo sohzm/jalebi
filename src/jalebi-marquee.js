@@ -82,6 +82,7 @@ class JalebiMarquee extends HTMLElement {
         if (containerWidth <= 0) return;
 
         let totalWidth = this._group1.scrollWidth;
+        const scrollDistance = this._group1.scrollWidth;
         while (totalWidth < containerWidth) {
             nodes.forEach(node => {
                 this._group1.appendChild(node.cloneNode(true));
@@ -91,7 +92,6 @@ class JalebiMarquee extends HTMLElement {
 
         this._group2.innerHTML = this._group1.innerHTML;
 
-        const scrollDistance = this._group1.scrollWidth / 2;
 
         if (this._dynamicStyle) {
             this._dynamicStyle.remove();
