@@ -2,6 +2,7 @@ class JalebiMarquee extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
+        this.isReady = false;
     }
 
     connectedCallback() {
@@ -58,6 +59,7 @@ class JalebiMarquee extends HTMLElement {
 
         window.addEventListener('resize', (this._resizeHandler = () => this._updateMarquee()));
         requestAnimationFrame(() => this._updateMarquee());
+        this.isReady = true;
     }
 
     disconnectedCallback() {
@@ -128,7 +130,8 @@ class JalebiMarquee extends HTMLElement {
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
-        if ((name === 'duration' || name === 'direction') && this._group1 && this._group2) {
+        if (!this.isReady) return;
+        if (name === 'duration' || name === 'direction') {
             this[name] = newValue;
             this._updateMarquee();
         }

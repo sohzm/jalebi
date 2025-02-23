@@ -4,12 +4,31 @@
         <title>Jalebi Example</title>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
-
         <style>
+:root {
+    --bg-1: #ffffff;
+    --bg-2: #f7f7f7;
+    --fg-1: #333333;
+    --fg-2: #666666;
+    --border-1: #cccccc;
+    --radius: 4px;
+    --radius-large: 12px;
+    --padding-1: 2px;
+    --padding-2: 4px;
+    --padding-3: 8px;
+    --padding-4: 16px;
+    --padding-w1: 4px 8px;
+    --padding-w2: 8px 16px;
+    --padding-w3: 10px 20px;
+    --gap-1: 5px;
+    --gap-2: 10px;
+    --gap-3: 20px;
+    --fg-accent: #5c35d9;
+    --bg-accent: #f2eeff;
+}
 pre {
     font-family: "IBM Plex Mono", serif;
     background-color: #f8f9fa;
@@ -17,38 +36,77 @@ pre {
     border-radius: 0.5rem;
     overflow-x: auto;
 }
-
 body {
     font-family: "IBM Plex Sans", sans-serif;
     padding: 1rem;
     max-width: 800px;
     margin: 0 auto;
 }
-
 a {
     color: blue;
 }
-        
         </style>
-
     </head>
     <body>
         <h1>Jalebi</h1>
-        <p> Jalebi is just a collection of web components that I use in my projects. For more information, visit <a href="https://github.com/sohzm/jalebi">github.com/sohzm/jalebi</a>.</p>
+        <p>Jalebi is just a collection of web components that I use in my projects. For more information, visit <a href="https://github.com/sohzm/jalebi">github.com/sohzm/jalebi</a>.</p>
         
         <br>
-
         <h2>Marquee</h2>
-        <pre>&lt;jalebi-marquee direction="to-left" duration="10s"&gt;
-    &lt;span style="padding-right: 2rem"&gt;Hello, world!&lt;/span&gt;
-    &lt;span style="padding-right: 2rem"&gt;This is an infinite marquee.&lt;/span&gt;
-    &lt;span style="padding-right: 2rem"&gt;Enjoy scrolling text!&lt;/span&gt;
-&lt;/jalebi-marquee&gt;</pre>
         <jalebi-marquee direction="to-left" duration="10s">
             <span style="padding-right: 2rem">Hello, world!</span>
             <span style="padding-right: 2rem">This is an infinite marquee.</span>
             <span style="padding-right: 2rem">Enjoy scrolling text!</span>
         </jalebi-marquee>
+        <pre>&lt;jalebi-marquee direction="to-left" duration="10s"&gt;
+    &lt;span style="padding-right: 2rem"&gt;Hello, world!&lt;/span&gt;
+    &lt;span style="padding-right: 2rem"&gt;This is an infinite marquee.&lt;/span&gt;
+    &lt;span style="padding-right: 2rem"&gt;Enjoy scrolling text!&lt;/span&gt;
+&lt;/jalebi-marquee&gt;</pre>
+        
+        <br>
+        <h2>Tooltip</h2>
+        <jalebi-tooltip tooltip="This is the tooltip content!" position="top">
+            <button onclick="alert('Button clicked!')">Hover me</button>
+        </jalebi-tooltip>
+        <pre>&lt;jalebi-tooltip tooltip="This is the tooltip content!" position="top"&gt;
+    &lt;button onclick="alert('Button clicked!')"&gt;Hover me&lt;/button&gt;
+&lt;/jalebi-tooltip&gt;</pre>
+        
+        <br>
+        <h2>Progress</h2>
+        <h3>Determinate progress</h3>
+        <jalebi-progress rounded value="75" max="100"></jalebi-progress>
+        <pre>&lt;jalebi-progress rounded value="75" max="100"&gt;&lt;/jalebi-progress&gt;</pre>
+        
+        <h3>Indeterminate progress</h3>
+        <jalebi-progress indeterminate></jalebi-progress>
+        <pre>&lt;jalebi-progress indeterminate&gt;&lt;/jalebi-progress&gt;</pre>
+        
+        <br>
+        <h2>Spinner</h2>
+        <jalebi-spinner size="small"></jalebi-spinner>
+        <jalebi-spinner size="medium"></jalebi-spinner>
+        <jalebi-spinner thickness="4" size="large"></jalebi-spinner>
+        <pre>&lt;jalebi-spinner size="small"&gt;&lt;/jalebi-spinner&gt;
+&lt;jalebi-spinner size="medium"&gt;&lt;/jalebi-spinner&gt;
+&lt;jalebi-spinner thickness="4" size="large"&gt;&lt;/jalebi-spinner&gt;</pre>
+
+        <br>
+        <h2>Toggle</h2>
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+            <label for="myToggle">Enable Notifications</label>
+            <jalebi-toggle id="myToggle" checked onvaluechange="alert(`Value changed: ${event.detail.value}`)"></jalebi-toggle>
+        </div>
+        <pre>&lt;label for="myToggle"&gt;Enable Notifications&lt;/label&gt;
+&lt;jalebi-toggle id="myToggle" checked onvaluechange="alert(`Value changed: ${event.detail.value}`)"&gt;&lt;/jalebi-toggle&gt;</pre>
+
+        <br> <br> <br> <br> <br> <br> <br> <br> <br>
+
         <script src="https://jalebi.soham.sh/src/jalebi-marquee.js"></script>
+        <script src="https://jalebi.soham.sh/src/jalebi-tooltip.js"></script>
+        <script src="https://jalebi.soham.sh/src/jalebi-progress.js"></script>
+        <script src="https://jalebi.soham.sh/src/jalebi-spinner.js"></script>
+        <script src="https://jalebi.soham.sh/src/jalebi-toggle.js"></script>
     </body>
 </html>
