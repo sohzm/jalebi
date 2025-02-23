@@ -101,7 +101,6 @@ class JalebiMultiSelect extends HTMLElement {
                     background: var(--bg-1, #ffffff);
                     border: 1px solid var(--border-1, #cccccc);
                     border-radius: var(--radius, 12px);
-                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
                     display: ${this.isOpen ? "flex" : "none"};
                     flex-direction: column;
                     max-height: 200px;
