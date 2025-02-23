@@ -60,6 +60,12 @@
     --bg-accent: #f2eeff;
     --themed-svg: none;
 }
+@media (hover: hover) {
+    *::-webkit-scrollbar { width: 15px; }
+    *::-webkit-scrollbar-track { background: var(--bg-1); }
+    *::-webkit-scrollbar-thumb { background-color: var(--bg-3); border-radius: 20px; border: 4px solid var(--bg-1); }
+    *::-webkit-scrollbar-thumb:hover { background-color: var(--fg-1); }
+}
 pre {
     font-family: var(--font-mono);
     background-color: var(--bg-2);
@@ -93,7 +99,10 @@ select {
 
         <img src="https://raw.githubusercontent.com/sohzm/jalebi/master/assets/jalebi.svg" alt="Jalebi" style="max-width: 200px" draggable="false" />
         <p>Jalebi is just a collection of web components that I use in my projects. For more information, visit <a href="https://github.com/sohzm/jalebi">github.com/sohzm/jalebi</a>.</p> 
-        <p> Highly customizable with CSS variables. No dependencies. <select id="themes"></select> </p>
+        <p> For importing, just add the following script tags to your HTML file:</p>
+        <pre>&lt;script src="https://jalebi.soham.sh/src/&lt;component name&gt;.js"&gt;&lt;/script&gt;</pre>
+
+        <select id="themes"></select> 
         
          <br> <br> <br>
 
@@ -112,10 +121,10 @@ select {
         <br>
         <h2>Tooltip</h2>
         <jalebi-tooltip tooltip="This is the tooltip content!" position="top">
-            <button onclick="alert('Button clicked!')">Hover me</button>
+            <button onclick="console.log('something')">Hover me</button>
         </jalebi-tooltip>
         <pre>&lt;jalebi-tooltip tooltip="This is the tooltip content!" position="top"&gt;
-    &lt;button onclick="alert('Button clicked!')"&gt;Hover me&lt;/button&gt;
+    &lt;button onclick="console.log('something')"&gt;Hover me&lt;/button&gt;
 &lt;/jalebi-tooltip&gt;</pre>
         
         <br>
@@ -179,10 +188,10 @@ select {
         <h2>Toggle</h2>
         <div style="display: flex; align-items: center; justify-content: space-between;">
             <label for="myToggle">Enable Notifications</label>
-            <jalebi-toggle id="myToggle" checked onvaluechange="alert(`Value changed: ${event.detail.value}`)"></jalebi-toggle>
+            <jalebi-toggle id="myToggle" checked onvaluechange="console.log(`Value changed: ${event.detail.value}`)"></jalebi-toggle>
         </div>
         <pre>&lt;label for="myToggle"&gt;Enable Notifications&lt;/label&gt;
-&lt;jalebi-toggle id="myToggle" checked onvaluechange="alert(`Value changed: ${event.detail.value}`)"&gt;&lt;/jalebi-toggle&gt;</pre>
+&lt;jalebi-toggle id="myToggle" checked onvaluechange="console.log(`Value changed: ${event.detail.value}`)"&gt;&lt;/jalebi-toggle&gt;</pre>
 
 
         <br> <br> <br> <br> <br> <br> <br> <br> <br>
