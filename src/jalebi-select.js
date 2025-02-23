@@ -2,59 +2,74 @@ class JalebiSelect extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
-        this.isOpen = false;
+        this.opened = false;
         this.hasSearch = this.hasAttribute('search');
         this._value = null;
     }
-
     connectedCallback() {
-        this.render();
-        this.setupEvents();
+        this.value = this.getInitialValue();
+        this.updateView();
+        if (!this._eventsBound) {
+            this.bindEvents();
+            this._eventsBound = true;
+        }
+    }
+    getInitialValue() {
         if (this.hasAttribute('value')) {
             const attrValue = this.getAttribute('value');
             if (attrValue === null || attrValue === "") {
                 const firstOption = this.querySelector('option');
                 if (firstOption) {
-                    this.value = firstOption.value;
-                } else {
-                    this.value = "";
+                    return firstOption.value;
                 }
+                return "";
             } else {
                 const matchingOption = this.querySelector(`option[value="${attrValue}"]`);
                 if (matchingOption) {
-                    this.value = matchingOption.value;
-                } else {
-                    this.value = "";
+                    return matchingOption.value;
                 }
+                return "";
             }
-        } else {
-            this.value = "";
         }
+        return "";
     }
-
     get value() {
         return this._value;
     }
-
     set value(val) {
         this._value = val;
-        const selectedOption = this.shadowRoot.querySelector(`.option[data-value="${val}"]`);
-        if (selectedOption) {
-            this.shadowRoot.querySelector('.selected-text').textContent = selectedOption.textContent;
-        }
+        this.updateView();
     }
-
-    render() {
+    updateView() {
+        this.shadowRoot.innerHTML = "";
+        const view = this.createView();
+        this.shadowRoot.appendChild(view);
+    }
+    createView() {
         const options = Array.from(this.querySelectorAll(':scope > option, :scope > optgroup')).map(el => {
             if (el.tagName === 'OPTGROUP') {
-                const groupOptions = Array.from(el.children)
-                    .map(opt => `<div class="option" data-value="${opt.value}">${opt.textContent}</div>`)
-                    .join('');
-                return `<div class="optgroup"><div class="optgroup-label">${el.label}</div>${groupOptions}</div>`;
+                const groupOptions = Array.from(el.children).map(opt => {
+                    return `<div class="option" data-value="${opt.value}">
+                                ${opt.textContent}
+                                ${this.value === opt.value ? `<svg width="16px" height="16px" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="var(--fg-2)">
+                                    <path d="M5 13L9 17L19 7" stroke="var(--fg-2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                </svg>` : ''}
+                            </div>`;
+                }).join('');
+                return `<div class="optgroup">
+                            <div class="optgroup-label">${el.label}</div>
+                            ${groupOptions}
+                        </div>`;
             }
-            return `<div class="option" data-value="${el.value}">${el.textContent}</div>`;
+            return `<div class="option" data-value="${el.value}">
+                        ${el.textContent}
+                        ${this.value === el.value ? `<svg width="16px" height="16px" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="var(--fg-2)">
+                            <path d="M5 13L9 17L19 7" stroke="var(--fg-2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>` : ''}
+                    </div>`;
         }).join('');
-        this.shadowRoot.innerHTML = `
+        const template = document.createElement('div');
+        template.innerHTML = `
             <style>
                 :host {
                     display: inline-block;
@@ -63,7 +78,7 @@ class JalebiSelect extends HTMLElement {
                 * {
                     box-sizing: border-box;
                     user-select: none;
-                    font-size: 14px;
+                    font-size: 12px;
                     font-family: var(--font, sans-serif);
                 }
                 .select {
@@ -78,21 +93,18 @@ class JalebiSelect extends HTMLElement {
                 }
                 .dropdown {
                     position: absolute;
-                    top: calc(100% + var(--padding-3, 8px));
+                    top: calc(100% + var(--padding-2, 8px));
                     left: 0;
                     width: 100%;
                     background: var(--bg-1, #ffffff);
                     border: 1px solid var(--border-1, #cccccc);
                     border-radius: var(--radius, 12px);
                     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-                    display: none;
+                    display: ${this.opened ? 'flex' : 'none'};
                     flex-direction: column;
                     max-height: 200px;
                     overflow: auto;
                     z-index: 10;
-                }
-                .dropdown.open {
-                    display: flex;
                 }
                 .option, .optgroup-label {
                     padding: var(--padding-w2, 4px 8px);
@@ -131,74 +143,87 @@ class JalebiSelect extends HTMLElement {
                     *::-webkit-scrollbar-thumb { background-color: var(--bg-3); border-radius: 20px; border: 4px solid var(--bg-1); }
                     *::-webkit-scrollbar-thumb:hover { background-color: var(--fg-1); }
                 }
+                .option {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                }
             </style>
             <div class="select" tabindex="0">
-                <span class="selected-text">${this._value ? this._value : 'Select...'}</span>
-<?xml version="1.0" encoding="UTF-8"?><svg width="16px" height="16px" viewBox="0 0 24 24" stroke-width="2" fill="none" xmlns="http://www.w3.org/2000/svg" color="var(--fg-1)"><path d="M17 8L12 3L7 8" stroke="var(--fg-2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M17 16L12 21L7 16" stroke="var(--fg-2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <span class="selected-text">${this._value ? this.querySelector(`option[value="${this._value}"]`).textContent : ''}</span>
+                <svg width="16px" height="16px" viewBox="0 0 24 24" stroke-width="2" fill="none" xmlns="http://www.w3.org/2000/svg" color="var(--fg-1)">
+                    <path d="M17 8L12 3L7 8" stroke="var(--fg-2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path d="M17 16L12 21L7 16" stroke="var(--fg-2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
             </div>
             <div class="dropdown">
-                ${this.hasSearch ? '<div class="search"> <?xml version="1.0" encoding="UTF-8"?><svg width="16px" height="16px" viewBox="0 0 24 24" stroke-width="2" fill="none" xmlns="http://www.w3.org/2000/svg" color="#000000"><path d="M17 17L21 21" stroke="var(--fg-2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M3 11C3 15.4183 6.58172 19 11 19C13.213 19 15.2161 18.1015 16.6644 16.6493C18.1077 15.2022 19 13.2053 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11Z" stroke="var(--fg-2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg> <input type="text" placeholder="Search..."></div>' : ''}
+                ${this.hasSearch ? `<div class="search">
+                    <svg width="16px" height="16px" viewBox="0 0 24 24" stroke-width="2" fill="none" xmlns="http://www.w3.org/2000/svg" color="#000000">
+                        <path d="M17 17L21 21" stroke="var(--fg-2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M3 11C3 15.4183 6.58172 19 11 19C13.213 19 15.2161 18.1015 16.6644 16.6493C18.1077 15.2022 19 13.2053 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11Z" stroke="var(--fg-2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                    <input type="text" placeholder="Search...">
+                </div>` : ''}
                 <div class="options">${options}</div>
             </div>
         `;
+        return template;
     }
-
-    setupEvents() {
-        const select = this.shadowRoot.querySelector('.select');
-        const dropdown = this.shadowRoot.querySelector('.dropdown');
-        const optionsContainer = this.shadowRoot.querySelector('.options');
-        const searchInput = this.shadowRoot.querySelector('.search input');
-        select.addEventListener('click', (e) => {
-            e.stopPropagation();
-            this.isOpen = !this.isOpen;
-            dropdown.classList.toggle('open', this.isOpen);
-        });
-        document.addEventListener('click', (e) => {
-            if (!this.contains(e.target)) {
-                this.isOpen = false;
-                dropdown.classList.remove('open');
-            }
-        });
-        optionsContainer.addEventListener('click', (e) => {
-            if (e.target.classList.contains('option')) {
-                const value = e.target.getAttribute('data-value');
+    bindEvents() {
+        this.shadowRoot.addEventListener('click', (e) => {
+            if (e.target.closest('.select')) {
+                this.opened = !this.opened;
+                this.updateView();
+            } else if (e.target.closest('.option')) {
+                const option = e.target.closest('.option');
+                const value = option.getAttribute('data-value');
                 this.value = value;
-                this.dispatchEvent(new CustomEvent('change', { 
+                this.dispatchEvent(new CustomEvent('change', {
                     detail: { value },
                     bubbles: true,
                     composed: true
                 }));
-                this.isOpen = false;
-                dropdown.classList.remove('open');
+                this.opened = false;
+                this.updateView();
             }
         });
-        if (this.hasSearch && searchInput) {
-            searchInput.addEventListener('input', () => {
-                const filter = searchInput.value.toLowerCase();
-                const directOptions = Array.from(this.shadowRoot.querySelectorAll('.options > .option'));
-                directOptions.forEach(opt => {
-                    opt.style.display = opt.textContent.toLowerCase().includes(filter) ? '' : 'none';
-                });
-                const groups = Array.from(this.shadowRoot.querySelectorAll('.options > .optgroup'));
-                groups.forEach(group => {
-                    const groupLabel = group.querySelector('.optgroup-label');
-                    const groupOptions = Array.from(group.querySelectorAll('.option'));
-                    if (groupLabel.textContent.toLowerCase().includes(filter)) {
-                        groupLabel.style.display = '';
-                        groupOptions.forEach(opt => opt.style.display = '');
-                    } else {
-                        let anyVisible = false;
-                        groupOptions.forEach(opt => {
-                            const match = opt.textContent.toLowerCase().includes(filter);
-                            opt.style.display = match ? '' : 'none';
-                            if (match) anyVisible = true;
-                        });
-                        groupLabel.style.display = anyVisible ? '' : 'none';
-                    }
-                });
-            });
-        }
+        this.shadowRoot.addEventListener('input', (e) => {
+            if (e.target.matches('.search input')) {
+                const filter = e.target.value.toLowerCase();
+                const optionsContainer = this.shadowRoot.querySelector('.options');
+                if (optionsContainer) {
+                    const directOptions = Array.from(optionsContainer.querySelectorAll(':scope > .option'));
+                    directOptions.forEach(opt => {
+                        opt.style.display = opt.textContent.toLowerCase().includes(filter) ? '' : 'none';
+                    });
+                    const groups = Array.from(optionsContainer.querySelectorAll(':scope > .optgroup'));
+                    groups.forEach(group => {
+                        const groupLabel = group.querySelector('.optgroup-label');
+                        const groupOptions = Array.from(group.querySelectorAll('.option'));
+                        if (groupLabel.textContent.toLowerCase().includes(filter)) {
+                            groupLabel.style.display = '';
+                            groupOptions.forEach(opt => opt.style.display = '');
+                        } else {
+                            let anyVisible = false;
+                            groupOptions.forEach(opt => {
+                                const match = opt.textContent.toLowerCase().includes(filter);
+                                opt.style.display = match ? '' : 'none';
+                                if (match) anyVisible = true;
+                            });
+                            groupLabel.style.display = anyVisible ? '' : 'none';
+                        }
+                    });
+                }
+            }
+        });
+        document.addEventListener('click', (e) => {
+            if (!this.contains(e.target)) {
+                if (this.opened) {
+                    this.opened = false;
+                    this.updateView();
+                }
+            }
+        });
     }
 }
-
 customElements.define('jalebi-select', JalebiSelect);
