@@ -39,7 +39,7 @@ class JalebiToggle extends HTMLElement {
                     left: 2px;
                     width: 16px;
                     height: 16px;
-                    background: white;
+                    background: var(--bg-1, #fff);
                     border-radius: var(--radius-large, 20px);
                     transition: transform 0.2s;
                 }

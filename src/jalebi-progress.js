@@ -9,14 +9,13 @@ class JalebiProgress extends HTMLElement {
         this.value = this.getAttribute('value') || 0;
         this.max = this.getAttribute('max') || 100;
         this.indeterminate = this.hasAttribute('indeterminate');
-        this.rounded = this.hasAttribute('rounded');
         
         this.render();
         this.isReady = true;
     }
 
     static get observedAttributes() {
-        return ['value', 'max', 'indeterminate', 'rounded'];
+        return ['value', 'max', 'indeterminate'];
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
@@ -29,10 +28,7 @@ class JalebiProgress extends HTMLElement {
             this.value = this.getAttribute('value') || 0;
             this.max = this.getAttribute('max') || 100;
             progressBar.style.width = `${(this.value / this.max) * 100}%`;
-        } else if (name === 'rounded') {
-            this.rounded = this.hasAttribute('rounded');
-            this.render();
-        }
+        } 
     }
 
     render() {
@@ -53,14 +49,14 @@ class JalebiProgress extends HTMLElement {
                     width: 100%;
                     height: 8px;
                     background: var(--bg-2);
-                    ${this.rounded ? 'border-radius: var(--radius);' : 'border-radius: 0;'}
+                    border-radius: var(--radius-large);
                     overflow: hidden;
                 }
                 
                 .progress-bar {
                     height: 100%;
                     background: var(--fg-accent);
-                    ${this.rounded ? 'border-radius: var(--radius);' : 'border-radius: 0;'}
+                    border-radius: var(--radius-large);
                     transition: width 0.2s ease;
                 }
                 
