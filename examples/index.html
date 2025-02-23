@@ -93,6 +93,44 @@ a {
 &lt;jalebi-spinner thickness="4" size="large"&gt;&lt;/jalebi-spinner&gt;</pre>
 
         <br>
+        <h2>Select</h2>
+        <jalebi-select id="mySelect" search style="width: 200px" value="a">
+            <option value="1">Option One</option>
+            <option value="2" selected>Option Two</option>
+            <optgroup label="Group A">
+                <option value="a">Alpha</option>
+                <option value="b">Beta</option>
+            </optgroup>
+        </jalebi-select>
+        <pre>&lt;jalebi-select id="mySelect" search style="width: 200px" value="a"&gt;
+    &lt;option value="1"&gt;Option One&lt;/option&gt;
+    &lt;option value="2" selected&gt;Option Two&lt;/option&gt;
+    &lt;optgroup label="Group A"&gt;
+        &lt;option value="a"&gt;Alpha&lt;/option&gt;
+        &lt;option value="b"&gt;Beta&lt;/option&gt;
+    &lt;/optgroup&gt;
+&lt;/jalebi-select&gt;</pre>
+
+        <br>
+        <h2>Multiselect</h2>
+        <jalebi-multiselect id="mySelect" search style="width: 200px" value="a, 2">
+            <option value="1">Option One</option>
+            <option value="2" selected>Option Two</option>
+            <optgroup label="Group A">
+                <option value="a">Alpha</option>
+                <option value="b">Beta</option>
+            </optgroup>
+        </jalebi-multiselect>
+        <pre>&lt;jalebi-multiselect id="mySelect" search style="width: 200px" value="a, 2"&gt;
+    &lt;option value="1"&gt;Option One&lt;/option&gt;
+    &lt;option value="2" selected&gt;Option Two&lt;/option&gt;
+    &lt;optgroup label="Group A"&gt;
+        &lt;option value="a"&gt;Alpha&lt;/option&gt;
+        &lt;option value="b"&gt;Beta&lt;/option&gt;
+    &lt;/optgroup&gt;
+&lt;/jalebi-multiselect&gt;</pre>
+
+        <br>
         <h2>Toggle</h2>
         <div style="display: flex; align-items: center; justify-content: space-between;">
             <label for="myToggle">Enable Notifications</label>
@@ -101,6 +139,7 @@ a {
         <pre>&lt;label for="myToggle"&gt;Enable Notifications&lt;/label&gt;
 &lt;jalebi-toggle id="myToggle" checked onvaluechange="alert(`Value changed: ${event.detail.value}`)"&gt;&lt;/jalebi-toggle&gt;</pre>
 
+
         <br> <br> <br> <br> <br> <br> <br> <br> <br>
 
         <script src="https://jalebi.soham.sh/src/jalebi-marquee.js"></script>
@@ -108,5 +147,7 @@ a {
         <script src="https://jalebi.soham.sh/src/jalebi-progress.js"></script>
         <script src="https://jalebi.soham.sh/src/jalebi-spinner.js"></script>
         <script src="https://jalebi.soham.sh/src/jalebi-toggle.js"></script>
+        <script src="https://jalebi.soham.sh/src/jalebi-select.js"></script>
+        <script src="https://jalebi.soham.sh/src/jalebi-multiselect.js"></script>
     </body>
 </html>

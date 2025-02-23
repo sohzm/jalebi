@@ -20,12 +20,12 @@ class JalebiTooltip extends HTMLElement {
                     position: absolute;
                     visibility: hidden;
                     opacity: 0;
-                    padding: var(--padding-w1);
+                    padding: var(--padding-w2);
+                    font-size: 14px;
                     background: var(--bg-2);
                     color: var(--fg-1);
                     border-radius: var(--radius);
                     border: 1px solid var(--border-1);
-                    font-size: 0.875rem;
                     width: max-content;
                     max-width: 250px;
                     transition: opacity 0.2s, visibility 0.2s;
