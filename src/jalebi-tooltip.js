@@ -16,6 +16,11 @@ class JalebiTooltip extends HTMLElement {
                     display: inline-block;
                     position: relative;
                 }
+                * {
+                    box-sizing: border-box;
+                    user-select: none;
+                    font-family: var(--font, sans-serif);
+                }
                 .tooltip-content {
                     position: absolute;
                     visibility: hidden;

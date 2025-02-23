@@ -13,18 +13,26 @@ class JalebiToggle extends HTMLElement {
                 :host {
                     display: inline-block;
                 }
+
+                * {
+                    box-sizing: border-box;
+                    user-select: none;
+                    font-family: var(--font, sans-serif);
+                }
+
                 .toggle {
                     position: relative;
                     width: 40px;
                     height: 20px;
                     background: var(--fg-2, #f7f7f7);
-                    border-radius: 10px;
+                    border-radius: var(--radius-large, 20px);
                     cursor: pointer;
                     transition: background-color 0.2s;
                 }
                 .toggle.checked {
                     background: var(--fg-accent, #5c35d9);
                 }
+
                 .thumb {
                     position: absolute;
                     top: 2px;
@@ -32,7 +40,7 @@ class JalebiToggle extends HTMLElement {
                     width: 16px;
                     height: 16px;
                     background: white;
-                    border-radius: 50%;
+                    border-radius: var(--radius-large, 20px);
                     transition: transform 0.2s;
                 }
                 .checked .thumb {

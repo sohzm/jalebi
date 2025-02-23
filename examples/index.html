@@ -4,16 +4,44 @@
         <title>Jalebi Example</title>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Creepster&family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Fira+Mono:wght@400;500;700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lora:ital,wght@0,400..700;1,400..700&family=Satisfy&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=VT323&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Varela+Round&family=Sarpanch:wght@400;500;600;700;800;900&Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+            rel="stylesheet"
+        />
+
         <style>
 :root {
     --bg-1: #ffffff;
     --bg-2: #f7f7f7;
+    --bg-3: #e0e0e0;
     --fg-1: #333333;
     --fg-2: #666666;
     --border-1: #cccccc;
+    --fg-red: #ff126d;
+    --bg-red: #ffebf1;
+    --fg-green: #2ecc71;
+    --bg-green: #e8f8f1;
+    --fg-blue: #487cff;
+    --bg-blue: #ebf1ff;
+    --fg-yellow: #f1c40f;
+    --bg-yellow: #fef9e7;
+    --fg-purple: #9b59b6;
+    --bg-purple: #f5eef8;
+    --fg-cyan: #00bcd4;
+    --bg-cyan: #e0f7fa;
+    --fg-orange: #e67e22;
+    --bg-orange: #fdf2e9;
+    --fg-white: #ffffff;
+    --bg-white: #ffffff;
+    --fg-black: #000000;
+    --bg-black: #000000;
+    --font: 'Inter', sans-serif;
+    --font-cursive: 'Satisfy', cursive;
+    --font-heading: 'Inter', sans-serif;
+    --font-mono: 'Fira Mono', monospace;
     --radius: 4px;
     --radius-large: 12px;
     --padding-1: 2px;
@@ -26,32 +54,49 @@
     --gap-1: 5px;
     --gap-2: 10px;
     --gap-3: 20px;
+    --drop-shadow: drop-shadow(0 0 20px rgba(0, 0, 0, 0.1));
+    --accent-svg: brightness(0) saturate(100%) invert(27%) sepia(51%) saturate(4354%) hue-rotate(242deg) brightness(92%) contrast(93%);
     --fg-accent: #5c35d9;
     --bg-accent: #f2eeff;
+    --themed-svg: none;
 }
 pre {
-    font-family: "IBM Plex Mono", serif;
-    background-color: #f8f9fa;
-    padding: 1rem;
-    border-radius: 0.5rem;
+    font-family: var(--font-mono);
+    background-color: var(--bg-2);
+    padding: var(--padding-3);
+    border-radius: var(--radius);
     overflow-x: auto;
 }
 body {
-    font-family: "IBM Plex Sans", sans-serif;
+    font-family: var(--font);
     padding: 1rem;
     max-width: 800px;
     margin: 0 auto;
+    background-color: var(--bg-1);
+    color: var(--fg-1);
 }
 a {
-    color: blue;
+    color: var(--fg-blue);
+}
+select {
+    padding: var(--padding-2);
+    border-radius: var(--radius);
+    border: 1px solid var(--border-1);
+    background-color: var(--bg-2);
+    color: var(--fg-1);
+    outline: none;
 }
         </style>
     </head>
     <body>
-        <h1>Jalebi</h1>
-        <p>Jalebi is just a collection of web components that I use in my projects. For more information, visit <a href="https://github.com/sohzm/jalebi">github.com/sohzm/jalebi</a>.</p>
+        <br> <br>
+
+        <img src="https://raw.githubusercontent.com/sohzm/jalebi/master/assets/jalebi.svg" alt="Jalebi" style="max-width: 200px" draggable="false" />
+        <p>Jalebi is just a collection of web components that I use in my projects. For more information, visit <a href="https://github.com/sohzm/jalebi">github.com/sohzm/jalebi</a>.</p> 
+        <p> Highly customizable with CSS variables. No dependencies. <select id="themes"></select> </p>
         
-        <br>
+         <br> <br> <br>
+
         <h2>Marquee</h2>
         <jalebi-marquee direction="to-left" duration="10s">
             <span style="padding-right: 2rem">Hello, world!</span>
@@ -142,12 +187,34 @@ a {
 
         <br> <br> <br> <br> <br> <br> <br> <br> <br>
 
-        <script src="https://jalebi.soham.sh/src/jalebi-marquee.js"></script>
-        <script src="https://jalebi.soham.sh/src/jalebi-tooltip.js"></script>
-        <script src="https://jalebi.soham.sh/src/jalebi-progress.js"></script>
-        <script src="https://jalebi.soham.sh/src/jalebi-spinner.js"></script>
-        <script src="https://jalebi.soham.sh/src/jalebi-toggle.js"></script>
-        <script src="https://jalebi.soham.sh/src/jalebi-select.js"></script>
-        <script src="https://jalebi.soham.sh/src/jalebi-multiselect.js"></script>
+        <script>
+            var themeData = "https://app.wisk.cc/js/theme/theme-data.json";
+            var themes = document.getElementById("themes");
+            var res = fetch(themeData).then(res => res.json()).then(data => {
+                data.themes.forEach(theme => {
+                    var option = document.createElement("option");
+                    option.value = theme.name;
+                    option.textContent = theme.name;
+                    themes.appendChild(option);
+                });
+                themes.addEventListener("change", e => {
+                    var theme = data.themes.find(theme => theme.name === e.target.value);
+                    console.log("Theme changed to", data.themes, data.themes.find(theme => theme.name === e.target.value));
+                    console.log(theme);
+                    for (var key in theme) {
+                        console.log(key, theme[key]);
+                        document.documentElement.style.setProperty(key, theme[key]);
+                    }
+                });
+            });
+        </script>
+
+        <script src="/src/jalebi-marquee.js"></script>
+        <script src="/src/jalebi-tooltip.js"></script>
+        <script src="/src/jalebi-progress.js"></script>
+        <script src="/src/jalebi-spinner.js"></script>
+        <script src="/src/jalebi-toggle.js"></script>
+        <script src="/src/jalebi-select.js"></script>
+        <script src="/src/jalebi-multiselect.js"></script>
     </body>
 </html>

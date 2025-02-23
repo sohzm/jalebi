@@ -42,6 +42,12 @@ class JalebiProgress extends HTMLElement {
                     display: block;
                     width: 100%;
                 }
+
+                * {
+                    box-sizing: border-box;
+                    user-select: none;
+                    font-family: var(--font, sans-serif);
+                }
                 
                 .progress {
                     width: 100%;

@@ -64,6 +64,7 @@ class JalebiSelect extends HTMLElement {
                     box-sizing: border-box;
                     user-select: none;
                     font-size: 14px;
+                    font-family: var(--font, sans-serif);
                 }
                 .select {
                     padding: var(--padding-w1, 8px 16px);

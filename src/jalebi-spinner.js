@@ -27,6 +27,12 @@ class JalebiSpinner extends HTMLElement {
                 :host {
                     display: inline-block;
                 }
+
+                * {
+                    box-sizing: border-box;
+                    user-select: none;
+                    font-family: var(--font, sans-serif);
+                }
                 
                 .spinner {
                     display: inline-block;
