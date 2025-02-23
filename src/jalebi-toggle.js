@@ -2,6 +2,7 @@ class JalebiToggle extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
+        this.isReady = false;
     }
 
     connectedCallback() {
@@ -45,6 +46,7 @@ class JalebiToggle extends HTMLElement {
 
         this.setupToggle();
         this.setupLabelSupport();
+        this.isReady = true;
     }
 
     setupToggle() {
@@ -82,6 +84,7 @@ class JalebiToggle extends HTMLElement {
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
+        if (!this.isReady) return;
         if (name === 'checked') {
             this.checked = this.hasAttribute('checked');
             const toggle = this.shadowRoot.querySelector('.toggle');
