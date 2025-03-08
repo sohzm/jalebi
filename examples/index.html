@@ -13,96 +13,115 @@
         />
 
         <style>
-:root {
-    --bg-1: #ffffff;
-    --bg-2: #f7f7f7;
-    --bg-3: #e0e0e0;
-    --fg-1: #333333;
-    --fg-2: #666666;
-    --border-1: #cccccc;
-    --fg-red: #ff126d;
-    --bg-red: #ffebf1;
-    --fg-green: #2ecc71;
-    --bg-green: #e8f8f1;
-    --fg-blue: #487cff;
-    --bg-blue: #ebf1ff;
-    --fg-yellow: #f1c40f;
-    --bg-yellow: #fef9e7;
-    --fg-purple: #9b59b6;
-    --bg-purple: #f5eef8;
-    --fg-cyan: #00bcd4;
-    --bg-cyan: #e0f7fa;
-    --fg-orange: #e67e22;
-    --bg-orange: #fdf2e9;
-    --fg-white: #ffffff;
-    --bg-white: #ffffff;
-    --fg-black: #000000;
-    --bg-black: #000000;
-    --font: 'Inter', sans-serif;
-    --font-cursive: 'Satisfy', cursive;
-    --font-heading: 'Inter', sans-serif;
-    --font-mono: 'Fira Mono', monospace;
-    --radius: 4px;
-    --radius-large: 12px;
-    --padding-1: 2px;
-    --padding-2: 4px;
-    --padding-3: 8px;
-    --padding-4: 16px;
-    --padding-w1: 4px 8px;
-    --padding-w2: 8px 16px;
-    --padding-w3: 10px 20px;
-    --gap-1: 5px;
-    --gap-2: 10px;
-    --gap-3: 20px;
-    --drop-shadow: drop-shadow(0 0 20px rgba(0, 0, 0, 0.1));
-    --accent-svg: brightness(0) saturate(100%) invert(27%) sepia(51%) saturate(4354%) hue-rotate(242deg) brightness(92%) contrast(93%);
-    --fg-accent: #5c35d9;
-    --bg-accent: #f2eeff;
-    --themed-svg: none;
-}
-@media (hover: hover) {
-    *::-webkit-scrollbar { width: 15px; }
-    *::-webkit-scrollbar-track { background: var(--bg-1); }
-    *::-webkit-scrollbar-thumb { background-color: var(--bg-3); border-radius: 20px; border: 4px solid var(--bg-1); }
-    *::-webkit-scrollbar-thumb:hover { background-color: var(--fg-1); }
-}
-pre {
-    font-family: var(--font-mono);
-    background-color: var(--bg-2);
-    padding: var(--padding-3);
-    border-radius: var(--radius);
-    overflow-x: auto;
-}
-body {
-    font-family: var(--font);
-    padding: 1rem;
-    max-width: 800px;
-    margin: 0 auto;
-    background-color: var(--bg-1);
-    color: var(--fg-1);
-}
-a {
-    color: var(--fg-blue);
-}
-select {
-    padding: var(--padding-2);
-    border-radius: var(--radius);
-    border: 1px solid var(--border-1);
-    background-color: var(--bg-2);
-    color: var(--fg-1);
-    outline: none;
-}
+            :root {
+                --bg-1: #ffffff;
+                --bg-2: #f7f7f7;
+                --bg-3: #e0e0e0;
+                --fg-1: #333333;
+                --fg-2: #666666;
+                --border-1: #cccccc;
+                --fg-red: #ff126d;
+                --bg-red: #ffebf1;
+                --fg-green: #2ecc71;
+                --bg-green: #e8f8f1;
+                --fg-blue: #487cff;
+                --bg-blue: #ebf1ff;
+                --fg-yellow: #f1c40f;
+                --bg-yellow: #fef9e7;
+                --fg-purple: #9b59b6;
+                --bg-purple: #f5eef8;
+                --fg-cyan: #00bcd4;
+                --bg-cyan: #e0f7fa;
+                --fg-orange: #e67e22;
+                --bg-orange: #fdf2e9;
+                --fg-white: #ffffff;
+                --bg-white: #ffffff;
+                --fg-black: #000000;
+                --bg-black: #000000;
+                --font: 'Inter', sans-serif;
+                --font-cursive: 'Satisfy', cursive;
+                --font-heading: 'Inter', sans-serif;
+                --font-mono: 'Fira Mono', monospace;
+                --radius: 4px;
+                --radius-large: 12px;
+                --padding-1: 2px;
+                --padding-2: 4px;
+                --padding-3: 8px;
+                --padding-4: 16px;
+                --padding-w1: 4px 8px;
+                --padding-w2: 8px 16px;
+                --padding-w3: 10px 20px;
+                --gap-1: 5px;
+                --gap-2: 10px;
+                --gap-3: 20px;
+                --drop-shadow: drop-shadow(0 0 20px rgba(0, 0, 0, 0.1));
+                --accent-svg: brightness(0) saturate(100%) invert(27%) sepia(51%) saturate(4354%) hue-rotate(242deg) brightness(92%) contrast(93%);
+                --fg-accent: #5c35d9;
+                --bg-accent: #f2eeff;
+                --themed-svg: none;
+            }
+            @media (hover: hover) {
+                *::-webkit-scrollbar {
+                    width: 15px;
+                }
+                *::-webkit-scrollbar-track {
+                    background: var(--bg-1);
+                }
+                *::-webkit-scrollbar-thumb {
+                    background-color: var(--bg-3);
+                    border-radius: 20px;
+                    border: 4px solid var(--bg-1);
+                }
+                *::-webkit-scrollbar-thumb:hover {
+                    background-color: var(--fg-1);
+                }
+            }
+            * {
+                box-sizing: border-box;
+            }
+            pre {
+                font-family: var(--font-mono);
+                background-color: var(--bg-2);
+                padding: var(--padding-3);
+                border-radius: var(--radius);
+                overflow-x: auto;
+            }
+            body {
+                font-family: var(--font);
+                padding: 1rem;
+                max-width: 800px;
+                margin: 0 auto;
+                background-color: var(--bg-1);
+                color: var(--fg-1);
+            }
+            a {
+                color: var(--fg-blue);
+            }
+            select {
+                padding: var(--padding-2);
+                border-radius: var(--radius);
+                border: 1px solid var(--border-1);
+                background-color: var(--bg-2);
+                color: var(--fg-1);
+                outline: none;
+            }
         </style>
     </head>
     <body>
-        <br> <br>
+        <br />
+        <br />
 
         <img src="https://raw.githubusercontent.com/sohzm/jalebi/master/assets/jalebi.svg" alt="Jalebi" style="max-width: 200px" draggable="false" />
-        <p>Jalebi is just a collection of web components that I use in my projects. For more information, visit <a href="https://github.com/sohzm/jalebi">github.com/sohzm/jalebi</a>.</p> 
+        <p>
+            Jalebi is just a collection of web components that I use in my projects. For more information, visit
+            <a href="https://github.com/sohzm/jalebi">github.com/sohzm/jalebi</a>.
+        </p>
 
-        <select id="themes"></select> 
-        
-         <br> <br> <br>
+        <select id="themes"></select>
+
+        <br />
+        <br />
+        <br />
 
         <h2>Marquee</h2>
         <jalebi-marquee direction="to-left" duration="10s">
@@ -110,41 +129,47 @@ select {
             <span style="padding-right: 2rem">This is an infinite marquee.</span>
             <span style="padding-right: 2rem">Enjoy scrolling text!</span>
         </jalebi-marquee>
-        <pre>&lt;jalebi-marquee direction="to-left" duration="10s"&gt;
+        <pre>
+&lt;jalebi-marquee direction="to-left" duration="10s"&gt;
     &lt;span style="padding-right: 2rem"&gt;Hello, world!&lt;/span&gt;
     &lt;span style="padding-right: 2rem"&gt;This is an infinite marquee.&lt;/span&gt;
     &lt;span style="padding-right: 2rem"&gt;Enjoy scrolling text!&lt;/span&gt;
-&lt;/jalebi-marquee&gt;</pre>
-        
-        <br>
+&lt;/jalebi-marquee&gt;</pre
+        >
+
+        <br />
         <h2>Tooltip</h2>
         <jalebi-tooltip tooltip="This is the tooltip content!" position="top">
             <button onclick="console.log('something')">Hover me</button>
         </jalebi-tooltip>
-        <pre>&lt;jalebi-tooltip tooltip="This is the tooltip content!" position="top"&gt;
+        <pre>
+&lt;jalebi-tooltip tooltip="This is the tooltip content!" position="top"&gt;
     &lt;button onclick="console.log('something')"&gt;Hover me&lt;/button&gt;
-&lt;/jalebi-tooltip&gt;</pre>
-        
-        <br>
+&lt;/jalebi-tooltip&gt;</pre
+        >
+
+        <br />
         <h2>Progress</h2>
         <h3>Determinate progress</h3>
         <jalebi-progress value="75" max="100"></jalebi-progress>
         <pre>&lt;jalebi-progress value="75" max="100"&gt;&lt;/jalebi-progress&gt;</pre>
-        
+
         <h3>Indeterminate progress</h3>
         <jalebi-progress indeterminate></jalebi-progress>
         <pre>&lt;jalebi-progress indeterminate&gt;&lt;/jalebi-progress&gt;</pre>
-        
-        <br>
+
+        <br />
         <h2>Spinner</h2>
         <jalebi-spinner size="small"></jalebi-spinner>
         <jalebi-spinner size="medium"></jalebi-spinner>
         <jalebi-spinner thickness="4" size="large"></jalebi-spinner>
-        <pre>&lt;jalebi-spinner size="small"&gt;&lt;/jalebi-spinner&gt;
+        <pre>
+&lt;jalebi-spinner size="small"&gt;&lt;/jalebi-spinner&gt;
 &lt;jalebi-spinner size="medium"&gt;&lt;/jalebi-spinner&gt;
-&lt;jalebi-spinner thickness="4" size="large"&gt;&lt;/jalebi-spinner&gt;</pre>
+&lt;jalebi-spinner thickness="4" size="large"&gt;&lt;/jalebi-spinner&gt;</pre
+        >
 
-        <br>
+        <br />
         <h2>Select</h2>
         <jalebi-select id="mySelect" search style="width: 200px" value="a">
             <option value="1">Option One</option>
@@ -154,16 +179,18 @@ select {
                 <option value="b">Beta</option>
             </optgroup>
         </jalebi-select>
-        <pre>&lt;jalebi-select id="mySelect" search style="width: 200px" value="a"&gt;
+        <pre>
+&lt;jalebi-select id="mySelect" search style="width: 200px" value="a"&gt;
     &lt;option value="1"&gt;Option One&lt;/option&gt;
     &lt;option value="2" selected&gt;Option Two&lt;/option&gt;
     &lt;optgroup label="Group A"&gt;
         &lt;option value="a"&gt;Alpha&lt;/option&gt;
         &lt;option value="b"&gt;Beta&lt;/option&gt;
     &lt;/optgroup&gt;
-&lt;/jalebi-select&gt;</pre>
+&lt;/jalebi-select&gt;</pre
+        >
 
-        <br>
+        <br />
         <h2>Multiselect</h2>
         <jalebi-multiselect id="mySelect" search style="width: 200px" value="a, 2">
             <option value="1">Option One</option>
@@ -173,47 +200,97 @@ select {
                 <option value="b">Beta</option>
             </optgroup>
         </jalebi-multiselect>
-        <pre>&lt;jalebi-multiselect id="mySelect" search style="width: 200px" value="a, 2"&gt;
+        <pre>
+&lt;jalebi-multiselect id="mySelect" search style="width: 200px" value="a, 2"&gt;
     &lt;option value="1"&gt;Option One&lt;/option&gt;
     &lt;option value="2" selected&gt;Option Two&lt;/option&gt;
     &lt;optgroup label="Group A"&gt;
         &lt;option value="a"&gt;Alpha&lt;/option&gt;
         &lt;option value="b"&gt;Beta&lt;/option&gt;
     &lt;/optgroup&gt;
-&lt;/jalebi-multiselect&gt;</pre>
+&lt;/jalebi-multiselect&gt;</pre
+        >
 
-        <br>
+        <br />
         <h2>Toggle</h2>
-        <div style="display: flex; align-items: center; justify-content: space-between;">
+        <div style="display: flex; align-items: center; justify-content: space-between">
             <label for="myToggle">Enable Notifications</label>
             <jalebi-toggle id="myToggle" checked onvaluechange="console.log(`Value changed: ${event.detail.value}`)"></jalebi-toggle>
         </div>
-        <pre>&lt;label for="myToggle"&gt;Enable Notifications&lt;/label&gt;
-&lt;jalebi-toggle id="myToggle" checked onvaluechange="console.log(`Value changed: ${event.detail.value}`)"&gt;&lt;/jalebi-toggle&gt;</pre>
+        <pre>
+&lt;label for="myToggle"&gt;Enable Notifications&lt;/label&gt;
+&lt;jalebi-toggle id="myToggle" checked onvaluechange="console.log(`Value changed: ${event.detail.value}`)"&gt;&lt;/jalebi-toggle&gt;</pre
+        >
 
+        <br />
+        <h2>Carousel</h2>
+        <jalebi-carousel autoplay interval="2000">
+            <div class="slide" style="padding: 20px 60px; color: var(--bg-1); background: var(--fg-red)">
+                <h2>Slide 1</h2>
+                <p>Content for slide 1</p>
+            </div>
+            <div class="slide" style="padding: 20px 60px; color: var(--bg-1); background: var(--fg-green)">
+                <h2>Slide 2</h2>
+                <p>Content for slide 2</p>
+            </div>
+            <div class="slide" style="padding: 20px 60px; color: var(--bg-1); background: var(--fg-blue)">
+                <h2>Slide 3</h2>
+                <p>Content for slide 3</p>
+            </div>
+        </jalebi-carousel>
+        <pre>
+&lt;jalebi-carousel autoplay interval="2000"&gt;
+    &lt;div class="slide" style="padding: 20px 60px; color: var(--bg-1); background: var(--fg-red);"&gt;
+        &lt;h2&gt;Slide 1&lt;/h2&gt;
+        &lt;p&gt;Content for slide 1&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class="slide" style="padding: 20px 60px; color: var(--bg-1); background: var(--fg-green);"&gt;
+        &lt;h2&gt;Slide 2&lt;/h2&gt;
+        &lt;p&gt;Content for slide 2&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class="slide" style="padding: 20px 60px; color: var(--bg-1); background: var(--fg-blue);"&gt;
+        &lt;h2&gt;Slide 3&lt;/h2&gt;
+        &lt;p&gt;Content for slide 3&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/jalebi-carousel&gt;</pre
+        >
 
-        <br> <br> <br> <br> <br> <br> <br> <br> <br>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
 
         <script>
-            var themeData = "https://app.wisk.cc/js/theme/theme-data.json";
-            var themes = document.getElementById("themes");
-            var res = fetch(themeData).then(res => res.json()).then(data => {
-                data.themes.forEach(theme => {
-                    var option = document.createElement("option");
-                    option.value = theme.name;
-                    option.textContent = theme.name;
-                    themes.appendChild(option);
+            var themeData = 'https://app.wisk.cc/js/theme/theme-data.json';
+            var themes = document.getElementById('themes');
+            var res = fetch(themeData)
+                .then(res => res.json())
+                .then(data => {
+                    data.themes.forEach(theme => {
+                        var option = document.createElement('option');
+                        option.value = theme.name;
+                        option.textContent = theme.name;
+                        themes.appendChild(option);
+                    });
+                    themes.addEventListener('change', e => {
+                        var theme = data.themes.find(theme => theme.name === e.target.value);
+                        console.log(
+                            'Theme changed to',
+                            data.themes,
+                            data.themes.find(theme => theme.name === e.target.value)
+                        );
+                        console.log(theme);
+                        for (var key in theme) {
+                            console.log(key, theme[key]);
+                            document.documentElement.style.setProperty(key, theme[key]);
+                        }
+                    });
                 });
-                themes.addEventListener("change", e => {
-                    var theme = data.themes.find(theme => theme.name === e.target.value);
-                    console.log("Theme changed to", data.themes, data.themes.find(theme => theme.name === e.target.value));
-                    console.log(theme);
-                    for (var key in theme) {
-                        console.log(key, theme[key]);
-                        document.documentElement.style.setProperty(key, theme[key]);
-                    }
-                });
-            });
         </script>
 
         <script src="/src/jalebi-marquee.js"></script>
@@ -222,6 +299,8 @@ select {
         <script src="/src/jalebi-spinner.js"></script>
         <script src="/src/jalebi-toggle.js"></script>
         <script src="/src/jalebi-select.js"></script>
+        <script src="/src/jalebi-select.js"></script>
+        <script src="/src/jalebi-carousel.js"></script>
         <script src="/src/jalebi-multiselect.js"></script>
     </body>
 </html>

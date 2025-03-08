@@ -17,21 +17,21 @@ class JalebiSelect extends HTMLElement {
     getInitialValue() {
         if (this.hasAttribute('value')) {
             const attrValue = this.getAttribute('value');
-            if (attrValue === null || attrValue === "") {
+            if (attrValue === null || attrValue === '') {
                 const firstOption = this.querySelector('option');
                 if (firstOption) {
                     return firstOption.value;
                 }
-                return "";
+                return '';
             } else {
                 const matchingOption = this.querySelector(`option[value="${attrValue}"]`);
                 if (matchingOption) {
                     return matchingOption.value;
                 }
-                return "";
+                return '';
             }
         }
-        return "";
+        return '';
     }
     get value() {
         return this._value;
@@ -41,33 +41,45 @@ class JalebiSelect extends HTMLElement {
         this.updateView();
     }
     updateView() {
-        this.shadowRoot.innerHTML = "";
+        this.shadowRoot.innerHTML = '';
         const view = this.createView();
         this.shadowRoot.appendChild(view);
     }
     createView() {
-        const options = Array.from(this.querySelectorAll(':scope > option, :scope > optgroup')).map(el => {
-            if (el.tagName === 'OPTGROUP') {
-                const groupOptions = Array.from(el.children).map(opt => {
-                    return `<div class="option" data-value="${opt.value}">
+        const options = Array.from(this.querySelectorAll(':scope > option, :scope > optgroup'))
+            .map(el => {
+                if (el.tagName === 'OPTGROUP') {
+                    const groupOptions = Array.from(el.children)
+                        .map(opt => {
+                            return `<div class="option" data-value="${opt.value}">
                                 ${opt.textContent}
-                                ${this.value === opt.value ? `<svg width="16px" height="16px" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="var(--fg-2)">
+                                ${
+                                    this.value === opt.value
+                                        ? `<svg width="16px" height="16px" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="var(--fg-2)">
                                     <path d="M5 13L9 17L19 7" stroke="var(--fg-2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                </svg>` : ''}
+                                </svg>`
+                                        : ''
+                                }
                             </div>`;
-                }).join('');
-                return `<div class="optgroup">
+                        })
+                        .join('');
+                    return `<div class="optgroup">
                             <div class="optgroup-label">${el.label}</div>
                             ${groupOptions}
                         </div>`;
-            }
-            return `<div class="option" data-value="${el.value}">
+                }
+                return `<div class="option" data-value="${el.value}">
                         ${el.textContent}
-                        ${this.value === el.value ? `<svg width="16px" height="16px" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="var(--fg-2)">
+                        ${
+                            this.value === el.value
+                                ? `<svg width="16px" height="16px" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="var(--fg-2)">
                             <path d="M5 13L9 17L19 7" stroke="var(--fg-2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                        </svg>` : ''}
+                        </svg>`
+                                : ''
+                        }
                     </div>`;
-        }).join('');
+            })
+            .join('');
         const template = document.createElement('div');
         template.innerHTML = `
             <style>
@@ -156,20 +168,24 @@ class JalebiSelect extends HTMLElement {
                 </svg>
             </div>
             <div class="dropdown">
-                ${this.hasSearch ? `<div class="search">
+                ${
+                    this.hasSearch
+                        ? `<div class="search">
                     <svg width="16px" height="16px" viewBox="0 0 24 24" stroke-width="2" fill="none" xmlns="http://www.w3.org/2000/svg" color="#000000">
                         <path d="M17 17L21 21" stroke="var(--fg-2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                         <path d="M3 11C3 15.4183 6.58172 19 11 19C13.213 19 15.2161 18.1015 16.6644 16.6493C18.1077 15.2022 19 13.2053 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11Z" stroke="var(--fg-2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                     </svg>
                     <input type="text" placeholder="Search...">
-                </div>` : ''}
+                </div>`
+                        : ''
+                }
                 <div class="options">${options}</div>
             </div>
         `;
         return template;
     }
     bindEvents() {
-        this.shadowRoot.addEventListener('click', (e) => {
+        this.shadowRoot.addEventListener('click', e => {
             if (e.target.closest('.select')) {
                 this.opened = !this.opened;
                 this.updateView();
@@ -177,16 +193,18 @@ class JalebiSelect extends HTMLElement {
                 const option = e.target.closest('.option');
                 const value = option.getAttribute('data-value');
                 this.value = value;
-                this.dispatchEvent(new CustomEvent('change', {
-                    detail: { value },
-                    bubbles: true,
-                    composed: true
-                }));
+                this.dispatchEvent(
+                    new CustomEvent('change', {
+                        detail: { value },
+                        bubbles: true,
+                        composed: true,
+                    })
+                );
                 this.opened = false;
                 this.updateView();
             }
         });
-        this.shadowRoot.addEventListener('input', (e) => {
+        this.shadowRoot.addEventListener('input', e => {
             if (e.target.matches('.search input')) {
                 const filter = e.target.value.toLowerCase();
                 const optionsContainer = this.shadowRoot.querySelector('.options');
@@ -201,7 +219,7 @@ class JalebiSelect extends HTMLElement {
                         const groupOptions = Array.from(group.querySelectorAll('.option'));
                         if (groupLabel.textContent.toLowerCase().includes(filter)) {
                             groupLabel.style.display = '';
-                            groupOptions.forEach(opt => opt.style.display = '');
+                            groupOptions.forEach(opt => (opt.style.display = ''));
                         } else {
                             let anyVisible = false;
                             groupOptions.forEach(opt => {
@@ -215,7 +233,7 @@ class JalebiSelect extends HTMLElement {
                 }
             }
         });
-        document.addEventListener('click', (e) => {
+        document.addEventListener('click', e => {
             if (!this.contains(e.target)) {
                 if (this.opened) {
                     this.opened = false;

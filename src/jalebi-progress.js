@@ -9,7 +9,7 @@ class JalebiProgress extends HTMLElement {
         this.value = this.getAttribute('value') || 0;
         this.max = this.getAttribute('max') || 100;
         this.indeterminate = this.hasAttribute('indeterminate');
-        
+
         this.render();
         this.isReady = true;
     }
@@ -28,7 +28,7 @@ class JalebiProgress extends HTMLElement {
             this.value = this.getAttribute('value') || 0;
             this.max = this.getAttribute('max') || 100;
             progressBar.style.width = `${(this.value / this.max) * 100}%`;
-        } 
+        }
     }
 
     render() {

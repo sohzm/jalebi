@@ -98,19 +98,12 @@ class JalebiTooltip extends HTMLElement {
     isTooltipInViewport() {
         const tooltip = this.shadowRoot.querySelector('.tooltip-content');
         const rect = tooltip.getBoundingClientRect();
-        return (
-            rect.top >= 0 &&
-            rect.left >= 0 &&
-            rect.bottom <= window.innerHeight &&
-            rect.right <= window.innerWidth
-        );
+        return rect.top >= 0 && rect.left >= 0 && rect.bottom <= window.innerHeight && rect.right <= window.innerWidth;
     }
 
     handleMouseEnter() {
         const allPositions = ['top', 'right', 'bottom', 'left'];
-        const candidates = [this.originalPosition].concat(
-            allPositions.filter((p) => p !== this.originalPosition)
-        );
+        const candidates = [this.originalPosition].concat(allPositions.filter(p => p !== this.originalPosition));
 
         let attempt = 0;
 

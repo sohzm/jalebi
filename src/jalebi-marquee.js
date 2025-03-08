@@ -94,7 +94,6 @@ class JalebiMarquee extends HTMLElement {
 
         this._group2.innerHTML = this._group1.innerHTML;
 
-
         if (this._dynamicStyle) {
             this._dynamicStyle.remove();
         }

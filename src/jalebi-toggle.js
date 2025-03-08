@@ -66,7 +66,7 @@ class JalebiToggle extends HTMLElement {
         if (this.id) {
             const label = document.querySelector(`label[for="${this.id}"]`);
             if (label) {
-                label.addEventListener('click', (event) => {
+                label.addEventListener('click', event => {
                     event.preventDefault();
                     this.toggleChecked();
                 });
