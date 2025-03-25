@@ -89,7 +89,7 @@
             body {
                 font-family: var(--font);
                 padding: 1rem;
-                max-width: 800px;
+                max-width: 1000px;
                 margin: 0 auto;
                 background-color: var(--bg-1);
                 color: var(--fg-1);
@@ -116,9 +116,29 @@
             Jalebi is just a collection of web components that I use in my projects. For more information, visit
             <a href="https://github.com/sohzm/jalebi">github.com/sohzm/jalebi</a>.
         </p>
+        <p>
+            Jalebi isn't a framework or a library. It's just a bunch of web components that you can use in your projects. The components are built
+            with vanilla JavaScript and have no external dependencies. This is a wip demo page for the components.
+        </p>
 
-        <select id="themes"></select>
+        <p>
+            Include the component with:
+            <code style="padding: 3px 10px; background: var(--bg-accent); border-radius: var(--radius); color: var(--fg-accent)"
+                >&lt;script src="https://jalebi.soham.sh/src/jalebi-&lt;component name&gt;.js"&gt;&lt;/script&gt;</code
+            >
+        </p>
 
+        <div style="display: flex; align-items: center; justify-content: space-between">
+            <label for="themes">Themes</label>
+            <select id="themes"></select>
+        </div>
+
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
         <br />
         <br />
         <br />
@@ -256,6 +276,190 @@
         >
 
         <br />
+        <h2>Tags</h2>
+        <jalebi-tags placeholder="Select technologies..." value="javascript,html">
+            <option value="javascript">JavaScript</option>
+            <option value="html">HTML</option>
+            <option value="css">CSS</option>
+            <optgroup label="Frameworks">
+                <option value="react">React</option>
+                <option value="vue">Vue</option>
+                <option value="angular">Angular</option>
+            </optgroup>
+            <optgroup label="Backend">
+                <option value="node">Node.js</option>
+                <option value="python">Python</option>
+                <option value="php">PHP</option>
+            </optgroup>
+        </jalebi-tags>
+        <pre>
+&lt;jalebi-tags placeholder="Select technologies..." value="javascript,html"&gt;
+    &lt;option value="javascript"&gt;JavaScript&lt;/option&gt;
+    &lt;option value="html"&gt;HTML&lt;/option&gt;
+    &lt;option value="css"&gt;CSS&lt;/option&gt;
+    &lt;optgroup label="Frameworks"&gt;
+        &lt;option value="react"&gt;React&lt;/option&gt;
+        &lt;option value="vue"&gt;Vue&lt;/option&gt;
+        &lt;option value="angular"&gt;Angular&lt;/option&gt;
+    &lt;/optgroup&gt;
+    &lt;optgroup label="Backend"&gt;
+        &lt;option value="node"&gt;Node.js&lt;/option&gt;
+        &lt;option value="python"&gt;Python&lt;/option&gt;
+        &lt;option value="php"&gt;PHP&lt;/option&gt;
+    &lt;/optgroup&gt;
+&lt;/jalebi-tags&gt;</pre
+        >
+
+        <br />
+        <h2>Tabs</h2>
+        <jalebi-tabs>
+            <jalebi-tab label="Features">
+                <div style="padding: 10px 0">
+                    <h3>Key Features</h3>
+                    <ul>
+                        <li>Lightweight web components</li>
+                        <li>No dependencies</li>
+                        <li>Customizable with CSS variables</li>
+                        <li>Accessible and responsive</li>
+                    </ul>
+                </div>
+            </jalebi-tab>
+            <jalebi-tab label="Usage">
+                <div style="padding: 10px 0">
+                    <h3>How to use</h3>
+                    <p>Import the component scripts and start using them in your HTML:</p>
+                    <code> &lt;script src="/src/jalebi-tabs.js"&gt;&lt;/script&gt; </code>
+                    <p>That's it! Now you can use the jalebi-tabs component.</p>
+                </div>
+            </jalebi-tab>
+            <jalebi-tab label="Examples">
+                <div style="padding: 10px 0">
+                    <h3>Code Examples</h3>
+                    <p>View more examples in the documentation.</p>
+                    <button>View Documentation</button>
+                </div>
+            </jalebi-tab>
+        </jalebi-tabs>
+        <pre>
+&lt;jalebi-tabs&gt;
+    &lt;jalebi-tab label="Features"&gt;
+        &lt;div style="padding: 10px 0"&gt;
+            &lt;h3&gt;Key Features&lt;/h3&gt;
+            &lt;ul&gt;
+                &lt;li&gt;Lightweight web components&lt;/li&gt;
+                &lt;li&gt;No dependencies&lt;/li&gt;
+                &lt;li&gt;Customizable with CSS variables&lt;/li&gt;
+                &lt;li&gt;Accessible and responsive&lt;/li&gt;
+            &lt;/ul&gt;
+        &lt;/div&gt;
+    &lt;/jalebi-tab&gt;
+    &lt;jalebi-tab label="Usage"&gt;
+        &lt;div style="padding: 10px 0"&gt;
+            &lt;h3&gt;How to use&lt;/h3&gt;
+            &lt;p&gt;Import the component scripts and start using them in your HTML:&lt;/p&gt;
+            &lt;code&gt;
+                &amp;lt;script src="/src/jalebi-tabs.js"&amp;gt;&amp;lt;/script&amp;gt;
+            &lt;/code&gt;
+            &lt;p&gt;That's it! Now you can use the jalebi-tabs component.&lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/jalebi-tab&gt;
+    &lt;jalebi-tab label="Examples"&gt;
+        &lt;div style="padding: 10px 0"&gt;
+            &lt;h3&gt;Code Examples&lt;/h3&gt;
+            &lt;p&gt;View more examples in the documentation.&lt;/p&gt;
+            &lt;button&gt;View Documentation&lt;/button&gt;
+        &lt;/div&gt;
+    &lt;/jalebi-tab&gt;
+&lt;/jalebi-tabs&gt;
+</pre
+        >
+
+        <br />
+        <h2>Accordion</h2>
+        <jalebi-accordion>
+            <jalebi-accordion-item title="What is Jalebi?" expanded>
+                <div style="padding: 10px 0">
+                    <p>
+                        Jalebi is a collection of lightweight, customizable web components that can be easily integrated into any web project. The
+                        components are built with vanilla JavaScript and have no external dependencies.
+                    </p>
+                </div>
+            </jalebi-accordion-item>
+
+            <jalebi-accordion-item title="How do I install Jalebi?">
+                <div style="padding: 10px 0">
+                    <p>You can include Jalebi directly from a CDN or download the source files:</p>
+                    <code> &lt;script src="https://cdn.example.com/jalebi.min.js"&gt;&lt;/script&gt; </code>
+                    <p>Or use npm:</p>
+                    <code> npm install jalebi-components </code>
+                </div>
+            </jalebi-accordion-item>
+
+            <jalebi-accordion-item title="Can I customize the appearance?">
+                <div style="padding: 10px 0">
+                    <p>
+                        Yes! Jalebi uses CSS variables that can be easily overridden to match your project's design system. This makes it simple to
+                        customize colors, fonts, spacing, and more.
+                    </p>
+                    <p>For example:</p>
+                    <code> :root { --fg-accent: #ff5500; --bg-accent: #fff1e6; } </code>
+                </div>
+            </jalebi-accordion-item>
+        </jalebi-accordion>
+        <pre>
+&lt;jalebi-accordion&gt;
+    &lt;jalebi-accordion-item title="What is Jalebi?" expanded&gt;
+        &lt;div style="padding: 10px 0"&gt;
+            &lt;p&gt;Jalebi is a collection of lightweight, customizable web components that can be easily integrated into any web project. The components are built with vanilla JavaScript and have no external dependencies.&lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/jalebi-accordion-item&gt;
+    
+    &lt;jalebi-accordion-item title="How do I install Jalebi?"&gt;
+        &lt;div style="padding: 10px 0"&gt;
+            &lt;p&gt;You can include Jalebi directly from a CDN or download the source files:&lt;/p&gt;
+            &lt;code&gt;
+                &amp;lt;script src="https://cdn.example.com/jalebi.min.js"&amp;gt;&amp;lt;/script&amp;gt;
+            &lt;/code&gt;
+            &lt;p&gt;Or use npm:&lt;/p&gt;
+            &lt;code&gt;
+                npm install jalebi-components
+            &lt;/code&gt;
+        &lt;/div&gt;
+    &lt;/jalebi-accordion-item&gt;
+    
+    &lt;jalebi-accordion-item title="Can I customize the appearance?"&gt;
+        &lt;div style="padding: 10px 0"&gt;
+            &lt;p&gt;Yes! Jalebi uses CSS variables that can be easily overridden to match your project's design system. This makes it simple to customize colors, fonts, spacing, and more.&lt;/p&gt;
+            &lt;p&gt;For example:&lt;/p&gt;
+            &lt;code&gt;
+                :root {
+                  --fg-accent: #ff5500;
+                  --bg-accent: #fff1e6;
+                }
+            &lt;/code&gt;
+        &lt;/div&gt;
+    &lt;/jalebi-accordion-item&gt;
+&lt;/jalebi-accordion&gt;
+</pre
+        >
+
+        <br />
+        <h2>Breadcrumbs</h2>
+        <jalebi-breadcrumbs separator="›">
+            <jalebi-breadcrumb href="/">Home</jalebi-breadcrumb>
+            <jalebi-breadcrumb href="/components">Components</jalebi-breadcrumb>
+            <jalebi-breadcrumb active>Breadcrumbs</jalebi-breadcrumb>
+        </jalebi-breadcrumbs>
+        <pre>
+&lt;jalebi-breadcrumbs separator="&gt;"&gt;
+    &lt;jalebi-breadcrumb href="/"&gt;Home&lt;/jalebi-breadcrumb&gt;
+    &lt;jalebi-breadcrumb href="/components"&gt;Components&lt;/jalebi-breadcrumb&gt;
+    &lt;jalebi-breadcrumb active&gt;Breadcrumbs&lt;/jalebi-breadcrumb&gt;
+&lt;/jalebi-breadcrumbs&gt;
+</pre
+        >
+
+        <br />
         <br />
         <br />
         <br />
@@ -299,8 +503,11 @@
         <script src="/src/jalebi-spinner.js"></script>
         <script src="/src/jalebi-toggle.js"></script>
         <script src="/src/jalebi-select.js"></script>
-        <script src="/src/jalebi-select.js"></script>
         <script src="/src/jalebi-carousel.js"></script>
         <script src="/src/jalebi-multiselect.js"></script>
+        <script src="/src/jalebi-tags.js"></script>
+        <script src="/src/jalebi-tabs.js"></script>
+        <script src="/src/jalebi-accordion.js"></script>
+        <script src="/src/jalebi-breadcrumbs.js"></script>
     </body>
 </html>
