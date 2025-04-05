@@ -175,6 +175,37 @@
                 }
             ],
             "code": "<jalebi-datepicker format=\"yyyy-mm-dd\" placeholder=\"Select a date\" label=\"Date\"></jalebi-datepicker>"
+        },
+        {
+            "id": "timepicker",
+            "name": "TimePicker",
+            "description": "A 3D carousel-style time picker with intuitive scrolling for hours, minutes, and AM/PM selection.",
+            "examples": [
+                {
+                    "html": "<jalebi-timepicker placeholder=\"Select time\"></jalebi-timepicker>"
+                },
+                {
+                    "html": "<jalebi-timepicker value=\"3:30 PM\" label=\"Meeting Time\"></jalebi-timepicker>"
+                },
+                {
+                    "html": "<jalebi-timepicker format=\"24h\" value=\"14:30\" label=\"Appointment Time\"></jalebi-timepicker>"
+                }
+            ],
+            "code": "<jalebi-timepicker placeholder=\"Select time\" label=\"Time\"></jalebi-timepicker>"
+        },
+        {
+            "id": "slider",
+            "name": "Slider",
+            "description": "A simple, accessible slider component with customizable range and styling that integrates with your theme system.",
+            "examples": [
+                {
+                    "html": "<jalebi-slider min=\"0\" max=\"100\" value=\"50\" step=\"1\"></jalebi-slider>"
+                },
+                {
+                    "html": "<jalebi-slider min=\"0\" max=\"500\" value=\"250\" step=\"10\" show-labels=\"true\" show-value=\"true\"></jalebi-slider>"
+                }
+            ],
+            "code": "<jalebi-slider min=\"0\" max=\"100\" value=\"50\" step=\"1\"></jalebi-slider>"
         }
     ],
     "scripts": [
@@ -191,6 +222,8 @@
         "/src/jalebi-accordion.js",
         "/src/jalebi-breadcrumbs.js",
         "/src/jalebi-dialog.js",
-        "/src/jalebi-datepicker.js"
+        "/src/jalebi-datepicker.js",
+        "/src/jalebi-timepicker.js",
+        "/src/jalebi-slider.js"
     ]
 }
