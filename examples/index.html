@@ -1,0 +1,486 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>Jalebi UI Component Library</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Creepster&family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Fira+Mono:wght@400;500;700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lora:ital,wght@0,400..700;1,400..700&family=Satisfy&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=VT323&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Varela+Round&family=Sarpanch:wght@400;500;600;700;800;900&Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+            rel="stylesheet"
+        />
+
+        <style>
+            :root {
+                --bg-1: #ffffff;
+                --bg-2: #f7f7f7;
+                --bg-3: #e0e0e0;
+                --fg-1: #333333;
+                --fg-2: #666666;
+                --border-1: #cccccc;
+                --fg-red: #ff126d;
+                --bg-red: #ffebf1;
+                --fg-green: #2ecc71;
+                --bg-green: #e8f8f1;
+                --fg-blue: #487cff;
+                --bg-blue: #ebf1ff;
+                --fg-yellow: #f1c40f;
+                --bg-yellow: #fef9e7;
+                --fg-purple: #9b59b6;
+                --bg-purple: #f5eef8;
+                --fg-cyan: #00bcd4;
+                --bg-cyan: #e0f7fa;
+                --fg-orange: #e67e22;
+                --bg-orange: #fdf2e9;
+                --fg-white: #ffffff;
+                --bg-white: #ffffff;
+                --fg-black: #000000;
+                --bg-black: #000000;
+                --font: 'Inter', sans-serif;
+                --font-cursive: 'Satisfy', cursive;
+                --font-heading: 'Inter', sans-serif;
+                --font-mono: 'Fira Mono', monospace;
+                --radius: 4px;
+                --radius-large: 12px;
+                --padding-1: 2px;
+                --padding-2: 4px;
+                --padding-3: 8px;
+                --padding-4: 16px;
+                --padding-w1: 4px 8px;
+                --padding-w2: 8px 16px;
+                --padding-w3: 10px 20px;
+                --gap-1: 5px;
+                --gap-2: 10px;
+                --gap-3: 20px;
+                --drop-shadow: drop-shadow(0 0 20px rgba(0, 0, 0, 0.1));
+                --accent-svg: brightness(0) saturate(100%) invert(27%) sepia(51%) saturate(4354%) hue-rotate(242deg) brightness(92%) contrast(93%);
+                --fg-accent: #5c35d9;
+                --bg-accent: #f2eeff;
+                --themed-svg: none;
+            }
+            @media (hover: hover) {
+                *::-webkit-scrollbar {
+                    width: 15px;
+                }
+                *::-webkit-scrollbar-track {
+                    background: var(--bg-1);
+                }
+                *::-webkit-scrollbar-thumb {
+                    background-color: var(--bg-3);
+                    border-radius: 20px;
+                    border: 4px solid var(--bg-1);
+                }
+                *::-webkit-scrollbar-thumb:hover {
+                    background-color: var(--fg-1);
+                }
+            }
+            * {
+                box-sizing: border-box;
+            }
+            body,
+            html {
+                margin: 0;
+                padding: 0;
+                height: 100%;
+                font-family: var(--font);
+                background-color: var(--bg-1);
+                color: var(--fg-1);
+            }
+            p {
+                margin: 0;
+            }
+            pre {
+                font-family: var(--font-mono);
+                background-color: var(--bg-2);
+                padding: var(--padding-3);
+                border-radius: var(--radius);
+                overflow-x: auto;
+            }
+            a {
+                color: var(--fg-blue);
+            }
+            select {
+                padding: var(--padding-2);
+                border-radius: var(--radius);
+                border: 1px solid var(--border-1);
+                background-color: var(--bg-2);
+                color: var(--fg-1);
+                outline: none;
+            }
+            button {
+            }
+            button:hover {
+            }
+
+            /* Layout styling */
+            .app-container {
+                display: flex;
+                height: 100vh;
+            }
+
+            /* Header */
+            .header {
+                display: flex;
+                align-items: center;
+                padding: var(--padding-4);
+                background-color: var(--bg-1);
+                border-bottom: 1px solid var(--border-1);
+                height: 70px;
+            }
+
+            .logo-container {
+                display: flex;
+                align-items: center;
+                gap: var(--gap-2);
+            }
+
+            .logo-container img {
+                max-height: 40px;
+            }
+
+            .theme-selector {
+                margin-left: auto;
+                display: flex;
+                align-items: center;
+                gap: var(--gap-2);
+            }
+
+            /* Sidebar */
+            .sidebar {
+                width: 250px;
+                flex-shrink: 0;
+                border-right: 1px solid var(--border-1);
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+                overflow-y: auto;
+            }
+
+            .sidebar-header {
+                padding: var(--padding-4);
+                border-bottom: 1px solid var(--border-1);
+                height: 70px;
+            }
+
+            .sidebar-content {
+                flex-grow: 1;
+                overflow-y: auto;
+                padding: var(--padding-3);
+            }
+
+            .component-nav ul {
+                list-style-type: none;
+                padding: 0;
+                margin: 0;
+            }
+
+            .component-nav li {
+                margin-bottom: var(--gap-1);
+            }
+
+            .component-nav a {
+                display: block;
+                padding: var(--padding-w1);
+                border-radius: var(--radius);
+                transition: background-color 0.2s;
+                color: var(--fg-1);
+                text-decoration: none;
+            }
+
+            .component-nav a:hover {
+                background-color: var(--bg-3);
+            }
+
+            .component-nav a.active {
+                background-color: var(--fg-1);
+                color: var(--bg-1);
+                font-weight: 500;
+            }
+
+            /* Main content */
+            .main-content {
+                flex-grow: 1;
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+                overflow: hidden;
+            }
+
+            .content-container {
+                flex-grow: 1;
+                overflow-y: auto;
+                padding: var(--padding-4);
+            }
+
+            .component-display {
+                padding: var(--padding-4);
+                background-color: var(--bg-1);
+                border-radius: var(--radius-large);
+                margin-bottom: var(--gap-3);
+                min-height: 150px;
+                border: 1px solid var(--bg-3);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .component-section {
+                display: none;
+            }
+
+            .component-section.active {
+                display: block;
+            }
+
+            .component-description {
+                margin-bottom: var(--gap-3);
+                line-height: 1.5;
+            }
+
+            .component-header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: var(--gap-3);
+                display: none;
+            }
+
+            .component-header h2 {
+                margin: 0;
+            }
+
+            @media (max-width: 768px) {
+                .app-container {
+                    flex-direction: column;
+                }
+                .sidebar {
+                    width: 100%;
+                    height: auto;
+                    border-right: none;
+                    border-bottom: 1px solid var(--border-1);
+                }
+                .sidebar-content {
+                    max-height: 200px;
+                }
+                .main-content {
+                    height: auto;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="app-container">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="sidebar-header">
+                    <div class="logo-container">
+                        <img src="https://raw.githubusercontent.com/sohzm/jalebi/master/assets/jalebi.svg" alt="Jalebi" draggable="false" />
+                    </div>
+                </div>
+                <div class="sidebar-content">
+                    <nav class="component-nav" id="component-nav">
+                        <!-- Navigation will be populated dynamically -->
+                    </nav>
+                </div>
+            </aside>
+
+            <!-- Main content -->
+            <main class="main-content">
+                <header class="header">
+                    <h2 id="current-component">Loading...</h2>
+                    <div class="theme-selector">
+                        <label for="themes">Theme:</label>
+                        <select id="themes"></select>
+                    </div>
+                </header>
+
+                <div class="content-container" id="component-content">
+                    <!-- Component sections will be populated dynamically -->
+                </div>
+            </main>
+        </div>
+
+        <!-- Scripts -->
+        <script>
+            // Fetch and load component data
+            let componentsData = null;
+            let currentComponent = null;
+
+            // Function to get URL parameter
+            function getUrlParam(param) {
+                const urlParams = new URLSearchParams(window.location.search);
+                return urlParams.get(param);
+            }
+
+            // Function to set URL parameter
+            function setUrlParam(param, value) {
+                const url = new URL(window.location.href);
+                url.searchParams.set(param, value);
+                window.history.pushState({}, '', url);
+            }
+
+            // Load component data from JSON
+            async function loadComponentData() {
+                try {
+                    const response = await fetch('/examples/elements.json');
+                    componentsData = await response.json();
+
+                    // Initialize the UI
+                    populateSidebar();
+
+                    // Load the component specified in URL or default to introduction
+                    const elementParam = getUrlParam('element') || 'introduction';
+                    loadComponent(elementParam);
+
+                    // Load component scripts
+                    loadComponentScripts();
+                } catch (error) {
+                    console.error('Error loading component data:', error);
+                }
+            }
+
+            // Populate sidebar navigation
+            function populateSidebar() {
+                const navContainer = document.getElementById('component-nav');
+                const navList = document.createElement('ul');
+
+                componentsData.components.forEach(component => {
+                    const listItem = document.createElement('li');
+                    const link = document.createElement('a');
+
+                    link.href = `?element=${component.id}`;
+                    link.textContent = component.name;
+                    link.className = 'nav-link';
+                    link.setAttribute('data-component', component.id);
+
+                    link.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        loadComponent(component.id);
+                        setUrlParam('element', component.id);
+                    });
+
+                    listItem.appendChild(link);
+                    navList.appendChild(listItem);
+                });
+
+                navContainer.appendChild(navList);
+            }
+
+            // Load a specific component
+            function loadComponent(componentId) {
+                // Find the component data
+                currentComponent = componentsData.components.find(comp => comp.id === componentId);
+                if (!currentComponent) {
+                    console.error(`Component with ID '${componentId}' not found.`);
+                    return;
+                }
+
+                // Update active navigation link
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('data-component') === componentId) {
+                        link.classList.add('active');
+                    }
+                });
+
+                // Update header title
+                document.getElementById('current-component').textContent = currentComponent.name;
+
+                // Clear and update content container
+                const contentContainer = document.getElementById('component-content');
+                contentContainer.innerHTML = '';
+
+                // Create component section
+                const section = document.createElement('section');
+                section.id = `${componentId}-section`;
+                section.className = 'component-section active';
+
+                // Add component header
+                const header = document.createElement('div');
+                header.className = 'component-header';
+                header.innerHTML = `<h2>${currentComponent.name}</h2>`;
+                section.appendChild(header);
+
+                // Add component description
+                const description = document.createElement('div');
+                description.className = 'component-description';
+                description.innerHTML = currentComponent.description;
+                section.appendChild(description);
+
+                // Add component examples
+                if (currentComponent.examples && currentComponent.examples.length > 0) {
+                    // Display all examples first
+                    currentComponent.examples.forEach(example => {
+                        const display = document.createElement('div');
+                        display.className = 'component-display';
+                        display.innerHTML = example.html;
+                        section.appendChild(display);
+                    });
+
+                    // Then add the code block after all examples
+                    if (currentComponent.code) {
+                        const codeDisplay = document.createElement('div');
+                        codeDisplay.className = 'component-code';
+                        codeDisplay.innerHTML = `<pre><code>${escapeHtml(currentComponent.code)}</code></pre>`;
+                        section.appendChild(codeDisplay);
+                    }
+                }
+
+                contentContainer.appendChild(section);
+            }
+
+            // Escape HTML for code display
+            function escapeHtml(html) {
+                const div = document.createElement('div');
+                div.textContent = html;
+                return div.innerHTML;
+            }
+
+            // Load component scripts
+            function loadComponentScripts() {
+                if (componentsData.scripts && componentsData.scripts.length > 0) {
+                    componentsData.scripts.forEach(scriptPath => {
+                        const script = document.createElement('script');
+                        script.src = scriptPath;
+                        document.body.appendChild(script);
+                    });
+                }
+            }
+
+            // Theme selector
+            function initializeThemeSelector() {
+                const themeData = 'https://app.wisk.cc/js/theme/theme-data.json';
+                const themes = document.getElementById('themes');
+
+                fetch(themeData)
+                    .then(res => res.json())
+                    .then(data => {
+                        data.themes.forEach(theme => {
+                            const option = document.createElement('option');
+                            option.value = theme.name;
+                            option.textContent = theme.name;
+                            themes.appendChild(option);
+                        });
+
+                        themes.addEventListener('change', e => {
+                            const theme = data.themes.find(theme => theme.name === e.target.value);
+                            for (const key in theme) {
+                                document.documentElement.style.setProperty(key, theme[key]);
+                            }
+                        });
+                    })
+                    .catch(error => console.error('Error loading themes:', error));
+            }
+
+            // Initialize the application
+            document.addEventListener('DOMContentLoaded', function () {
+                loadComponentData();
+                initializeThemeSelector();
+            });
+        </script>
+    </body>
+</html>
