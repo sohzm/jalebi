@@ -174,27 +174,27 @@ class JalebiSelect extends HTMLElement {
                 }
                 .select {
                     padding: var(--padding-w2);
-                    border: 2px solid transparent;
+                    border: 1px solid var(--border-1);
                     border-radius: var(--radius);
                     cursor: pointer;
                     display: flex;
                     justify-content: space-between;
                     align-items: center;
                     outline: none;
-                    background-color: var(--bg-3);
+                    background-color: var(--bg-1);
                     color: var(--fg-1);
                     transition: all 0.2s ease;
                 }
                 :host([aria-expanded="true"]) .select {
-                    border-color: var(--fg-1);
+                    border-color: var(--fg-accent);
                     background-color: var(--bg-1);
                 }
                 .select:hover {
-                    border-color: var(--fg-1);
+                    border-color: var(--fg-accent);
                     background-color: var(--bg-1);
                 }
                 .select:focus, .select:focus-visible {
-                    border-color: var(--fg-1);
+                    border-color: var(--fg-accent);
                     outline: none;
                 }
                 .selected-text {
@@ -206,7 +206,7 @@ class JalebiSelect extends HTMLElement {
                     left: 0;
                     width: 100%;
                     background: var(--bg-1);
-                    border: 2px solid var(--fg-1);
+                    border: 1px solid var(--fg-accent);
                     border-radius: var(--radius);
                     display: ${this.opened ? 'flex' : 'none'};
                     flex-direction: column;

@@ -66,6 +66,16 @@ class JalebiBreadcrumbs extends HTMLElement {
                 display: flex;
                 align-items: center;
                 font-size: 15px;
+                opacity: 0.6;
+            }
+
+            .breadcrumb-item:hover {
+                opacity: 1;
+                transition: opacity 0.2s ease;
+            }
+
+            .breadcrumb-item:last-child {
+                opacity: 1;
             }
             
             .breadcrumb-link {
@@ -85,6 +95,7 @@ class JalebiBreadcrumbs extends HTMLElement {
                 align-items: center;
                 margin: 0 var(--padding-3);
                 color: var(--fg-1);
+                opacity: 0.6;
             }
             
             .separator-icon {
@@ -99,10 +110,12 @@ class JalebiBreadcrumbs extends HTMLElement {
                 margin: 0 var(--padding-3);
                 cursor: pointer;
                 transition: transform 0.2s ease, color 0.2s ease;
+                opacity: 0.6;
             }
             
             .more-dots:hover {
                 color: var(--fg-1);
+                opacity: 1;
                 transform: scale(1.1);
             }
             

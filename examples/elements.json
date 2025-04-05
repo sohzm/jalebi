@@ -3,7 +3,7 @@
         {
             "id": "introduction",
             "name": "Introduction",
-            "description": "<div><img src=\"https://raw.githubusercontent.com/sohzm/jalebi/master/assets/jalebi.svg\" alt=\"Jalebi\" draggable=\"false\" /><h3>Jalebi</h3><p>Jalebi is a work-in-progress UI component library with features like theming, i18n, and more. For more information, visit <a href=\"https://github.com/sohzm/jalebi\" target=\"_blank\">github.com/sohzm/jalebi</a>.</p><br><p>No deps, no build, no hassle. Just import the components you need and start using them&nbsp;<code style='padding: var(--padding-w1); background: var(--bg-3); border-radius: var(--radius)'>&lt;script src='https://jalebi.soham.sh/src/jalebi-marquee.js'&gt;&lt;/script&gt;</code> </p> </div> ",
+            "description": "<div><img src=\"https://raw.githubusercontent.com/sohzm/jalebi/master/assets/jalebi.svg\" alt=\"Jalebi\" draggable=\"false\" /><h3>Jalebi</h3><p>Jalebi is a work-in-progress UI component library with features like theming, i18n, and more. For more information, visit <a href=\"https://github.com/sohzm/jalebi\" target=\"_blank\">github.com/sohzm/jalebi</a>.</p><br><p>No deps, no build, no hassle. Just import the components you need and start using them, for example you can include marquee like this: &nbsp;<code style='padding: var(--padding-w1); background: var(--bg-3); border-radius: var(--radius)'>&lt;script src='https://jalebi.soham.sh/src/jalebi-marquee.js'&gt;&lt;/script&gt;</code> </p> </div> ",
             "examples": [],
             "code": ""
         },
@@ -161,6 +161,20 @@
                 }
             ],
             "code": "<button onclick=\"document.getElementById('myDialog').show()\">Open Dialog</button>\n\n<draggable-dialog id=\"myDialog\" title=\"Example Dialog\">\n  <div slot=\"content\" class=\"demo-content\" style=\"padding: var(--padding-w2);\">\n    <h2>Dialog Content</h2>\n    <p>This is a draggable dialog...</p>\n    <button onclick=\"document.getElementById('myDialog').hide()\">Close Dialog</button>\n  </div>\n</draggable-dialog> \n\n<draggable-dialog no-header id=\"customHeaderDialog\" title=\"Custom Header\">\n  <div slot=\"header\">\n    <div style=\"background-color: var(--bg-blue); color: var(--fg-blue); padding: var(--padding-w2); display: flex; justify-content: space-between;\">\n      <button class=\"my-close-button\" onclick=\"document.getElementById('customHeaderDialog').hide()\"> close </button>\n      <h2 style=\"margin: 0; width: 100%; text-align: center;\">My Dialog Title</h2>\n    </div>\n  </div>\n  <div slot=\"content\">\n    <div style=\"padding: var(--padding-w2);\">\n      <h2>Custom Header Content</h2>\n      <p>This is a draggable dialog with a custom header.</p>\n      <button onclick=\"document.getElementById('customHeaderDialog').hide()\">Close Dialog</button>\n    </div>\n  </div>\n</draggable-dialog>"
+        },
+        {
+            "id": "datepicker",
+            "name": "DatePicker",
+            "description": "A clean, accessible datepicker component with month navigation and date selection.",
+            "examples": [
+                {
+                    "html": "<jalebi-datepicker format=\"yyyy-mm-dd\" placeholder=\"Select a date\" ></jalebi-datepicker>"
+                },
+                {
+                    "html": "<jalebi-datepicker format=\"dd/mm/yyyy\" value=\"2023-05-15\" label=\"Birth Date\"></jalebi-datepicker>"
+                }
+            ],
+            "code": "<jalebi-datepicker format=\"yyyy-mm-dd\" placeholder=\"Select a date\" label=\"Date\"></jalebi-datepicker>"
         }
     ],
     "scripts": [
@@ -176,6 +190,7 @@
         "/src/jalebi-tabs.js",
         "/src/jalebi-accordion.js",
         "/src/jalebi-breadcrumbs.js",
-        "/src/jalebi-dialog.js"
+        "/src/jalebi-dialog.js",
+        "/src/jalebi-datepicker.js"
     ]
 }

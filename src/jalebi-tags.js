@@ -126,7 +126,7 @@ class JalebiTags extends HTMLElement {
                 }
                 .tags-container {
                     padding: var(--padding-w1);
-                    border: 2px solid transparent;
+                    border: 1px solid var(--border-1);
                     border-radius: var(--radius);
                     cursor: text;
                     display: flex;
@@ -134,26 +134,26 @@ class JalebiTags extends HTMLElement {
                     align-items: center;
                     gap: var(--gap-1);
                     outline: none;
-                    background-color: var(--bg-3);
+                    background-color: var(--bg-1);
                     color: var(--fg-1);
                     transition: all 0.2s ease;
                 }
                 :host([aria-expanded="true"]) .tags-container {
-                    border-color: var(--fg-1);
+                    border-color: var(--fg-accent);
                     background-color: var(--bg-1);
                 }
                 .tags-container:hover {
-                    border-color: var(--fg-1);
+                    border-color: var(--fg-accent);
                     background-color: var(--bg-1);
                 }
                 .tags-container:focus-within {
-                    border-color: var(--fg-1);
+                    border-color: var(--fg-accent);
                     outline: none;
                 }
                 .tag {
                     display: inline-flex;
                     align-items: center;
-                    background: var(--bg-1);
+                    background: var(--bg-3);
                     color: var(--fg-1);
                     border-radius: var(--radius);
                     padding: var(--padding-w1);
@@ -213,7 +213,7 @@ class JalebiTags extends HTMLElement {
                     left: 0;
                     width: 100%;
                     background: var(--bg-1);
-                    border: 2px solid var(--fg-1);
+                    border: 1px solid var(--fg-accent);
                     border-radius: var(--radius);
                     display: ${this.isOpen ? 'flex' : 'none'};
                     flex-direction: column;
