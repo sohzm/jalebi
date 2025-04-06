@@ -127,16 +127,19 @@
         {
             "id": "slider",
             "name": "Slider",
-            "description": "A simple, accessible slider component with customizable range and styling that integrates with your theme system.",
+            "description": "A customizable range slider component with support for intervals, steps, and various display options.",
             "examples": [
                 {
                     "html": "<jalebi-slider min=\"0\" max=\"100\" value=\"50\" step=\"1\"></jalebi-slider>"
                 },
                 {
-                    "html": "<jalebi-slider min=\"0\" max=\"500\" value=\"250\" step=\"10\" show-labels=\"true\" show-value=\"true\"></jalebi-slider>"
+                    "html": "<jalebi-slider min=\"0\" max=\"10\" value=\"5\" step=\"0.5\" interval=\"1\"></jalebi-slider>"
+                },
+                {
+                    "html": "<jalebi-slider min=\"1\" max=\"5\" value=\"3\" step=\"1\" hide-labels hide-value></jalebi-slider>"
                 }
             ],
-            "code": "<jalebi-slider min=\"0\" max=\"100\" value=\"50\" step=\"1\"></jalebi-slider>"
+            "code": "<jalebi-slider\n    min=\"0\"\n    max=\"100\"\n    value=\"50\"\n    step=\"1\"\n    interval=\"10\">\n</jalebi-slider>"
         },
         {
             "id": "checkbox",
@@ -191,13 +194,16 @@
         {
             "id": "tabs",
             "name": "Tabs",
-            "description": "Tabbed interface for organizing content into separate views.",
+            "description": "A clean and accessible tabs component with support for default and shadcn styling.",
             "examples": [
                 {
-                    "html": "<jalebi-tabs style='width: 100%'><jalebi-tab label=\"Features\"><div style=\"padding: 10px 0\"><h3>Key Features</h3><ul><li>Lightweight web components</li><li>No dependencies</li><li>Customizable with CSS variables</li><li>Accessible and responsive</li></ul></div></jalebi-tab><jalebi-tab label=\"Usage\"><div style=\"padding: 10px 0\"><h3>How to use</h3><p>Import the component scripts and start using them in your HTML:</p><code> &lt;script src=\"/src/jalebi-tabs.js\"&gt;&lt;/script&gt; </code><p>That's it! Now you can use the jalebi-tabs component.</p></div></jalebi-tab><jalebi-tab label=\"Examples\"><div style=\"padding: 10px 0\"><h3>Code Examples</h3><p>View more examples in the documentation.</p><button>View Documentation</button></div></jalebi-tab></jalebi-tabs>"
+                    "html": "<jalebi-tabs id=\"demo-tabs\" style='width: 100%'>\n    <jalebi-tab label=\"First Tab\">\n        <p>This is the content of the first tab.</p>\n        <p>You can put any HTML content here.</p>\n    </jalebi-tab>\n    <jalebi-tab label=\"Second Tab\">\n        <p>This is the content of the second tab.</p>\n        <p>Different content appears when this tab is selected.</p>\n    </jalebi-tab>\n    <jalebi-tab label=\"Third Tab\">\n        <p>And here's the content of the third tab.</p>\n        <p>Each tab can have its own unique content.</p>\n    </jalebi-tab>\n</jalebi-tabs>"
+                },
+                {
+                    "html": "<jalebi-tabs id=\"shadcn-tabs\" style='width: 100%' variant=\"shadcn\">\n    <jalebi-tab label=\"Dashboard\">\n        <p>Welcome to your dashboard! This is the shadcn style variant.</p>\n        <p>The tabs have a different look with the shadcn styling.</p>\n    </jalebi-tab>\n    <jalebi-tab label=\"Analytics\">\n        <p>View your analytics data here.</p>\n        <p>The shadcn style gives the tabs a cleaner, more modern look.</p>\n    </jalebi-tab>\n    <jalebi-tab label=\"Settings\">\n        <p>Adjust your settings and preferences here.</p>\n        <p>Notice how the active tab has a white background instead of an underline.</p>\n    </jalebi-tab>\n</jalebi-tabs>"
                 }
             ],
-            "code": "<jalebi-tabs style='width: 100%'>\n  <jalebi-tab label=\"Features\">\n    <div style=\"padding: 10px 0\">\n      <h3>Key Features</h3>\n      <ul>\n        <li>Lightweight web components</li>\n        <li>No dependencies</li>\n        <li>Customizable with CSS variables</li>\n        <li>Accessible and responsive</li>\n      </ul>\n    </div>\n  </jalebi-tab>\n  <jalebi-tab label=\"Usage\">\n    <div style=\"padding: 10px 0\">\n      <h3>How to use</h3>\n      <p>Import the component scripts and start using them in your HTML:</p>\n      <code> &lt;script src=\"/src/jalebi-tabs.js\"&gt;&lt;/script&gt; </code>\n      <p>That's it! Now you can use the jalebi-tabs component.</p>\n    </div>\n  </jalebi-tab>\n  <jalebi-tab label=\"Examples\">\n    <div style=\"padding: 10px 0\">\n      <h3>Code Examples</h3>\n      <p>View more examples in the documentation.</p>\n      <button>View Documentation</button>\n    </div>\n  </jalebi-tab>\n</jalebi-tabs>"
+            "code": "<jalebi-tabs id=\"my-tabs\">\n    <jalebi-tab label=\"First Tab\">\n        <p>This is the content of the first tab.</p>\n    </jalebi-tab>\n    <jalebi-tab label=\"Second Tab\">\n        <p>This is the content of the second tab.</p>\n    </jalebi-tab>\n    <jalebi-tab label=\"Third Tab\">\n        <p>This is the content of the third tab.</p>\n    </jalebi-tab>\n</jalebi-tabs>"
         },
         {
             "id": "accordion",

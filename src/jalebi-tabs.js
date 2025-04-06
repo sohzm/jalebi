@@ -4,6 +4,7 @@ class JalebiTabs extends HTMLElement {
         this.attachShadow({ mode: 'open' });
         this.isReady = false;
         this._activeTab = 0;
+        this._variant = 'default';
     }
 
     connectedCallback() {
@@ -11,12 +12,16 @@ class JalebiTabs extends HTMLElement {
             this._activeTab = parseInt(this.getAttribute('active-tab'), 10) || 0;
         }
 
+        if (this.hasAttribute('variant')) {
+            this._variant = this.getAttribute('variant');
+        }
+
         this.render();
         this.isReady = true;
     }
 
     static get observedAttributes() {
-        return ['active-tab'];
+        return ['active-tab', 'variant'];
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
@@ -25,7 +30,26 @@ class JalebiTabs extends HTMLElement {
         if (name === 'active-tab') {
             const newTabIndex = parseInt(newValue, 10) || 0;
             this.selectTab(newTabIndex);
+        } else if (name === 'variant') {
+            this._variant = newValue;
+            this.updatevariant();
         }
+    }
+
+    updatevariant() {
+        const tabHeaders = this.shadowRoot.querySelector('.tab-headers');
+        const tabHeadersContainer = this.shadowRoot.querySelector('.tab-headers-container');
+
+        if (this._variant === 'shadcn') {
+            tabHeaders.classList.add('shadcn-style');
+            tabHeadersContainer.classList.add('shadcn-container');
+        } else {
+            tabHeaders.classList.remove('shadcn-style');
+            tabHeadersContainer.classList.remove('shadcn-container');
+        }
+
+        // Re-select current tab to update styles
+        this.selectTab(this._activeTab);
     }
 
     render() {
@@ -47,12 +71,25 @@ class JalebiTabs extends HTMLElement {
                     width: 100%;
                 }
                 
+                .tab-headers-container {
+                    position: relative;
+                    overflow: hidden;
+                    width: 100%;
+                }
+                
                 .tab-headers {
                     display: flex;
                     background: var(--bg-1);
                     position: relative;
                     overflow-x: auto;
                     scrollbar-width: none;
+                }
+                
+                .tab-headers.shadcn-style {
+                    background: var(--bg-3);
+                    padding: var(--padding-2);
+                    border-radius: var(--radius);
+                    font-size: 14px;
                 }
                 
                 .tab-headers::-webkit-scrollbar {
@@ -69,6 +106,7 @@ class JalebiTabs extends HTMLElement {
                     flex: 1 1 0%;
                     text-align: center;
                     font-weight: 500;
+                    transition: color 0.2s, background-color 0.2s, border-color 0.2s;
                 }
                 
                 .tab-header:hover {
@@ -80,32 +118,23 @@ class JalebiTabs extends HTMLElement {
                     border-bottom: 4px solid var(--fg-1);
                 }
                 
+                .shadcn-style .tab-header {
+                    border-bottom: none;
+                    padding: var(--padding-w1);
+                    border-radius: var(--radius);
+                    filter: var(--drop-shadow);
+                }
+                
+                .shadcn-style .tab-header.active {
+                    background-color: var(--bg-1);
+                    border-bottom: none;
+                }
+                
                 .tab-content-container {
                     padding: var(--padding-4);
                     background: var(--bg-1);
                     border-bottom-left-radius: var(--radius);
                     border-bottom-right-radius: var(--radius);
-                }
-                
-                .tab-content {
-                    display: none;
-                    animation: fadeIn 0.3s ease-in-out;
-                }
-                
-                .tab-content.active {
-                    display: block;
-                }
-                
-                @keyframes fadeIn {
-                    from { opacity: 0; }
-                    to { opacity: 1; }
-                }
-                
-                /* Scrollable tabs with shadows */
-                .tab-headers-container {
-                    position: relative;
-                    overflow: hidden;
-                    width: 100%;
                 }
                 
                 .shadow-left, .shadow-right {
@@ -129,6 +158,14 @@ class JalebiTabs extends HTMLElement {
                     background: linear-gradient(90deg, transparent 0%, var(--bg-1) 100%);
                 }
                 
+                .shadcn-container .shadow-left {
+                    background: linear-gradient(90deg, var(--bg-3) 0%, transparent 100%);
+                }
+                
+                .shadcn-container .shadow-right {
+                    background: linear-gradient(90deg, transparent 0%, var(--bg-3) 100%);
+                }
+                
                 .show-left-shadow .shadow-left {
                     opacity: 1;
                 }
@@ -137,32 +174,41 @@ class JalebiTabs extends HTMLElement {
                     opacity: 1;
                 }
                 
-                /* Navigation arrows for mobile */
+                /* Navigation arrows */
                 .tab-nav-arrows {
                     display: none;
+                    justify-content: space-between;
+                    margin-top: var(--padding-3);
+                }
+                
+                .tab-nav-arrow {
+                    background: var(--bg-2);
+                    border: 1px solid var(--border-1);
+                    border-radius: var(--radius);
+                    padding: var(--padding-1) var(--padding-3);
+                    cursor: pointer;
+                    color: var(--fg-2);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+                
+                .tab-nav-arrow:disabled {
+                    opacity: 0.5;
+                    cursor: not-allowed;
+                }
+                
+                .tab-nav-arrow:hover:not(:disabled) {
+                    background: var(--bg-3);
                 }
                 
                 @media (max-width: 768px) {
                     .tab-nav-arrows {
                         display: flex;
-                        justify-content: space-between;
-                        margin-top: 8px;
                     }
                     
-                    .tab-nav-arrow {
-                        background: var(--bg-2);
-                        border: 1px solid var(--border-1);
-                        border-radius: var(--radius);
-                        padding: 4px 8px;
-                        cursor: pointer;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                    }
-                    
-                    .tab-nav-arrow:disabled {
-                        opacity: 0.5;
-                        cursor: not-allowed;
+                    .tab-header {
+                        min-width: 120px;
                     }
                 }
             </style>
@@ -170,7 +216,7 @@ class JalebiTabs extends HTMLElement {
             <div class="tabs-container">
                 <div class="tab-headers-container">
                     <div class="shadow-left"></div>
-                    <div class="tab-headers"></div>
+                    <div class="tab-headers ${this._variant === 'shadcn' ? 'shadcn-style' : ''}"></div>
                     <div class="shadow-right"></div>
                 </div>
                 <div class="tab-content-container">
@@ -189,8 +235,6 @@ class JalebiTabs extends HTMLElement {
 
     setupTabs() {
         const tabSlot = this.shadowRoot.querySelector('slot');
-        const tabHeaders = this.shadowRoot.querySelector('.tab-headers');
-
         tabSlot.addEventListener('slotchange', () => {
             this.updateTabs();
         });
@@ -211,6 +255,9 @@ class JalebiTabs extends HTMLElement {
             tabHeader.className = 'tab-header';
             tabHeader.textContent = tab.getAttribute('label') || `Tab ${index + 1}`;
             tabHeader.dataset.index = index;
+            tabHeader.setAttribute('role', 'tab');
+            tabHeader.setAttribute('aria-selected', index === this._activeTab ? 'true' : 'false');
+            tabHeader.id = `tab-${this.id || ''}-${index}`;
 
             // Set icon if present
             const icon = tab.getAttribute('icon');
@@ -222,6 +269,10 @@ class JalebiTabs extends HTMLElement {
             }
 
             tabHeaders.appendChild(tabHeader);
+
+            // Set ARIA attributes on tab panels
+            tab.setAttribute('role', 'tabpanel');
+            tab.setAttribute('aria-labelledby', tabHeader.id);
         });
 
         // Initially hide all tab contents except the active one
@@ -248,6 +299,17 @@ class JalebiTabs extends HTMLElement {
             if (tabHeader) {
                 const index = parseInt(tabHeader.dataset.index, 10);
                 this.selectTab(index);
+            }
+        });
+
+        // Keyboard navigation
+        tabHeaders.addEventListener('keydown', e => {
+            if (e.key === 'ArrowRight') {
+                this.navigateTab(1);
+                e.preventDefault();
+            } else if (e.key === 'ArrowLeft') {
+                this.navigateTab(-1);
+                e.preventDefault();
             }
         });
 
@@ -285,19 +347,21 @@ class JalebiTabs extends HTMLElement {
         // Update tab headers
         tabHeaders.forEach((header, i) => {
             header.classList.toggle('active', i === index);
+            header.setAttribute('aria-selected', i === index ? 'true' : 'false');
+            header.tabIndex = i === index ? 0 : -1;
         });
 
-        // Update tab contents - explicitly set display style
+        // Update tab contents
         tabContents.forEach((content, i) => {
             const isActive = i === index;
             content.setAttribute('active', isActive ? '' : null);
-            content.classList.toggle('active', isActive);
             content.style.display = isActive ? 'block' : 'none';
         });
 
         // Ensure the selected tab is visible
         if (tabHeaders[index]) {
             this.scrollTabIntoView(tabHeaders[index]);
+            tabHeaders[index].focus();
         }
 
         // Dispatch change event
@@ -399,15 +463,13 @@ class JalebiTab extends HTMLElement {
                 }
             </style>
             
-            <div class="tab-panel" role="tabpanel">
+            <div class="tab-panel">
                 <slot></slot>
             </div>
         `;
     }
 
     updateVisibility(isVisible) {
-        // This method is now mainly handled by the parent component
-        // which directly sets the style.display property
         const tabPanel = this.shadowRoot.querySelector('.tab-panel');
         if (tabPanel) {
             tabPanel.style.animation = isVisible ? 'fadeIn 0.3s ease-in-out' : 'none';

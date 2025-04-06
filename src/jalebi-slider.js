@@ -8,6 +8,7 @@ class JalebiSlider extends HTMLElement {
         this._max = 100;
         this._value = 50;
         this._step = 1;
+        this._interval = null; // For stepped intervals
         this._showLabels = true;
         this._showValue = true;
 
@@ -17,7 +18,7 @@ class JalebiSlider extends HTMLElement {
 
     // Component attributes
     static get observedAttributes() {
-        return ['min', 'max', 'value', 'step', 'show-labels', 'show-value'];
+        return ['min', 'max', 'value', 'step', 'interval', 'hide-labels', 'hide-value'];
     }
 
     // Attribute changed callback
@@ -35,11 +36,14 @@ class JalebiSlider extends HTMLElement {
             case 'step':
                 this._step = Number(newValue);
                 break;
-            case 'show-labels':
-                this._showLabels = newValue !== 'false';
+            case 'interval':
+                this._interval = newValue ? Number(newValue) : null;
                 break;
-            case 'show-value':
-                this._showValue = newValue !== 'false';
+            case 'hide-labels':
+                this._showLabels = newValue === null || newValue === 'false';
+                break;
+            case 'hide-value':
+                this._showValue = newValue === null || newValue === 'false';
                 break;
         }
         this.updateSlider();
@@ -81,6 +85,69 @@ class JalebiSlider extends HTMLElement {
         this.setAttribute('step', val);
     }
 
+    get interval() {
+        return this._interval;
+    }
+    set interval(val) {
+        this._interval = val ? Number(val) : null;
+        if (val === null) {
+            this.removeAttribute('interval');
+        } else {
+            this.setAttribute('interval', val);
+        }
+        this.renderIntervalMarkers();
+    }
+
+    // Getter and setter for showLabels
+    get showLabels() {
+        return this._showLabels;
+    }
+    set showLabels(val) {
+        this._showLabels = val;
+        if (val) {
+            this.removeAttribute('hide-labels');
+        } else {
+            this.setAttribute('hide-labels', '');
+        }
+        this.updateLayout();
+    }
+
+    // Getter and setter for showValue
+    get showValue() {
+        return this._showValue;
+    }
+    set showValue(val) {
+        this._showValue = val;
+        if (val) {
+            this.removeAttribute('hide-value');
+        } else {
+            this.setAttribute('hide-value', '');
+        }
+        this.updateLayout();
+    }
+
+    // Update container layout based on visibility settings
+    updateLayout() {
+        if (!this.shadowRoot) return;
+
+        const container = this.shadowRoot.querySelector('.slider-container');
+        const labelContainer = this.shadowRoot.querySelector('.slider-label-container');
+        const valueDisplay = this.shadowRoot.querySelector('.slider-value');
+
+        if (container) {
+            container.style.paddingTop = this._showLabels ? '20px' : '0';
+            container.style.paddingBottom = this._showValue ? '24px' : '0';
+        }
+
+        if (labelContainer) {
+            labelContainer.style.display = this._showLabels ? 'flex' : 'none';
+        }
+
+        if (valueDisplay) {
+            valueDisplay.style.display = this._showValue ? 'block' : 'none';
+        }
+    }
+
     // Initial rendering
     render() {
         // Create the styles
@@ -90,29 +157,36 @@ class JalebiSlider extends HTMLElement {
                 display: block;
                 font-family: var(--font);
                 margin: var(--padding-4) 0;
-                width: 220px;
+                width: 100%;
+                max-width: 300px;
             }
             
             .slider-container {
                 width: 100%;
                 position: relative;
+                padding-top: ${this._showLabels ? '20px' : '0'};
+                padding-bottom: ${this._showValue ? '24px' : '0'};
             }
             
             .slider-label-container {
-                display: flex;
+                display: ${this._showLabels ? 'flex' : 'none'};
                 justify-content: space-between;
-                margin-bottom: var(--padding-2);
                 color: var(--fg-2);
-                font-size: 0.9rem;
+                font-size: 0.8rem;
                 position: absolute;
                 width: 100%;
+                top: 0;
             }
             
             .slider-value {
+                display: ${this._showValue ? 'block' : 'none'};
                 color: var(--fg-1);
-                font-weight: bold;
+                font-weight: 500;
                 text-align: center;
-                margin-bottom: var(--padding-2);
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+                font-size: 0.9rem;
             }
             
             .slider-track {
@@ -120,12 +194,13 @@ class JalebiSlider extends HTMLElement {
                 height: 6px;
                 background-color: var(--bg-3);
                 border-radius: var(--radius);
+                margin: 10px 0;
             }
             
             .slider-progress {
                 position: absolute;
                 height: 100%;
-                background-color: var(--fg-1);
+                background-color: var(--fg-accent);
                 border-radius: var(--radius);
             }
             
@@ -134,35 +209,39 @@ class JalebiSlider extends HTMLElement {
                 top: 50%;
                 width: 16px;
                 height: 16px;
-                background-color: var(--fg-1);
+                background-color: var(--fg-accent);
                 border-radius: 50%;
                 transform: translate(-50%, -50%);
                 cursor: pointer;
+                transition: transform 0.1s ease;
             }
             
-            .slider-thumb:hover, .slider-thumb:active {
-                background-color: var(--fg-1);
+            .slider-thumb:hover {
+                transform: translate(-50%, -50%) scale(1.1);
             }
             
-            /* Focus ring styles */
-            .slider-thumb::after {
-                content: '';
+            .slider-thumb:active {
+                transform: translate(-50%, -50%) scale(1.2);
+            }
+            
+            .interval-markers {
                 position: absolute;
-                top: 50%;
-                left: 50%;
-                width: 24px;
-                height: 24px;
-                border-radius: 50%;
-                background-color: transparent;
-                transform: translate(-50%, -50%);
-                transition: background-color 0.2s ease;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
             }
             
-            input[type="range"]:focus + .slider-thumb::after {
-                background-color: var(--fg-accent);
-                opacity: 0.3;
+            .interval-marker {
+                position: absolute;
+                width: 2px;
+                height: 8px;
+                background-color: var(--fg-2);
+                transform: translateX(-50%);
+                top: -1px;
+                opacity: 0.5;
             }
             
+            /* Focus states for accessibility */
             input[type="range"] {
                 position: absolute;
                 top: 0;
@@ -174,6 +253,10 @@ class JalebiSlider extends HTMLElement {
                 margin: 0;
                 z-index: 2;
             }
+            
+            input[type="range"]:focus + .slider-thumb {
+                box-shadow: 0 0 0 3px var(--bg-accent);
+            }
         `;
 
         // Create the structure
@@ -183,6 +266,7 @@ class JalebiSlider extends HTMLElement {
         // Labels
         const labelContainer = document.createElement('div');
         labelContainer.className = 'slider-label-container';
+        labelContainer.style.display = this._showLabels ? 'flex' : 'none';
 
         const minLabel = document.createElement('span');
         minLabel.className = 'slider-min-label';
@@ -199,6 +283,7 @@ class JalebiSlider extends HTMLElement {
         const valueDisplay = document.createElement('div');
         valueDisplay.className = 'slider-value';
         valueDisplay.textContent = this._value;
+        valueDisplay.style.display = this._showValue ? 'block' : 'none';
 
         // Track
         const track = document.createElement('div');
@@ -207,6 +292,10 @@ class JalebiSlider extends HTMLElement {
         // Progress
         const progress = document.createElement('div');
         progress.className = 'slider-progress';
+
+        // Interval markers container
+        const intervalsContainer = document.createElement('div');
+        intervalsContainer.className = 'interval-markers';
 
         // Input (for accessibility)
         const input = document.createElement('input');
@@ -237,18 +326,13 @@ class JalebiSlider extends HTMLElement {
 
         // Append elements
         track.appendChild(progress);
+        track.appendChild(intervalsContainer);
         track.appendChild(input);
         track.appendChild(thumb);
 
-        if (this._showLabels) {
-            container.appendChild(labelContainer);
-        }
-
-        if (this._showValue) {
-            container.appendChild(valueDisplay);
-        }
-
+        container.appendChild(labelContainer);
         container.appendChild(track);
+        container.appendChild(valueDisplay);
 
         // Append to shadow DOM
         this.shadowRoot.appendChild(style);
@@ -261,9 +345,39 @@ class JalebiSlider extends HTMLElement {
         this._inputElement = input;
         this._minLabel = minLabel;
         this._maxLabel = maxLabel;
+        this._intervalsContainer = intervalsContainer;
+        this._labelContainer = labelContainer;
+        this._container = container;
 
         // Initial update
         this.updateSlider();
+        this.renderIntervalMarkers();
+    }
+
+    // Render interval markers if interval is set
+    renderIntervalMarkers() {
+        if (!this._intervalsContainer) return;
+
+        // Clear existing markers
+        this._intervalsContainer.innerHTML = '';
+
+        // If interval is not set, do nothing
+        if (!this._interval) return;
+
+        const range = this._max - this._min;
+        const numMarkers = Math.floor(range / this._interval);
+
+        // Create markers
+        for (let i = 1; i <= numMarkers; i++) {
+            const value = this._min + i * this._interval;
+            const percentage = ((value - this._min) / range) * 100;
+
+            const marker = document.createElement('div');
+            marker.className = 'interval-marker';
+            marker.style.left = `${percentage}%`;
+
+            this._intervalsContainer.appendChild(marker);
+        }
     }
 
     // Update slider visuals
@@ -294,6 +408,9 @@ class JalebiSlider extends HTMLElement {
         // Update labels
         this._minLabel.textContent = this._min;
         this._maxLabel.textContent = this._max;
+
+        // Update layout
+        this.updateLayout();
     }
 }
 
