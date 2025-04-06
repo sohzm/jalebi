@@ -1,18 +1,34 @@
 class JalebiSelect extends HTMLElement {
+    static get observedAttributes() {
+        return ['value', 'search'];
+    }
+
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
         this.opened = false;
         this.hasSearch = this.hasAttribute('search');
-        this._value = null;
         this.highlightedIndex = -1;
         this.allOptions = [];
         this.visibleOptions = [];
+        this._eventsBound = false;
+
+        // Set up MutationObserver to watch for changes to child elements
+        this._observer = new MutationObserver(this._handleMutations.bind(this));
     }
 
     connectedCallback() {
+        // Start observing for changes to child elements (options)
+        this._observer.observe(this, {
+            childList: true,
+            subtree: true,
+            characterData: true,
+        });
+
+        // Initialize the value and view
         this.value = this.getInitialValue();
         this.updateView();
+
         if (!this._eventsBound) {
             this.bindEvents();
             this._eventsBound = true;
@@ -23,6 +39,51 @@ class JalebiSelect extends HTMLElement {
         this.setAttribute('aria-haspopup', 'listbox');
         this.setAttribute('aria-expanded', 'false');
         this.setAttribute('aria-controls', `select-dropdown-${this._uniqueId}`);
+    }
+
+    disconnectedCallback() {
+        // Stop observing when element is removed from the DOM
+        this._observer.disconnect();
+    }
+
+    attributeChangedCallback(name, oldValue, newValue) {
+        if (name === 'value' && oldValue !== newValue) {
+            // Only update the view if the value has actually changed
+            this.updateView();
+        } else if (name === 'search') {
+            this.hasSearch = this.hasAttribute('search');
+            this.updateView();
+        }
+    }
+
+    _handleMutations(mutations) {
+        let needsUpdate = false;
+
+        for (const mutation of mutations) {
+            // Check if options or optgroups were added/removed
+            if (mutation.type === 'childList' && (mutation.addedNodes.length > 0 || mutation.removedNodes.length > 0)) {
+                needsUpdate = true;
+                break;
+            }
+
+            // Check if text content of options changed
+            if (mutation.type === 'characterData') {
+                const target = mutation.target;
+                if (target.parentElement && target.parentElement.tagName === 'OPTION') {
+                    needsUpdate = true;
+                    break;
+                }
+            }
+        }
+
+        if (needsUpdate) {
+            // If we don't have a value yet but now we have options, select the first one
+            if (!this.value) {
+                this.value = this.getInitialValue();
+            }
+
+            this.updateView();
+        }
     }
 
     get _uniqueId() {
@@ -48,20 +109,48 @@ class JalebiSelect extends HTMLElement {
                 }
                 return '';
             }
+        } else {
+            // Default to first option if no value attribute is set
+            const firstOption = this.querySelector('option');
+            if (firstOption) {
+                return firstOption.value;
+            }
         }
         return '';
     }
 
     get value() {
-        return this._value;
+        return this.getAttribute('value') || '';
     }
 
     set value(val) {
-        this._value = val;
-        this.updateView();
+        const oldValue = this.value;
+
+        if (oldValue !== val) {
+            // Reflect the value directly to the attribute as our source of truth
+            if (val) {
+                this.setAttribute('value', val);
+            } else {
+                this.removeAttribute('value');
+            }
+
+            // Don't call updateView() here - attributeChangedCallback will handle it
+
+            // Dispatch change event when value is set programmatically
+            this.dispatchEvent(
+                new CustomEvent('change', {
+                    detail: { value: val },
+                    bubbles: true,
+                    composed: true,
+                })
+            );
+        }
     }
 
     updateView() {
+        // Make sure we have a shadowRoot before trying to update
+        if (!this.shadowRoot) return;
+
         this.shadowRoot.innerHTML = '';
         const view = this.createView();
         this.shadowRoot.appendChild(view);
@@ -82,7 +171,7 @@ class JalebiSelect extends HTMLElement {
         // Set initial highlight index
         if (this.opened && this.visibleOptions.length > 0) {
             // Find the index of the currently selected option
-            const selectedIndex = this.visibleOptions.findIndex(option => option.getAttribute('data-value') === this._value);
+            const selectedIndex = this.visibleOptions.findIndex(option => option.getAttribute('data-value') === this.value);
             this.highlightedIndex = selectedIndex >= 0 ? selectedIndex : 0;
             this.updateHighlight();
         }
@@ -116,23 +205,6 @@ class JalebiSelect extends HTMLElement {
                 }
             }
         }
-    }
-
-    getSelectedOptionText() {
-        if (!this._value) return '';
-        
-        // First try direct query with escaped value
-        const escapedValue = this._value.replace(/"/g, '\\"');
-        const option = this.querySelector(`option[value="${escapedValue}"]`);
-        if (option) return option.textContent;
-        
-        // If that fails, try iterating through all options
-        const allOptions = Array.from(this.querySelectorAll('option'));
-        const matchingOption = allOptions.find(opt => opt.value === this._value);
-        if (matchingOption) return matchingOption.textContent;
-        
-        // If no match found, return the value itself or empty string
-        return this._value || '';
     }
 
     createView() {
@@ -171,7 +243,15 @@ class JalebiSelect extends HTMLElement {
             })
             .join('');
 
-        const selectedText = this.getSelectedOptionText();
+        // Get the selected option's text even if options were added after initialization
+        let selectedText = '';
+        if (this.value) {
+            const selectedOption = this.querySelector(`option[value="${this.value}"]`);
+            if (selectedOption) {
+                selectedText = selectedOption.textContent;
+            }
+        }
+
         const selectId = `select-${this._uniqueId}`;
         const dropdownId = `select-dropdown-${this._uniqueId}`;
 
@@ -247,7 +327,7 @@ class JalebiSelect extends HTMLElement {
                     justify-content: space-between;
                     align-items: center;
                 }
-                .option[data-value="${this._value}"] {
+                .option[data-value="${this.value}"] {
                     color: var(--fg-1);
                     background-color: var(--bg-2);
                 }

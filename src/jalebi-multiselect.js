@@ -1,24 +1,36 @@
 class JalebiMultiSelect extends HTMLElement {
+    static get observedAttributes() {
+        return ['value', 'search'];
+    }
+
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
         this.opened = false;
         this.hasSearch = this.hasAttribute('search');
-        this._values = [];
         this._eventsBound = false;
         this.highlightedIndex = -1;
         this.allOptions = [];
         this.visibleOptions = [];
+
+        // Set up MutationObserver to watch for changes to child elements
+        this._observer = new MutationObserver(this._handleMutations.bind(this));
     }
 
     connectedCallback() {
-        if (this.hasAttribute('value')) {
-            const attrValue = this.getAttribute('value');
-            if (attrValue) {
-                this._values = attrValue.split(',').map(v => v.trim());
-            }
+        // Start observing for changes to child elements (options)
+        this._observer.observe(this, {
+            childList: true,
+            subtree: true,
+            characterData: true,
+        });
+
+        if (!this.hasAttribute('value')) {
+            this.setAttribute('value', '');
         }
+
         this.updateView();
+
         if (!this._eventsBound) {
             this.bindEvents();
             this._eventsBound = true;
@@ -31,6 +43,46 @@ class JalebiMultiSelect extends HTMLElement {
         this.setAttribute('aria-controls', `multiselect-dropdown-${this._uniqueId}`);
     }
 
+    disconnectedCallback() {
+        // Stop observing when element is removed from the DOM
+        this._observer.disconnect();
+    }
+
+    attributeChangedCallback(name, oldValue, newValue) {
+        if (name === 'value' && oldValue !== newValue) {
+            // Value attribute has changed, update the view
+            this.updateView();
+        } else if (name === 'search') {
+            this.hasSearch = this.hasAttribute('search');
+            this.updateView();
+        }
+    }
+
+    _handleMutations(mutations) {
+        let needsUpdate = false;
+
+        for (const mutation of mutations) {
+            // Check if options or optgroups were added/removed
+            if (mutation.type === 'childList' && (mutation.addedNodes.length > 0 || mutation.removedNodes.length > 0)) {
+                needsUpdate = true;
+                break;
+            }
+
+            // Check if text content of options changed
+            if (mutation.type === 'characterData') {
+                const target = mutation.target;
+                if (target.parentElement && target.parentElement.tagName === 'OPTION') {
+                    needsUpdate = true;
+                    break;
+                }
+            }
+        }
+
+        if (needsUpdate) {
+            this.updateView();
+        }
+    }
+
     get _uniqueId() {
         if (!this.__uniqueId) {
             this.__uniqueId = Math.random().toString(36).substring(2, 10);
@@ -39,15 +91,32 @@ class JalebiMultiSelect extends HTMLElement {
     }
 
     get values() {
-        return this._values;
+        const valueAttr = this.getAttribute('value') || '';
+        return valueAttr ? valueAttr.split(',').map(v => v.trim()) : [];
     }
 
     set values(val) {
-        this._values = val;
-        this.updateView();
+        const oldValues = this.values;
+        const newValues = Array.isArray(val) ? val : [val];
+
+        // Only update if values actually changed
+        if (JSON.stringify(oldValues) !== JSON.stringify(newValues)) {
+            this.setAttribute('value', newValues.join(','));
+
+            // Dispatch change event when values are set programmatically
+            this.dispatchEvent(
+                new CustomEvent('change', {
+                    detail: { values: newValues },
+                    bubbles: true,
+                    composed: true,
+                })
+            );
+        }
     }
 
     updateView() {
+        if (!this.shadowRoot) return;
+
         this.shadowRoot.innerHTML = '';
         const view = this.createView();
         this.shadowRoot.appendChild(view);
@@ -102,15 +171,17 @@ class JalebiMultiSelect extends HTMLElement {
     }
 
     createView() {
+        const selectedValues = this.values;
+
         const options = Array.from(this.querySelectorAll(':scope > option, :scope > optgroup'))
             .map(el => {
                 if (el.tagName === 'OPTGROUP') {
                     const groupOptions = Array.from(el.children)
                         .map(opt => {
-                            return `<div class="option" role="option" id="option-${opt.value.replace(/\s+/g, '-')}" aria-selected="${this._values.includes(opt.value)}" data-value="${opt.value}">
+                            return `<div class="option" role="option" id="option-${opt.value.replace(/\s+/g, '-')}" aria-selected="${selectedValues.includes(opt.value)}" data-value="${opt.value}">
                                 ${opt.textContent}
                                 ${
-                                    this._values.includes(opt.value)
+                                    selectedValues.includes(opt.value)
                                         ? `<svg width="16px" height="16px" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="var(--fg-1)">
                                     <path d="M5 13L9 17L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                                 </svg>`
@@ -124,10 +195,10 @@ class JalebiMultiSelect extends HTMLElement {
                             ${groupOptions}
                         </div>`;
                 }
-                return `<div class="option" role="option" id="option-${el.value.replace(/\s+/g, '-')}" aria-selected="${this._values.includes(el.value)}" data-value="${el.value}">
+                return `<div class="option" role="option" id="option-${el.value.replace(/\s+/g, '-')}" aria-selected="${selectedValues.includes(el.value)}" data-value="${el.value}">
                         ${el.textContent}
                         ${
-                            this._values.includes(el.value)
+                            selectedValues.includes(el.value)
                                 ? `<svg width="16px" height="16px" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="var(--fg-1)">
                             <path d="M5 13L9 17L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                         </svg>`
@@ -139,8 +210,8 @@ class JalebiMultiSelect extends HTMLElement {
 
         // Handle selected text display
         let selectedText = 'Select...';
-        if (this._values.length > 0) {
-            const selectedLabels = this._values.map(val => {
+        if (selectedValues.length > 0) {
+            const selectedLabels = selectedValues.map(val => {
                 const option = this.querySelector(`option[value="${val}"]`);
                 return option ? option.textContent : val;
             });
@@ -355,21 +426,15 @@ class JalebiMultiSelect extends HTMLElement {
             } else if (e.target.closest('.option')) {
                 const option = e.target.closest('.option');
                 const value = option.getAttribute('data-value');
+                const currentValues = this.values;
 
-                if (this._values.includes(value)) {
-                    this._values = this._values.filter(val => val !== value);
+                if (currentValues.includes(value)) {
+                    this.values = currentValues.filter(val => val !== value);
                 } else {
-                    this._values.push(value);
+                    this.values = [...currentValues, value];
                 }
 
-                this.dispatchEvent(
-                    new CustomEvent('change', {
-                        detail: { values: this._values },
-                        bubbles: true,
-                        composed: true,
-                    })
-                );
-                this.updateView();
+                // View gets updated via attribute change callback
             }
         });
 
@@ -464,21 +529,13 @@ class JalebiMultiSelect extends HTMLElement {
                         if (this.highlightedIndex >= 0 && this.visibleOptions[this.highlightedIndex]) {
                             const option = this.visibleOptions[this.highlightedIndex];
                             const value = option.getAttribute('data-value');
+                            const currentValues = this.values;
 
-                            if (this._values.includes(value)) {
-                                this._values = this._values.filter(val => val !== value);
+                            if (currentValues.includes(value)) {
+                                this.values = currentValues.filter(val => val !== value);
                             } else {
-                                this._values.push(value);
+                                this.values = [...currentValues, value];
                             }
-
-                            this.dispatchEvent(
-                                new CustomEvent('change', {
-                                    detail: { values: this._values },
-                                    bubbles: true,
-                                    composed: true,
-                                })
-                            );
-                            this.updateView();
 
                             // Keep dropdown open after selection for multiselect
                             setTimeout(() => {
