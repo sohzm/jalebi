@@ -19,17 +19,6 @@
             "code": "<jalebi-marquee direction=\"to-left\" duration=\"30s\">\n  <span style=\"padding-right: 2rem\">Hello, world!</span>\n  <span style=\"padding-right: 2rem\">This is an infinite marquee.</span>\n  <span style=\"padding-right: 2rem\">Enjoy scrolling text!</span>\n</jalebi-marquee>"
         },
         {
-            "id": "tooltip",
-            "name": "Tooltip",
-            "description": "Provides additional information on hover with customizable positioning.",
-            "examples": [
-                {
-                    "html": "<jalebi-tooltip tooltip=\"This is the tooltip content!\" position=\"right\"><button>Hover me</button></jalebi-tooltip>"
-                }
-            ],
-            "code": "<jalebi-tooltip tooltip=\"This is the tooltip content!\" position=\"right\">\n  <button>Hover me</button>\n</jalebi-tooltip>"
-        },
-        {
             "id": "progress",
             "name": "Progress",
             "description": "Visual indicators for displaying progress, available in both determinate and indeterminate states.",
@@ -94,17 +83,6 @@
             "code": "<div style=\"display: flex; align-items: center; justify-content: space-between; gap: 20px\">\n  <label for=\"myToggle\">Enable Notifications</label>\n  <jalebi-toggle id=\"myToggle\" checked onvaluechange=\"console.log(`Value changed: ${event.detail.value}`)\"></jalebi-toggle>\n</div>"
         },
         {
-            "id": "carousel",
-            "name": "Carousel",
-            "description": "An image and content slider with automatic or manual navigation.",
-            "examples": [
-                {
-                    "html": "<jalebi-carousel indicator-type='line' indicator-position='external' hide-controls style='max-width: 800px; width: 100%' autoplay interval=\"2000\"><div class=\"slide\" style=\"aspect-ratio: 2 / 1; max-width: 800px; width: 100%; margin: auto; color: white; background: url('https://picsum.photos/id/1023/800/400') center/cover no-repeat; display: flex; align-items: center; justify-content: center;\"><h2>Slide 1</h2></div><div class=\"slide\" style=\"aspect-ratio: 2 / 1; max-width: 800px; width: 100%; margin: auto; color: white; background: url('https://picsum.photos/id/1021/800/400') center/cover no-repeat; display: flex; align-items: center; justify-content: center;\"><h2>Slide 2</h2></div><div class=\"slide\" style=\"aspect-ratio: 2 / 1; max-width: 800px; width: 100%; margin: auto; color: white; background: url('https://picsum.photos/id/1022/800/400') center/cover no-repeat; display: flex; align-items: center; justify-content: center;\"><h2>Slide 3</h2></div><div class=\"slide\" style=\"aspect-ratio: 2 / 1; max-width: 800px; width: 100%; margin: auto; color: white; background: url('https://picsum.photos/id/1041/800/400') center/cover no-repeat; display: flex; align-items: center; justify-content: center;\"><h2>Slide 4</h2></div></jalebi-carousel>"
-                }
-            ],
-            "code": "<jalebi-carousel autoplay interval=\"2000\">\n  <div class=\"slide\" style=\"padding: 20px 60px; color: var(--bg-1); background: var(--fg-red)\">\n    <h2>Slide 1</h2>\n    <p>Content for slide 1</p>\n  </div>\n  <div class=\"slide\" style=\"padding: 20px 60px; color: var(--bg-1); background: var(--fg-green)\">\n    <h2>Slide 2</h2>\n    <p>Content for slide 2</p>\n  </div>\n  <div class=\"slide\" style=\"padding: 20px 60px; color: var(--bg-1); background: var(--fg-blue)\">\n    <h2>Slide 3</h2>\n    <p>Content for slide 3</p>\n  </div>\n</jalebi-carousel>"
-        },
-        {
             "id": "tags",
             "name": "Tags",
             "description": "Input field that allows users to enter and manage multiple tag values.",
@@ -114,53 +92,6 @@
                 }
             ],
             "code": "<jalebi-tags placeholder=\"Select technologies...\" value=\"javascript,html\">\n  <option value=\"javascript\">JavaScript</option>\n  <option value=\"html\">HTML</option>\n  <option value=\"css\">CSS</option>\n  <optgroup label=\"Frameworks\">\n    <option value=\"react\">React</option>\n    <option value=\"vue\">Vue</option>\n    <option value=\"angular\">Angular</option>\n  </optgroup>\n  <optgroup label=\"Backend\">\n    <option value=\"node\">Node.js</option>\n    <option value=\"python\">Python</option>\n    <option value=\"php\">PHP</option>\n  </optgroup>\n</jalebi-tags>"
-        },
-        {
-            "id": "tabs",
-            "name": "Tabs",
-            "description": "Tabbed interface for organizing content into separate views.",
-            "examples": [
-                {
-                    "html": "<jalebi-tabs style='width: 100%'><jalebi-tab label=\"Features\"><div style=\"padding: 10px 0\"><h3>Key Features</h3><ul><li>Lightweight web components</li><li>No dependencies</li><li>Customizable with CSS variables</li><li>Accessible and responsive</li></ul></div></jalebi-tab><jalebi-tab label=\"Usage\"><div style=\"padding: 10px 0\"><h3>How to use</h3><p>Import the component scripts and start using them in your HTML:</p><code> &lt;script src=\"/src/jalebi-tabs.js\"&gt;&lt;/script&gt; </code><p>That's it! Now you can use the jalebi-tabs component.</p></div></jalebi-tab><jalebi-tab label=\"Examples\"><div style=\"padding: 10px 0\"><h3>Code Examples</h3><p>View more examples in the documentation.</p><button>View Documentation</button></div></jalebi-tab></jalebi-tabs>"
-                }
-            ],
-            "code": "<jalebi-tabs style='width: 100%'>\n  <jalebi-tab label=\"Features\">\n    <div style=\"padding: 10px 0\">\n      <h3>Key Features</h3>\n      <ul>\n        <li>Lightweight web components</li>\n        <li>No dependencies</li>\n        <li>Customizable with CSS variables</li>\n        <li>Accessible and responsive</li>\n      </ul>\n    </div>\n  </jalebi-tab>\n  <jalebi-tab label=\"Usage\">\n    <div style=\"padding: 10px 0\">\n      <h3>How to use</h3>\n      <p>Import the component scripts and start using them in your HTML:</p>\n      <code> &lt;script src=\"/src/jalebi-tabs.js\"&gt;&lt;/script&gt; </code>\n      <p>That's it! Now you can use the jalebi-tabs component.</p>\n    </div>\n  </jalebi-tab>\n  <jalebi-tab label=\"Examples\">\n    <div style=\"padding: 10px 0\">\n      <h3>Code Examples</h3>\n      <p>View more examples in the documentation.</p>\n      <button>View Documentation</button>\n    </div>\n  </jalebi-tab>\n</jalebi-tabs>"
-        },
-        {
-            "id": "accordion",
-            "name": "Accordion",
-            "description": "Collapsible content panels for organizing information in a limited space.",
-            "examples": [
-                {
-                    "html": "<jalebi-accordion style='max-width: 740px'> <jalebi-accordion-item title='Section 1' expanded> <p>This is the content for section 1.</p> </jalebi-accordion-item> <jalebi-accordion-item title='Section 2'> <p>Content for section 2 goes here.</p> <p>You can add any HTML content inside.</p> </jalebi-accordion-item> <jalebi-accordion-item title='Section 3'> <p>This is section 3 content.</p> </jalebi-accordion-item> </jalebi-accordion>"
-                }
-            ],
-            "code": "<jalebi-accordion style='max-width: 740px'>\n  <jalebi-accordion-item title=\"What is Jalebi?\" expanded>\n    <div style=\"padding: 10px 0\">\n      <p>\n        Jalebi is a collection of lightweight, customizable web components that can be easily integrated into any web project. The\n        components are built with vanilla JavaScript and have no external dependencies.\n      </p>\n    </div>\n  </jalebi-accordion-item>\n\n  <jalebi-accordion-item title=\"How do I install Jalebi?\">\n    <div style=\"padding: 10px 0\">\n      <p>You can include Jalebi directly from a CDN or download the source files:</p>\n      <code> &lt;script src=\"https://cdn.example.com/jalebi.min.js\"&gt;&lt;/script&gt; </code>\n      <p>Or use npm:</p>\n      <code> npm install jalebi-components </code>\n    </div>\n  </jalebi-accordion-item>\n\n  <jalebi-accordion-item title=\"Can I customize the appearance?\">\n    <div style=\"padding: 10px 0\">\n      <p>\n        Yes! Jalebi uses CSS variables that can be easily overridden to match your project's design system. This makes it simple to\n        customize colors, fonts, spacing, and more.\n      </p>\n      <p>For example:</p>\n      <code> :root { --fg-accent: #ff5500; --bg-accent: #fff1e6; } </code>\n    </div>\n  </jalebi-accordion-item>\n</jalebi-accordion>"
-        },
-        {
-            "id": "breadcrumbs",
-            "name": "Breadcrumbs",
-            "description": "Navigation aid that shows the user's location in a website hierarchy.",
-            "examples": [
-                {
-                    "html": "<jalebi-breadcrumbs data-breadcrumb=\"Home:/,Products:/p,Shoes:/p/shoes,Sneakers:/p/shoes/sneakers\" type=\"slash\"></jalebi-breadcrumbs>"
-                },
-                {
-                    "html": "<jalebi-breadcrumbs data-breadcrumb=\"Home:/,Products:/products,Electronics:/products/electronics,Smartphones:/products/electronics/smartphones,iPhone:/products/electronics/smartphones/iphone\" type=\"arrow\" max-elements=\"3\"></jalebi-breadcrumbs>"
-                }
-            ],
-            "code": "<jalebi-breadcrumbs data-breadcrumb=\"Home:/,Products:/p,Shoes:/p/shoes,Sneakers:/p/shoes/sneakers\" type=\"slash\"></jalebi-breadcrumbs>\n\n<jalebi-breadcrumbs \n  data-breadcrumb=\"Home:/,Products:/products,Electronics:/products/electronics,Smartphones:/products/electronics/smartphones,iPhone:/products/electronics/smartphones/iphone\" \n  type=\"arrow\" \n  max-elements=\"3\">\n</jalebi-breadcrumbs>"
-        },
-        {
-            "id": "dialog",
-            "name": "Dialog",
-            "description": "Modal dialogs for displaying important information or capturing user input.",
-            "examples": [
-                {
-                    "html": "<button onclick=\"document.getElementById('demoDialog').show()\">Open Dialog</button><button onclick=\"document.getElementById('customHeaderDialog').show()\">Open Custom Header Dialog</button><draggable-dialog id=\"demoDialog\" title=\"Example Dialog\"><div slot=\"content\" class=\"demo-content\" style=\"padding: var(--padding-w2);\"><h2>Dialog Content</h2><p>This is a draggable dialog that works as both a modal dialog on desktop and a bottom sheet on mobile.</p><p>Try resizing your browser window to see how it adapts!</p><p>On mobile or narrow screens, you can:</p><ul><li>Drag down to dismiss</li><li>Drag up to expand</li></ul><button id=\"closeDialog\" onclick=\"document.getElementById('demoDialog').hide()\">Close Dialog</button></div></draggable-dialog><draggable-dialog no-header id=\"customHeaderDialog\" title=\"Custom Header\"><div slot=\"header\"><div style=\"background-color: var(--bg-blue); color: var(--fg-blue); padding: var(--padding-w2); display: flex; justify-content: space-between;\"><button class=\"my-close-button\" onclick=\"document.getElementById('customHeaderDialog').hide()\"> close </button><h2 style=\"margin: 0; width: 100%; text-align: center;\">My Dialog Title</h2></div></div><div slot=\"content\"><div style=\"padding: var(--padding-w2);\"><h2>Custom Header Content</h2><p>This is a draggable dialog with a custom header.</p><p>You can customize the header as per your design requirements.</p><button id=\"closeCustomDialog\" onclick=\"document.getElementById('customHeaderDialog').hide()\">Close Dialog</button></div></div></draggable-dialog>"
-                }
-            ],
-            "code": "<button onclick=\"document.getElementById('myDialog').show()\">Open Dialog</button>\n\n<draggable-dialog id=\"myDialog\" title=\"Example Dialog\">\n  <div slot=\"content\" class=\"demo-content\" style=\"padding: var(--padding-w2);\">\n    <h2>Dialog Content</h2>\n    <p>This is a draggable dialog...</p>\n    <button onclick=\"document.getElementById('myDialog').hide()\">Close Dialog</button>\n  </div>\n</draggable-dialog> \n\n<draggable-dialog no-header id=\"customHeaderDialog\" title=\"Custom Header\">\n  <div slot=\"header\">\n    <div style=\"background-color: var(--bg-blue); color: var(--fg-blue); padding: var(--padding-w2); display: flex; justify-content: space-between;\">\n      <button class=\"my-close-button\" onclick=\"document.getElementById('customHeaderDialog').hide()\"> close </button>\n      <h2 style=\"margin: 0; width: 100%; text-align: center;\">My Dialog Title</h2>\n    </div>\n  </div>\n  <div slot=\"content\">\n    <div style=\"padding: var(--padding-w2);\">\n      <h2>Custom Header Content</h2>\n      <p>This is a draggable dialog with a custom header.</p>\n      <button onclick=\"document.getElementById('customHeaderDialog').hide()\">Close Dialog</button>\n    </div>\n  </div>\n</draggable-dialog>"
         },
         {
             "id": "datepicker",
@@ -234,26 +165,95 @@
                 }
             ],
             "code": "<jalebi-radio options=\"Option 1, Option 2, Option 3\" value=\"Option 1\" direction=\"horizontal\">\n</jalebi-radio>"
+        },
+        {
+            "id": "carousel",
+            "name": "Carousel",
+            "description": "An image and content slider with automatic or manual navigation.",
+            "examples": [
+                {
+                    "html": "<jalebi-carousel indicator-type='line' indicator-position='external' hide-controls style='max-width: 800px; width: 100%' autoplay interval=\"2000\"><div class=\"slide\" style=\"aspect-ratio: 2 / 1; max-width: 800px; width: 100%; margin: auto; color: white; background: url('https://picsum.photos/id/1023/800/400') center/cover no-repeat; display: flex; align-items: center; justify-content: center;\"><h2>Slide 1</h2></div><div class=\"slide\" style=\"aspect-ratio: 2 / 1; max-width: 800px; width: 100%; margin: auto; color: white; background: url('https://picsum.photos/id/1021/800/400') center/cover no-repeat; display: flex; align-items: center; justify-content: center;\"><h2>Slide 2</h2></div><div class=\"slide\" style=\"aspect-ratio: 2 / 1; max-width: 800px; width: 100%; margin: auto; color: white; background: url('https://picsum.photos/id/1022/800/400') center/cover no-repeat; display: flex; align-items: center; justify-content: center;\"><h2>Slide 3</h2></div><div class=\"slide\" style=\"aspect-ratio: 2 / 1; max-width: 800px; width: 100%; margin: auto; color: white; background: url('https://picsum.photos/id/1041/800/400') center/cover no-repeat; display: flex; align-items: center; justify-content: center;\"><h2>Slide 4</h2></div></jalebi-carousel>"
+                }
+            ],
+            "code": "<jalebi-carousel autoplay interval=\"2000\">\n  <div class=\"slide\" style=\"padding: 20px 60px; color: var(--bg-1); background: var(--fg-red)\">\n    <h2>Slide 1</h2>\n    <p>Content for slide 1</p>\n  </div>\n  <div class=\"slide\" style=\"padding: 20px 60px; color: var(--bg-1); background: var(--fg-green)\">\n    <h2>Slide 2</h2>\n    <p>Content for slide 2</p>\n  </div>\n  <div class=\"slide\" style=\"padding: 20px 60px; color: var(--bg-1); background: var(--fg-blue)\">\n    <h2>Slide 3</h2>\n    <p>Content for slide 3</p>\n  </div>\n</jalebi-carousel>"
+        },
+        {
+            "id": "tooltip",
+            "name": "Tooltip",
+            "description": "Provides additional information on hover with customizable positioning.",
+            "examples": [
+                {
+                    "html": "<jalebi-tooltip tooltip=\"This is the tooltip content!\" position=\"right\"><button>Hover me</button></jalebi-tooltip>"
+                }
+            ],
+            "code": "<jalebi-tooltip tooltip=\"This is the tooltip content!\" position=\"right\">\n  <button>Hover me</button>\n</jalebi-tooltip>"
+        },
+        {
+            "id": "tabs",
+            "name": "Tabs",
+            "description": "Tabbed interface for organizing content into separate views.",
+            "examples": [
+                {
+                    "html": "<jalebi-tabs style='width: 100%'><jalebi-tab label=\"Features\"><div style=\"padding: 10px 0\"><h3>Key Features</h3><ul><li>Lightweight web components</li><li>No dependencies</li><li>Customizable with CSS variables</li><li>Accessible and responsive</li></ul></div></jalebi-tab><jalebi-tab label=\"Usage\"><div style=\"padding: 10px 0\"><h3>How to use</h3><p>Import the component scripts and start using them in your HTML:</p><code> &lt;script src=\"/src/jalebi-tabs.js\"&gt;&lt;/script&gt; </code><p>That's it! Now you can use the jalebi-tabs component.</p></div></jalebi-tab><jalebi-tab label=\"Examples\"><div style=\"padding: 10px 0\"><h3>Code Examples</h3><p>View more examples in the documentation.</p><button>View Documentation</button></div></jalebi-tab></jalebi-tabs>"
+                }
+            ],
+            "code": "<jalebi-tabs style='width: 100%'>\n  <jalebi-tab label=\"Features\">\n    <div style=\"padding: 10px 0\">\n      <h3>Key Features</h3>\n      <ul>\n        <li>Lightweight web components</li>\n        <li>No dependencies</li>\n        <li>Customizable with CSS variables</li>\n        <li>Accessible and responsive</li>\n      </ul>\n    </div>\n  </jalebi-tab>\n  <jalebi-tab label=\"Usage\">\n    <div style=\"padding: 10px 0\">\n      <h3>How to use</h3>\n      <p>Import the component scripts and start using them in your HTML:</p>\n      <code> &lt;script src=\"/src/jalebi-tabs.js\"&gt;&lt;/script&gt; </code>\n      <p>That's it! Now you can use the jalebi-tabs component.</p>\n    </div>\n  </jalebi-tab>\n  <jalebi-tab label=\"Examples\">\n    <div style=\"padding: 10px 0\">\n      <h3>Code Examples</h3>\n      <p>View more examples in the documentation.</p>\n      <button>View Documentation</button>\n    </div>\n  </jalebi-tab>\n</jalebi-tabs>"
+        },
+        {
+            "id": "accordion",
+            "name": "Accordion",
+            "description": "Collapsible content panels for organizing information in a limited space.",
+            "examples": [
+                {
+                    "html": "<jalebi-accordion style='max-width: 740px'> <jalebi-accordion-item title='Section 1' expanded> <p>This is the content for section 1.</p> </jalebi-accordion-item> <jalebi-accordion-item title='Section 2'> <p>Content for section 2 goes here.</p> <p>You can add any HTML content inside.</p> </jalebi-accordion-item> <jalebi-accordion-item title='Section 3'> <p>This is section 3 content.</p> </jalebi-accordion-item> </jalebi-accordion>"
+                }
+            ],
+            "code": "<jalebi-accordion style='max-width: 740px'>\n  <jalebi-accordion-item title=\"What is Jalebi?\" expanded>\n    <div style=\"padding: 10px 0\">\n      <p>\n        Jalebi is a collection of lightweight, customizable web components that can be easily integrated into any web project. The\n        components are built with vanilla JavaScript and have no external dependencies.\n      </p>\n    </div>\n  </jalebi-accordion-item>\n\n  <jalebi-accordion-item title=\"How do I install Jalebi?\">\n    <div style=\"padding: 10px 0\">\n      <p>You can include Jalebi directly from a CDN or download the source files:</p>\n      <code> &lt;script src=\"https://cdn.example.com/jalebi.min.js\"&gt;&lt;/script&gt; </code>\n      <p>Or use npm:</p>\n      <code> npm install jalebi-components </code>\n    </div>\n  </jalebi-accordion-item>\n\n  <jalebi-accordion-item title=\"Can I customize the appearance?\">\n    <div style=\"padding: 10px 0\">\n      <p>\n        Yes! Jalebi uses CSS variables that can be easily overridden to match your project's design system. This makes it simple to\n        customize colors, fonts, spacing, and more.\n      </p>\n      <p>For example:</p>\n      <code> :root { --fg-accent: #ff5500; --bg-accent: #fff1e6; } </code>\n    </div>\n  </jalebi-accordion-item>\n</jalebi-accordion>"
+        },
+        {
+            "id": "breadcrumbs",
+            "name": "Breadcrumbs",
+            "description": "Navigation aid that shows the user's location in a website hierarchy.",
+            "examples": [
+                {
+                    "html": "<jalebi-breadcrumbs data-breadcrumb=\"Home:/,Products:/p,Shoes:/p/shoes,Sneakers:/p/shoes/sneakers\" type=\"slash\"></jalebi-breadcrumbs>"
+                },
+                {
+                    "html": "<jalebi-breadcrumbs data-breadcrumb=\"Home:/,Products:/products,Electronics:/products/electronics,Smartphones:/products/electronics/smartphones,iPhone:/products/electronics/smartphones/iphone\" type=\"arrow\" max-elements=\"3\"></jalebi-breadcrumbs>"
+                }
+            ],
+            "code": "<jalebi-breadcrumbs data-breadcrumb=\"Home:/,Products:/p,Shoes:/p/shoes,Sneakers:/p/shoes/sneakers\" type=\"slash\"></jalebi-breadcrumbs>\n\n<jalebi-breadcrumbs \n  data-breadcrumb=\"Home:/,Products:/products,Electronics:/products/electronics,Smartphones:/products/electronics/smartphones,iPhone:/products/electronics/smartphones/iphone\" \n  type=\"arrow\" \n  max-elements=\"3\">\n</jalebi-breadcrumbs>"
+        },
+        {
+            "id": "dialog",
+            "name": "Dialog",
+            "description": "Modal dialogs for displaying important information or capturing user input.",
+            "examples": [
+                {
+                    "html": "<button onclick=\"document.getElementById('demoDialog').show()\">Open Dialog</button><button onclick=\"document.getElementById('customHeaderDialog').show()\">Open Custom Header Dialog</button><draggable-dialog id=\"demoDialog\" title=\"Example Dialog\"><div slot=\"content\" class=\"demo-content\" style=\"padding: var(--padding-w2);\"><h2>Dialog Content</h2><p>This is a draggable dialog that works as both a modal dialog on desktop and a bottom sheet on mobile.</p><p>Try resizing your browser window to see how it adapts!</p><p>On mobile or narrow screens, you can:</p><ul><li>Drag down to dismiss</li><li>Drag up to expand</li></ul><button id=\"closeDialog\" onclick=\"document.getElementById('demoDialog').hide()\">Close Dialog</button></div></draggable-dialog><draggable-dialog no-header id=\"customHeaderDialog\" title=\"Custom Header\"><div slot=\"header\"><div style=\"background-color: var(--bg-blue); color: var(--fg-blue); padding: var(--padding-w2); display: flex; justify-content: space-between;\"><button class=\"my-close-button\" onclick=\"document.getElementById('customHeaderDialog').hide()\"> close </button><h2 style=\"margin: 0; width: 100%; text-align: center;\">My Dialog Title</h2></div></div><div slot=\"content\"><div style=\"padding: var(--padding-w2);\"><h2>Custom Header Content</h2><p>This is a draggable dialog with a custom header.</p><p>You can customize the header as per your design requirements.</p><button id=\"closeCustomDialog\" onclick=\"document.getElementById('customHeaderDialog').hide()\">Close Dialog</button></div></div></draggable-dialog>"
+                }
+            ],
+            "code": "<button onclick=\"document.getElementById('myDialog').show()\">Open Dialog</button>\n\n<draggable-dialog id=\"myDialog\" title=\"Example Dialog\">\n  <div slot=\"content\" class=\"demo-content\" style=\"padding: var(--padding-w2);\">\n    <h2>Dialog Content</h2>\n    <p>This is a draggable dialog...</p>\n    <button onclick=\"document.getElementById('myDialog').hide()\">Close Dialog</button>\n  </div>\n</draggable-dialog> \n\n<draggable-dialog no-header id=\"customHeaderDialog\" title=\"Custom Header\">\n  <div slot=\"header\">\n    <div style=\"background-color: var(--bg-blue); color: var(--fg-blue); padding: var(--padding-w2); display: flex; justify-content: space-between;\">\n      <button class=\"my-close-button\" onclick=\"document.getElementById('customHeaderDialog').hide()\"> close </button>\n      <h2 style=\"margin: 0; width: 100%; text-align: center;\">My Dialog Title</h2>\n    </div>\n  </div>\n  <div slot=\"content\">\n    <div style=\"padding: var(--padding-w2);\">\n      <h2>Custom Header Content</h2>\n      <p>This is a draggable dialog with a custom header.</p>\n      <button onclick=\"document.getElementById('customHeaderDialog').hide()\">Close Dialog</button>\n    </div>\n  </div>\n</draggable-dialog>"
         }
     ],
     "scripts": [
         "/src/jalebi-marquee.js",
-        "/src/jalebi-tooltip.js",
         "/src/jalebi-progress.js",
         "/src/jalebi-spinner.js",
         "/src/jalebi-toggle.js",
         "/src/jalebi-select.js",
-        "/src/jalebi-carousel.js",
         "/src/jalebi-multiselect.js",
         "/src/jalebi-tags.js",
+        "/src/jalebi-slider.js",
+        "/src/jalebi-checkbox.js",
+        "/src/jalebi-radio.js",
+        "/src/jalebi-datepicker.js",
+        "/src/jalebi-timepicker.js",
+        "/src/jalebi-carousel.js",
+        "/src/jalebi-tooltip.js",
         "/src/jalebi-tabs.js",
         "/src/jalebi-accordion.js",
         "/src/jalebi-breadcrumbs.js",
-        "/src/jalebi-dialog.js",
-        "/src/jalebi-datepicker.js",
-        "/src/jalebi-timepicker.js",
-        "/src/jalebi-slider.js",
-        "/src/jalebi-checkbox.js",
-        "/src/jalebi-radio.js"
+        "/src/jalebi-dialog.js"
     ]
 }
