@@ -118,6 +118,23 @@ class JalebiSelect extends HTMLElement {
         }
     }
 
+    getSelectedOptionText() {
+        if (!this._value) return '';
+        
+        // First try direct query with escaped value
+        const escapedValue = this._value.replace(/"/g, '\\"');
+        const option = this.querySelector(`option[value="${escapedValue}"]`);
+        if (option) return option.textContent;
+        
+        // If that fails, try iterating through all options
+        const allOptions = Array.from(this.querySelectorAll('option'));
+        const matchingOption = allOptions.find(opt => opt.value === this._value);
+        if (matchingOption) return matchingOption.textContent;
+        
+        // If no match found, return the value itself or empty string
+        return this._value || '';
+    }
+
     createView() {
         const options = Array.from(this.querySelectorAll(':scope > option, :scope > optgroup'))
             .map(el => {
@@ -154,7 +171,7 @@ class JalebiSelect extends HTMLElement {
             })
             .join('');
 
-        const selectedText = this._value ? this.querySelector(`option[value="${this._value}"]`)?.textContent : '';
+        const selectedText = this.getSelectedOptionText();
         const selectId = `select-${this._uniqueId}`;
         const dropdownId = `select-dropdown-${this._uniqueId}`;
 
