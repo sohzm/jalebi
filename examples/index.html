@@ -60,6 +60,12 @@
                 --bg-accent: #f2eeff;
                 --themed-svg: none;
             }
+            code {
+                font-family: var(--font-mono);
+                background-color: var(--bg-3);
+                padding: var(--padding-1);
+                border-radius: var(--radius);
+            }
             @media (hover: hover) {
                 *::-webkit-scrollbar {
                     width: 15px;
@@ -305,6 +311,8 @@
         </div>
 
         <!-- Scripts -->
+
+        <script src="/src/themes.js"></script>
         <script>
             // Fetch and load component data
             let componentsData = null;
@@ -451,29 +459,30 @@
                 }
             }
 
-            // Theme selector
             function initializeThemeSelector() {
-                const themeData = 'https://app.wisk.cc/js/theme/theme-data.json';
-                const themes = document.getElementById('themes');
+                const themesSelect = document.getElementById('themes');
 
-                fetch(themeData)
-                    .then(res => res.json())
-                    .then(data => {
-                        data.themes.forEach(theme => {
-                            const option = document.createElement('option');
-                            option.value = theme.name;
-                            option.textContent = theme.name;
-                            themes.appendChild(option);
-                        });
+                // Wait for themes to be loaded
+                jalebi.theme.onReady(function (themes) {
+                    // Populate the dropdown
+                    themes.forEach(theme => {
+                        const option = document.createElement('option');
+                        option.value = theme.name;
+                        option.textContent = theme.name;
+                        themesSelect.appendChild(option);
+                    });
 
-                        themes.addEventListener('change', e => {
-                            const theme = data.themes.find(theme => theme.name === e.target.value);
-                            for (const key in theme) {
-                                document.documentElement.style.setProperty(key, theme[key]);
-                            }
-                        });
-                    })
-                    .catch(error => console.error('Error loading themes:', error));
+                    // Set current theme as selected
+                    const currentTheme = jalebi.theme.currentTheme();
+                    if (currentTheme) {
+                        themesSelect.value = currentTheme;
+                    }
+
+                    // Add change handler
+                    themesSelect.addEventListener('change', function (e) {
+                        jalebi.theme.setTheme(e.target.value);
+                    });
+                });
             }
 
             // Initialize the application
