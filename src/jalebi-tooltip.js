@@ -25,8 +25,8 @@ class JalebiTooltip extends HTMLElement {
                     position: absolute;
                     visibility: hidden;
                     opacity: 0;
-                    padding: var(--padding-w2);
-                    font-size: 14px;
+                    padding: var(--padding-w1);
+                    font-size: 13px;
                     background: var(--fg-1);
                     color: var(--bg-1);
                     border-radius: var(--radius);
@@ -35,6 +35,9 @@ class JalebiTooltip extends HTMLElement {
                     transition: opacity 0.2s, visibility 0.2s;
                     z-index: 1000;
                     white-space: nowrap;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
                 }
                 .tooltip-content[data-position="top"] {
                     bottom: 100%;
