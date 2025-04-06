@@ -206,6 +206,34 @@
                 }
             ],
             "code": "<jalebi-slider min=\"0\" max=\"100\" value=\"50\" step=\"1\"></jalebi-slider>"
+        },
+        {
+            "id": "checkbox",
+            "name": "Checkbox",
+            "description": "A simple customizable checkbox component with optional label on either side.",
+            "examples": [
+                {
+                    "html": "<jalebi-checkbox label=\"Accept terms\"></jalebi-checkbox>"
+                },
+                {
+                    "html": "<jalebi-checkbox label=\"Left-side label\" label-position=\"left\"></jalebi-checkbox>"
+                }
+            ],
+            "code": "<jalebi-checkbox label=\"Checkbox label\" label-position=\"left\"></jalebi-checkbox>"
+        },
+        {
+            "id": "radio",
+            "name": "Radio",
+            "description": "A simple component for creating accessible radio button groups in either horizontal or vertical layouts.",
+            "examples": [
+                {
+                    "html": "<jalebi-radio options=\"Small, Medium, Large\" value=\"Medium\"></jalebi-radio>"
+                },
+                {
+                    "html": "<jalebi-radio options=\"Red, Green, Blue, Yellow\" value=\"Blue\" direction=\"vertical\"></jalebi-radio>"
+                }
+            ],
+            "code": "<jalebi-radio options=\"Option 1, Option 2, Option 3\" value=\"Option 1\" direction=\"horizontal\">\n</jalebi-radio>"
         }
     ],
     "scripts": [
@@ -224,6 +252,8 @@
         "/src/jalebi-dialog.js",
         "/src/jalebi-datepicker.js",
         "/src/jalebi-timepicker.js",
-        "/src/jalebi-slider.js"
+        "/src/jalebi-slider.js",
+        "/src/jalebi-checkbox.js",
+        "/src/jalebi-radio.js"
     ]
 }

@@ -86,75 +86,95 @@ class JalebiSlider extends HTMLElement {
         // Create the styles
         const style = document.createElement('style');
         style.textContent = `
-      :host {
-        display: block;
-        font-family: var(--font);
-        margin: var(--padding-4) 0;
-        width: 220px;
-      }
-      
-      .slider-container {
-        width: 100%;
-        position: relative;
-      }
-      
-      .slider-label-container {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: var(--padding-2);
-        color: var(--fg-2);
-        font-size: 0.9rem;
-        position: absolute;
-        width: 100%;
-      }
-      
-      .slider-value {
-        color: var(--fg-accent);
-        font-weight: bold;
-        text-align: center;
-        margin-bottom: var(--padding-2);
-      }
-      
-      .slider-track {
-        position: relative;
-        height: 6px;
-        background-color: var(--bg-3);
-        border-radius: var(--radius);
-      }
-      
-      .slider-progress {
-        position: absolute;
-        height: 100%;
-        background-color: var(--fg-accent);
-        border-radius: var(--radius);
-      }
-      
-      .slider-thumb {
-        position: absolute;
-        top: 50%;
-        width: 16px;
-        height: 16px;
-        background-color: var(--fg-accent);
-        border-radius: 50%;
-        transform: translate(-50%, -50%);
-        cursor: pointer;
-      }
-      
-      .slider-thumb:hover, .slider-thumb:active {
-        background-color: var(--fg-accent);
-      }
-      
-      input[type="range"] {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        opacity: 0;
-        cursor: pointer;
-        margin: 0;
-      }
-    `;
+            :host {
+                display: block;
+                font-family: var(--font);
+                margin: var(--padding-4) 0;
+                width: 220px;
+            }
+            
+            .slider-container {
+                width: 100%;
+                position: relative;
+            }
+            
+            .slider-label-container {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: var(--padding-2);
+                color: var(--fg-2);
+                font-size: 0.9rem;
+                position: absolute;
+                width: 100%;
+            }
+            
+            .slider-value {
+                color: var(--fg-1);
+                font-weight: bold;
+                text-align: center;
+                margin-bottom: var(--padding-2);
+            }
+            
+            .slider-track {
+                position: relative;
+                height: 6px;
+                background-color: var(--bg-3);
+                border-radius: var(--radius);
+            }
+            
+            .slider-progress {
+                position: absolute;
+                height: 100%;
+                background-color: var(--fg-1);
+                border-radius: var(--radius);
+            }
+            
+            .slider-thumb {
+                position: absolute;
+                top: 50%;
+                width: 16px;
+                height: 16px;
+                background-color: var(--fg-1);
+                border-radius: 50%;
+                transform: translate(-50%, -50%);
+                cursor: pointer;
+            }
+            
+            .slider-thumb:hover, .slider-thumb:active {
+                background-color: var(--fg-1);
+            }
+            
+            /* Focus ring styles */
+            .slider-thumb::after {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 24px;
+                height: 24px;
+                border-radius: 50%;
+                background-color: transparent;
+                transform: translate(-50%, -50%);
+                transition: background-color 0.2s ease;
+            }
+            
+            input[type="range"]:focus + .slider-thumb::after {
+                background-color: var(--fg-accent);
+                opacity: 0.3;
+            }
+            
+            input[type="range"] {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                opacity: 0;
+                cursor: pointer;
+                margin: 0;
+                z-index: 2;
+            }
+        `;
 
         // Create the structure
         const container = document.createElement('div');
@@ -188,10 +208,6 @@ class JalebiSlider extends HTMLElement {
         const progress = document.createElement('div');
         progress.className = 'slider-progress';
 
-        // Thumb
-        const thumb = document.createElement('div');
-        thumb.className = 'slider-thumb';
-
         // Input (for accessibility)
         const input = document.createElement('input');
         input.type = 'range';
@@ -200,6 +216,10 @@ class JalebiSlider extends HTMLElement {
         input.step = this._step;
         input.value = this._value;
         input.setAttribute('aria-label', 'Slider');
+
+        // Thumb
+        const thumb = document.createElement('div');
+        thumb.className = 'slider-thumb';
 
         // Event listeners
         input.addEventListener('input', e => {
@@ -217,8 +237,8 @@ class JalebiSlider extends HTMLElement {
 
         // Append elements
         track.appendChild(progress);
-        track.appendChild(thumb);
         track.appendChild(input);
+        track.appendChild(thumb);
 
         if (this._showLabels) {
             container.appendChild(labelContainer);

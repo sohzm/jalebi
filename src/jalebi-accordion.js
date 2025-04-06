@@ -155,7 +155,7 @@ class JalebiAccordionItem extends HTMLElement {
                     background: var(--bg-1, #ffffff);
                     font-size: 14px;
                     transition: background-color 0.2s;
-                    min-height: 64px;
+                    min-height: 48px;
                 }
                 
                 .accordion-header:hover {
