@@ -142,6 +142,7 @@
             .logo-container {
                 display: flex;
                 align-items: center;
+                justify-content: space-between;
                 gap: var(--gap-2);
             }
 
@@ -285,7 +286,7 @@
             <aside class="sidebar">
                 <div class="sidebar-header">
                     <div class="logo-container">
-                        <img src="/assets/jalebi.svg" alt="Jalebi" draggable="false" style="filter: var(--themed-svg)" />
+                        <img src="/assets/jalebi.svg" class="logooo" alt="Jalebi" draggable="false" style="filter: var(--themed-svg)" />
                     </div>
                 </div>
                 <div class="sidebar-content">
@@ -518,6 +519,364 @@
                 loadComponentData();
                 initializeThemeSelector();
             });
+        </script>
+
+        <script>
+            // Function to initialize search functionality
+            function initializeSearch() {
+                // First, create and insert the search button element
+                const searchButton = document.createElement('button');
+                searchButton.id = 'search-button';
+                searchButton.className = 'search-button';
+                searchButton.setAttribute('aria-label', 'Search components');
+                searchButton.innerHTML = `
+            <svg width="24px" height="24px" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="var(--fg-1)" style="pointer-events: none;">
+                <path d="M15.5 15.5L19 19" stroke="var(--fg-1)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M5 11a6 6 0 1012 0 6 6 0 00-12 0z" stroke="var(--fg-1)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+        `;
+
+                // Create the search dialog
+                const searchDialog = document.createElement('div');
+                searchDialog.id = 'search-dialog';
+                searchDialog.className = 'search-dialog';
+                searchDialog.innerHTML = `
+            <div class="search-dialog-header">
+                <div class="search-input-container">
+                    <input type="text" id="search-input" placeholder="Search components..." autofocus>
+                    <button id="clear-search" class="clear-search-button" aria-label="Clear search">
+                        <svg width="16px" height="16px" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="var(--fg-1)">
+                            <path d="M6.75827 17.2426L12.0009 12M17.2435 6.75736L12.0009 12M12.0009 12L6.75827 6.75736M12.0009 12L17.2435 17.2426" stroke="var(--fg-1)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                    </button>
+                </div>
+                <button id="close-search" class="close-search-button" aria-label="Close search">
+                    <svg width="20px" height="20px" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="var(--fg-1)">
+                        <path d="M6.75827 17.2426L12.0009 12M17.2435 6.75736L12.0009 12M12.0009 12L6.75827 6.75736M12.0009 12L17.2435 17.2426" stroke="var(--fg-1)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                </button>
+            </div>
+            <div class="search-results" id="search-results">
+                <!-- Search results will be populated here -->
+            </div>
+        `;
+
+                // Create a container for the search elements
+                const searchContainer = document.createElement('div');
+                searchContainer.className = 'search-container';
+                searchContainer.appendChild(searchButton);
+                searchContainer.appendChild(searchDialog);
+
+                // Insert the search container before the GitHub link in the header
+                const logoContainer = document.querySelector('.logo-container');
+
+                logoContainer.insertBefore(searchContainer, logoContainer.lastChild);
+
+                // Add styles for search elements
+                const styleElement = document.createElement('style');
+                styleElement.textContent = `
+            /* Search container and button styles */
+            .search-container {
+                margin-left: 10px;
+            }
+            
+            .search-button {
+                background: none;
+                border: none;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 4px;
+                border-radius: var(--radius);
+                transition: background-color 0.2s;
+            }
+            
+            .search-button:hover {
+                background-color: var(--bg-2);
+            }
+            
+            /* Search dialog styles */
+            .search-dialog {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 90%;
+                max-width: 500px;
+                max-height: 500px;
+                background-color: var(--bg-1);
+                border: 1px solid var(--border-1);
+                border-radius: var(--radius-large);
+                z-index: 1000;
+                display: none;
+                flex-direction: column;
+                overflow: hidden;
+                filter: var(--drop-shadow);
+                transition: all 0.3s ease-in-out;
+                opacity: 1;
+            }
+
+            @starting-style {
+                .search-dialog {
+                    opacity: 0;
+                    top: 60%;
+                }
+            }
+            
+            .search-dialog.active {
+                display: flex;
+            }
+            
+            .search-dialog-header {
+                display: flex;
+                align-items: center;
+                padding: var(--padding-w3);
+            }
+            
+            .search-input-container {
+                position: relative;
+                flex: 1;
+                display: flex;
+                align-items: center;
+            }
+            
+            #search-input {
+                width: 100%;
+                padding: var(--padding-w1);
+                border: 1px solid var(--border-1);
+                border-radius: var(--radius);
+                outline: none;
+                font-family: var(--font);
+                color: var(--fg-1);
+                background-color: var(--bg-2);
+            }
+            
+            #search-input:focus {
+                border-color: var(--fg-accent);
+            }
+            
+            .clear-search-button {
+                background: none;
+                border: none;
+                cursor: pointer;
+                position: absolute;
+                right: 8px;
+                display: none;
+                padding: 0;
+            }
+            
+            .clear-search-button.visible {
+                display: block;
+            }
+            
+            .close-search-button {
+                background: none;
+                border: none;
+                cursor: pointer;
+                margin-left: var(--padding-2);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 4px;
+                border-radius: 50%;
+            }
+            
+            .close-search-button:hover {
+                background-color: var(--bg-2);
+            }
+            
+            /* Search results styles */
+            .search-results {
+                flex: 1;
+                overflow-y: auto;
+                padding: var(--padding-2);
+            }
+            
+            .search-result-item {
+                padding: var(--padding-w2);
+                border-radius: var(--radius);
+                cursor: pointer;
+                margin-bottom: var(--padding-1);
+                transition: background-color 0.2s;
+            }
+            
+            .search-result-item:hover {
+                background-color: var(--bg-2);
+            }
+            
+            .search-result-item h3 {
+                margin: 0 0 var(--padding-2) 0;
+                font-size: 16px;
+            }
+            
+            .search-result-item p {
+                margin: 0;
+                font-size: 14px;
+                color: var(--fg-2);
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+            
+            .no-results {
+                padding: var(--padding-w2);
+                text-align: center;
+                color: var(--fg-2);
+            }
+            
+        `;
+                document.head.appendChild(styleElement);
+
+                // Add event listeners for search functionality
+                const searchInput = document.getElementById('search-input');
+                const searchResults = document.getElementById('search-results');
+                const closeSearch = document.getElementById('close-search');
+                const clearSearch = document.getElementById('clear-search');
+
+                // Show search dialog when search button is clicked
+                searchButton.addEventListener('click', () => {
+                    searchDialog.classList.add('active');
+                    searchInput.focus();
+
+                    // Set initial search results (show all components)
+                    displaySearchResults(componentsData.components);
+                });
+
+                // Close search dialog
+                closeSearch.addEventListener('click', () => {
+                    searchDialog.classList.remove('active');
+                    searchInput.value = '';
+                    clearSearch.classList.remove('visible');
+                });
+
+                // Clear search input
+                clearSearch.addEventListener('click', () => {
+                    searchInput.value = '';
+                    searchInput.focus();
+                    clearSearch.classList.remove('visible');
+                    displaySearchResults(componentsData.components);
+                });
+
+                // Search as user types
+                searchInput.addEventListener('input', e => {
+                    const searchTerm = e.target.value.toLowerCase().trim();
+
+                    // Show/hide clear button based on input content
+                    if (searchTerm.length > 0) {
+                        clearSearch.classList.add('visible');
+                    } else {
+                        clearSearch.classList.remove('visible');
+                    }
+
+                    if (searchTerm === '') {
+                        // If empty, show all components
+                        displaySearchResults(componentsData.components);
+                    } else {
+                        // Filter components based on search term
+                        const filteredComponents = componentsData.components.filter(component => {
+                            const nameMatch = component.name.toLowerCase().includes(searchTerm);
+                            const descMatch = component.description.toLowerCase().includes(searchTerm);
+                            return nameMatch || descMatch;
+                        });
+
+                        displaySearchResults(filteredComponents);
+                    }
+                });
+
+                // Close dialog when clicking outside
+                document.addEventListener('click', e => {
+                    if (searchDialog.classList.contains('active') && !searchDialog.contains(e.target) && e.target !== searchButton) {
+                        searchDialog.classList.remove('active');
+                        searchInput.value = '';
+                        clearSearch.classList.remove('visible');
+                    }
+                });
+
+                // Prevent clicks inside dialog from closing it
+                searchDialog.addEventListener('click', e => {
+                    e.stopPropagation();
+                });
+
+                // Handle keyboard events
+                document.addEventListener('keydown', e => {
+                    // Close dialog on Escape key
+                    if (e.key === 'Escape' && searchDialog.classList.contains('active')) {
+                        searchDialog.classList.remove('active');
+                        searchInput.value = '';
+                        clearSearch.classList.remove('visible');
+                    }
+
+                    // Open dialog on Ctrl+K or Command+K
+                    if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                        e.preventDefault();
+                        searchDialog.classList.contains('active') ? searchDialog.classList.remove('active') : searchDialog.classList.add('active');
+
+                        if (searchDialog.classList.contains('active')) {
+                            searchInput.focus();
+                            displaySearchResults(componentsData.components);
+                        }
+                    }
+                });
+            }
+
+            // Display search results
+            function displaySearchResults(components) {
+                const searchResults = document.getElementById('search-results');
+                searchResults.innerHTML = '';
+
+                if (components.length === 0) {
+                    searchResults.innerHTML = '<div class="no-results">No components found</div>';
+                    return;
+                }
+
+                components.forEach(component => {
+                    const resultItem = document.createElement('div');
+                    resultItem.className = 'search-result-item';
+
+                    // Strip HTML tags for description preview
+                    const tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = component.description;
+                    const descText = tempDiv.textContent || tempDiv.innerText || '';
+
+                    resultItem.innerHTML = `
+                <h3>${component.name}</h3>
+                <p>${descText.substring(0, 100)}${descText.length > 100 ? '...' : ''}</p>
+            `;
+
+                    // Navigate to component when clicked
+                    resultItem.addEventListener('click', () => {
+                        loadComponent(component.id);
+                        setUrlParam('element', component.id);
+
+                        // Close the search dialog
+                        document.getElementById('search-dialog').classList.remove('active');
+                        document.getElementById('search-input').value = '';
+                        document.getElementById('clear-search').classList.remove('visible');
+                    });
+
+                    searchResults.appendChild(resultItem);
+                });
+            }
+
+            // Initialize search when components data is loaded
+            function initializeWhenReady() {
+                if (typeof componentsData !== 'undefined' && componentsData) {
+                    initializeSearch();
+                } else {
+                    // Check again after a short delay
+                    setTimeout(initializeWhenReady, 100);
+                }
+            }
+
+            // Start initialization
+            document.addEventListener('DOMContentLoaded', initializeWhenReady);
+
+            // If DOMContentLoaded already fired, initialize now
+            if (document.readyState === 'complete' || document.readyState === 'interactive') {
+                initializeWhenReady();
+            }
         </script>
     </body>
 </html>

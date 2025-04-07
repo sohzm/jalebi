@@ -88,10 +88,10 @@
             "description": "Input field that allows users to enter and manage multiple tag values.",
             "examples": [
                 {
-                    "html": "<jalebi-tags placeholder=\"Select technologies...\" value=\"javascript,html\"><option value=\"javascript\">JavaScript</option><option value=\"html\">HTML</option><option value=\"css\">CSS</option><optgroup label=\"Frameworks\"><option value=\"react\">React</option><option value=\"vue\">Vue</option><option value=\"angular\">Angular</option></optgroup><optgroup label=\"Backend\"><option value=\"node\">Node.js</option><option value=\"python\">Python</option><option value=\"php\">PHP</option></optgroup></jalebi-tags>"
+                    "html": "<jalebi-tags colorful placeholder=\"Select technologies...\" value=\"javascript,css\"><option value=\"javascript\">JavaScript</option><option value=\"html\">HTML</option><option value=\"css\">CSS</option><optgroup label=\"Frameworks\"><option value=\"react\">React</option><option value=\"vue\">Vue</option><option value=\"angular\">Angular</option></optgroup><optgroup label=\"Backend\"><option value=\"node\">Node.js</option><option value=\"python\">Python</option><option value=\"php\">PHP</option></optgroup></jalebi-tags>"
                 }
             ],
-            "code": "<jalebi-tags placeholder=\"Select technologies...\" value=\"javascript,html\">\n  <option value=\"javascript\">JavaScript</option>\n  <option value=\"html\">HTML</option>\n  <option value=\"css\">CSS</option>\n  <optgroup label=\"Frameworks\">\n    <option value=\"react\">React</option>\n    <option value=\"vue\">Vue</option>\n    <option value=\"angular\">Angular</option>\n  </optgroup>\n  <optgroup label=\"Backend\">\n    <option value=\"node\">Node.js</option>\n    <option value=\"python\">Python</option>\n    <option value=\"php\">PHP</option>\n  </optgroup>\n</jalebi-tags>"
+            "code": "<jalebi-tags colorful placeholder=\"Select technologies...\" value=\"javascript,css\">\n  <option value=\"javascript\">JavaScript</option>\n  <option value=\"html\">HTML</option>\n  <option value=\"css\">CSS</option>\n  <optgroup label=\"Frameworks\">\n    <option value=\"react\">React</option>\n    <option value=\"vue\">Vue</option>\n    <option value=\"angular\">Angular</option>\n  </optgroup>\n  <optgroup label=\"Backend\">\n    <option value=\"node\">Node.js</option>\n    <option value=\"python\">Python</option>\n    <option value=\"php\">PHP</option>\n  </optgroup>\n</jalebi-tags>"
         },
         {
             "id": "datepicker",

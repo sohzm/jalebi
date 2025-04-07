@@ -204,7 +204,7 @@ class JalebiTabs extends HTMLElement {
                 
                 @media (max-width: 768px) {
                     .tab-nav-arrows {
-                        display: flex;
+                        display: none;
                     }
                     
                     .tab-header {

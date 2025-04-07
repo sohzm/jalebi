@@ -4,8 +4,18 @@ class JalebiTags extends HTMLElement {
         this.attachShadow({ mode: 'open' });
         this.isOpen = false;
         this.hasSearch = this.hasAttribute('search');
+        this.isColorful = this.hasAttribute('colorful');
         this._values = [];
         this._eventsBound = false;
+        this.colorOptions = [
+            { fg: '--fg-red', bg: '--bg-red' },
+            { fg: '--fg-green', bg: '--bg-green' },
+            { fg: '--fg-blue', bg: '--bg-blue' },
+            { fg: '--fg-yellow', bg: '--bg-yellow' },
+            { fg: '--fg-purple', bg: '--bg-purple' },
+            { fg: '--fg-cyan', bg: '--bg-cyan' },
+            { fg: '--fg-orange', bg: '--bg-orange' },
+        ];
     }
 
     connectedCallback() {
@@ -44,6 +54,22 @@ class JalebiTags extends HTMLElement {
         this.updateView();
     }
 
+    // Simple hash function to get consistent colors for the same tag value
+    getColorForValue(value) {
+        if (!this.isColorful) return { fg: '', bg: '' };
+
+        let hash = 0;
+        for (let i = 0; i < value.length; i++) {
+            const char = value.charCodeAt(i);
+            hash = (hash << 5) - hash + char;
+            hash = hash & hash; // Convert to 32bit integer
+        }
+
+        // Get positive index
+        const colorIndex = Math.abs(hash) % this.colorOptions.length;
+        return this.colorOptions[colorIndex];
+    }
+
     updateView() {
         this.shadowRoot.innerHTML = '';
         const view = this.createView();
@@ -59,10 +85,13 @@ class JalebiTags extends HTMLElement {
             .map(val => {
                 const option = this.querySelector(`option[value="${val}"]`);
                 const label = option ? option.textContent : val;
-                return `<div class="tag" data-value="${val}">
+                const { fg, bg } = this.getColorForValue(val);
+                const colorStyle = this.isColorful ? `color: var(${bg}); background-color: var(${fg});` : '';
+
+                return `<div class="tag" data-value="${val}" style="${colorStyle}">
                 <span>${label}</span>
                 <button class="tag-remove" aria-label="Remove ${label}">
-                    <svg width="14px" height="14px" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="var(--fg-1)">
+                    <svg width="14px" height="14px" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="currentColor">
                         <path d="M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                         <path d="M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                     </svg>
@@ -77,8 +106,11 @@ class JalebiTags extends HTMLElement {
                 if (el.tagName === 'OPTGROUP') {
                     const groupOptions = Array.from(el.children)
                         .map(opt => {
+                            const { fg } = this.getColorForValue(opt.value);
+                            const colorStyle = this.isColorful ? `color: var(${fg});` : '';
+
                             return `<div class="option ${this._values.includes(opt.value) ? 'selected' : ''}" data-value="${opt.value}" role="option" id="option-${opt.value.replace(/\s+/g, '-')}" aria-selected="${this._values.includes(opt.value)}">
-                                ${opt.textContent}
+                                <span style="${colorStyle}">${opt.textContent}</span>
                                 ${
                                     this._values.includes(opt.value)
                                         ? `<svg width="16px" height="16px" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="var(--fg-1)">
@@ -94,8 +126,12 @@ class JalebiTags extends HTMLElement {
                             ${groupOptions}
                         </div>`;
                 }
+
+                const { fg } = this.getColorForValue(el.value);
+                const colorStyle = this.isColorful ? `color: var(${fg});` : '';
+
                 return `<div class="option ${this._values.includes(el.value) ? 'selected' : ''}" data-value="${el.value}" role="option" id="option-${el.value.replace(/\s+/g, '-')}" aria-selected="${this._values.includes(el.value)}">
-                        ${el.textContent}
+                        <span style="${colorStyle}">${el.textContent}</span>
                         ${
                             this._values.includes(el.value)
                                 ? `<svg width="16px" height="16px" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="var(--fg-1)">
@@ -220,7 +256,6 @@ class JalebiTags extends HTMLElement {
                     z-index: 10;
                     animation: fadeIn 0.2s ease-out;
                     overflow: hidden;
-                    box-shadow: var(--shadow-dropdown);
                 }
                 @keyframes fadeIn {
                     from { opacity: 0; transform: translateY(-5px); }
@@ -236,6 +271,7 @@ class JalebiTags extends HTMLElement {
                     display: flex;
                     justify-content: space-between;
                     align-items: center;
+                    font-weight: 500;
                 }
                 .option.selected {
                     color: var(--fg-1);
@@ -567,7 +603,7 @@ class JalebiTags extends HTMLElement {
     }
 
     static get observedAttributes() {
-        return ['value', 'placeholder', 'search'];
+        return ['value', 'placeholder', 'search', 'colorful'];
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
@@ -582,6 +618,11 @@ class JalebiTags extends HTMLElement {
 
         if (name === 'search') {
             this.hasSearch = this.hasAttribute('search');
+            this.updateView();
+        }
+
+        if (name === 'colorful') {
+            this.isColorful = this.hasAttribute('colorful');
             this.updateView();
         }
 
