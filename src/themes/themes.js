@@ -20,7 +20,7 @@
         // Private variables
         let themes = [];
         let currentThemeName = null;
-        let themeDataUrl = 'https://app.wisk.cc/js/theme/theme-data.json';
+        let themeDataUrl = 'https://jalebi.soham.sh/src/themes/themes.json';
         let isLoaded = false;
         let onLoadCallbacks = [];
 

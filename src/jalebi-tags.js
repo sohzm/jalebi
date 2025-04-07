@@ -300,7 +300,6 @@ class JalebiTags extends HTMLElement {
                     align-items: center;
                     gap: var(--gap-1);
                     background-color: var(--bg-2);
-                    border-radius: var(--radius-large) var(--radius-large) 0 0;
                 }
                 .search input {
                     width: 100%;
