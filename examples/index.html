@@ -278,6 +278,52 @@
                     height: auto;
                 }
             }
+
+            /* Mobile menu button */
+            .mobile-menu-toggle {
+                display: none;
+                background: none;
+                border: none;
+                cursor: pointer;
+                padding: var(--padding-2);
+                border-radius: var(--radius);
+            }
+
+            .mobile-menu-toggle:hover {
+                background-color: var(--bg-2);
+            }
+
+            /* Responsive styles */
+            @media (max-width: 900px) {
+                .app-container {
+                    flex-direction: column;
+                }
+
+                .mobile-menu-toggle {
+                    display: flex;
+                }
+
+                .sidebar {
+                    width: 100%;
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    z-index: 1000;
+                    background-color: var(--bg-1);
+                    transform: translateY(-100%);
+                    transition: transform 0.3s ease;
+                    border-bottom: 1px solid var(--border-1);
+                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                }
+
+                .sidebar.mobile-visible {
+                    transform: translateY(0);
+                }
+
+                .main-content {
+                    width: 100%;
+                }
+            }
         </style>
     </head>
     <body>
@@ -287,6 +333,26 @@
                 <div class="sidebar-header">
                     <div class="logo-container">
                         <img src="/assets/jalebi.svg" class="logooo" alt="Jalebi" draggable="false" style="filter: var(--themed-svg)" />
+
+                        <button id="mobile-menu-toggle2" class="mobile-menu-toggle" aria-label="Toggle menu">
+                            <svg
+                                width="24px"
+                                height="24px"
+                                stroke-width="2"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                                color="var(--fg-1)"
+                            >
+                                <path
+                                    d="M3 5h18M3 12h18M3 19h18"
+                                    stroke="var(--fg-1)"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                ></path>
+                            </svg>
+                        </button>
                     </div>
                 </div>
                 <div class="sidebar-content">
@@ -329,6 +395,26 @@
                             ></path>
                         </svg>
                     </a>
+
+                    <button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="Toggle menu">
+                        <svg
+                            width="24px"
+                            height="24px"
+                            stroke-width="2"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                            color="var(--fg-1)"
+                        >
+                            <path
+                                d="M3 5h18M3 12h18M3 19h18"
+                                stroke="var(--fg-1)"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            ></path>
+                        </svg>
+                    </button>
                 </header>
 
                 <div class="content-container" id="component-content">
@@ -462,7 +548,7 @@
                     if (currentComponent.code) {
                         const codeDisplay = document.createElement('div');
                         codeDisplay.className = 'component-code';
-                        codeDisplay.innerHTML = `<pre><code>${escapeHtml(currentComponent.code)}</code></pre>`;
+                        codeDisplay.innerHTML = `<pre>${escapeHtml(currentComponent.code)}</pre>`;
                         section.appendChild(codeDisplay);
                     }
                 }
@@ -569,8 +655,9 @@
 
                 // Insert the search container before the GitHub link in the header
                 const logoContainer = document.querySelector('.logo-container');
+                const mobileMenuToggle2 = document.getElementById('mobile-menu-toggle2');
 
-                logoContainer.insertBefore(searchContainer, logoContainer.lastChild);
+                logoContainer.insertBefore(searchContainer, mobileMenuToggle2);
 
                 // Add styles for search elements
                 const styleElement = document.createElement('style');
@@ -877,6 +964,69 @@
             if (document.readyState === 'complete' || document.readyState === 'interactive') {
                 initializeWhenReady();
             }
+
+            document.addEventListener('DOMContentLoaded', function () {
+                const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+                const sidebar = document.querySelector('.sidebar');
+
+                if (mobileMenuToggle && sidebar) {
+                    mobileMenuToggle.addEventListener('click', function () {
+                        sidebar.classList.toggle('mobile-visible');
+                    });
+
+                    // Close sidebar when clicking on a component link
+                    const navLinks = document.querySelectorAll('.nav-link');
+                    navLinks.forEach(link => {
+                        link.addEventListener('click', function () {
+                            if (window.innerWidth <= 900) {
+                                sidebar.classList.remove('mobile-visible');
+                            }
+                        });
+                    });
+
+                    // Close sidebar when clicking outside
+                    document.addEventListener('click', function (event) {
+                        if (
+                            window.innerWidth <= 900 &&
+                            !sidebar.contains(event.target) &&
+                            event.target !== mobileMenuToggle &&
+                            !mobileMenuToggle.contains(event.target)
+                        ) {
+                            sidebar.classList.remove('mobile-visible');
+                        }
+                    });
+                }
+
+                const mobileMenuToggle2 = document.getElementById('mobile-menu-toggle2');
+
+                if (mobileMenuToggle2 && sidebar) {
+                    mobileMenuToggle2.addEventListener('click', function () {
+                        sidebar.classList.toggle('mobile-visible');
+                    });
+
+                    // Close sidebar when clicking on a component link
+                    const navLinks = document.querySelectorAll('.nav-link');
+                    navLinks.forEach(link => {
+                        link.addEventListener('click', function () {
+                            if (window.innerWidth <= 900) {
+                                sidebar.classList.remove('mobile-visible');
+                            }
+                        });
+                    });
+
+                    // Close sidebar when clicking outside
+                    document.addEventListener('click', function (event) {
+                        if (
+                            window.innerWidth <= 900 &&
+                            !sidebar.contains(event.target) &&
+                            event.target !== mobileMenuToggle &&
+                            !mobileMenuToggle.contains(event.target)
+                        ) {
+                            sidebar.classList.remove('mobile-visible');
+                        }
+                    });
+                }
+            });
         </script>
     </body>
 </html>
