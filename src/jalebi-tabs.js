@@ -58,6 +58,7 @@ class JalebiTabs extends HTMLElement {
                 :host {
                     display: block;
                     font-family: var(--font, sans-serif);
+                    height: 100%;
                 }
                 
                 * {
@@ -69,11 +70,11 @@ class JalebiTabs extends HTMLElement {
                     display: flex;
                     flex-direction: column;
                     width: 100%;
+                    height: 100%;
                 }
                 
                 .tab-headers-container {
                     position: relative;
-                    overflow: hidden;
                     width: 100%;
                 }
                 
@@ -110,7 +111,7 @@ class JalebiTabs extends HTMLElement {
                 }
                 
                 .tab-header:hover {
-                    background-color: var(--bg-2);
+                    background-color: var(--bg-3);
                 }
                 
                 .tab-header.active {
@@ -122,19 +123,19 @@ class JalebiTabs extends HTMLElement {
                     border-bottom: none;
                     padding: var(--padding-w1);
                     border-radius: var(--radius);
-                    filter: var(--drop-shadow);
+                    background: var(--bg-3);
                 }
                 
                 .shadcn-style .tab-header.active {
                     background-color: var(--bg-1);
                     border-bottom: none;
+                    filter: var(--drop-shadow);
                 }
                 
                 .tab-content-container {
-                    padding: var(--padding-4);
                     background: var(--bg-1);
-                    border-bottom-left-radius: var(--radius);
-                    border-bottom-right-radius: var(--radius);
+                    height: 100%;
+                    overflow: auto;
                 }
                 
                 .shadow-left, .shadow-right {
@@ -450,6 +451,7 @@ class JalebiTab extends HTMLElement {
             <style>
                 :host {
                     display: block;
+                    height: 100%;
                 }
                 
                 .tab-panel {
