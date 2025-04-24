@@ -9,11 +9,11 @@ class JalebiBreadcrumbs extends HTMLElement {
     }
 
     static get observedAttributes() {
-        return ['data-breadcrumb', 'type', 'max-elements'];
+        return ['data-breadcrumb', 'type', 'max-elements', 'max-chars'];
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
-        if (name === 'data-breadcrumb' || name === 'type' || name === 'max-elements') {
+        if (name === 'data-breadcrumb' || name === 'type' || name === 'max-elements' || name === 'max-chars') {
             this.render();
         }
     }
@@ -149,6 +149,14 @@ class JalebiBreadcrumbs extends HTMLElement {
                     white-space: nowrap;
                 }
             }
+            
+            .truncated-text {
+                display: inline-block;
+                max-width: 100%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
         `;
 
         // Get the breadcrumb data
@@ -156,6 +164,9 @@ class JalebiBreadcrumbs extends HTMLElement {
 
         // Get max elements to display
         const maxElements = parseInt(this.getAttribute('max-elements')) || breadcrumbData.length;
+        
+        // Get max characters per breadcrumb label
+        const maxChars = parseInt(this.getAttribute('max-chars')) || 0;
 
         // Generate breadcrumb HTML
         let breadcrumbsHTML = '';
@@ -166,9 +177,13 @@ class JalebiBreadcrumbs extends HTMLElement {
         if (needsMoreDots) {
             // Always show the first item
             const firstItem = breadcrumbData[0];
+            const firstLabel = this.truncateLabel(firstItem.label, maxChars);
+            
             breadcrumbsHTML += `
                 <li class="breadcrumb-item">
-                    <a href="${firstItem.url}" class="breadcrumb-link">${firstItem.label}</a>
+                    <a href="${firstItem.url}" class="breadcrumb-link" title="${firstItem.label}">
+                        <span class="truncated-text">${firstLabel}</span>
+                    </a>
                 </li>
             `;
 
@@ -184,14 +199,19 @@ class JalebiBreadcrumbs extends HTMLElement {
 
             remainingItems.forEach((item, index) => {
                 const isLast = index === remainingItems.length - 1;
+                const truncatedLabel = this.truncateLabel(item.label, maxChars);
 
                 // Create breadcrumb item
                 breadcrumbsHTML += `
                     <li class="breadcrumb-item">
                         ${
                             isLast
-                                ? `<span class="breadcrumb-link" aria-current="page">${item.label}</span>`
-                                : `<a href="${item.url}" class="breadcrumb-link">${item.label}</a>`
+                                ? `<span class="breadcrumb-link" aria-current="page" title="${item.label}">
+                                     <span class="truncated-text">${truncatedLabel}</span>
+                                   </span>`
+                                : `<a href="${item.url}" class="breadcrumb-link" title="${item.label}">
+                                     <span class="truncated-text">${truncatedLabel}</span>
+                                   </a>`
                         }
                     </li>
                 `;
@@ -211,14 +231,19 @@ class JalebiBreadcrumbs extends HTMLElement {
 
             displayItems.forEach((item, index) => {
                 const isLast = index === displayItems.length - 1;
+                const truncatedLabel = this.truncateLabel(item.label, maxChars);
 
                 // Create breadcrumb item
                 breadcrumbsHTML += `
                     <li class="breadcrumb-item">
                         ${
                             isLast
-                                ? `<span class="breadcrumb-link" aria-current="page">${item.label}</span>`
-                                : `<a href="${item.url}" class="breadcrumb-link">${item.label}</a>`
+                                ? `<span class="breadcrumb-link" aria-current="page" title="${item.label}">
+                                     <span class="truncated-text">${truncatedLabel}</span>
+                                   </span>`
+                                : `<a href="${item.url}" class="breadcrumb-link" title="${item.label}">
+                                     <span class="truncated-text">${truncatedLabel}</span>
+                                   </a>`
                         }
                     </li>
                 `;
@@ -249,6 +274,14 @@ class JalebiBreadcrumbs extends HTMLElement {
         if (moreDotsElement) {
             moreDotsElement.addEventListener('click', () => this.expandBreadcrumbs());
         }
+    }
+
+    // Helper method to truncate label text with ellipsis
+    truncateLabel(label, maxChars) {
+        if (!maxChars || maxChars <= 0 || label.length <= maxChars) {
+            return label;
+        }
+        return label.slice(0, maxChars) + '...';
     }
 
     parseBreadcrumbData() {
@@ -299,6 +332,9 @@ class JalebiBreadcrumbs extends HTMLElement {
     renderExpanded() {
         // Get the breadcrumb type (slash or arrow) or default to arrow
         const type = this.getAttribute('type') || 'arrow';
+        
+        // Get max characters per breadcrumb label
+        const maxChars = parseInt(this.getAttribute('max-chars')) || 0;
 
         // Define separator SVG
         const slashSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="separator-icon">
@@ -320,14 +356,19 @@ class JalebiBreadcrumbs extends HTMLElement {
 
         breadcrumbData.forEach((item, index) => {
             const isLast = index === breadcrumbData.length - 1;
+            const truncatedLabel = this.truncateLabel(item.label, maxChars);
 
             // Create breadcrumb item
             breadcrumbsHTML += `
                 <li class="breadcrumb-item">
                     ${
                         isLast
-                            ? `<span class="breadcrumb-link" aria-current="page">${item.label}</span>`
-                            : `<a href="${item.url}" class="breadcrumb-link">${item.label}</a>`
+                            ? `<span class="breadcrumb-link" aria-current="page" title="${item.label}">
+                                 <span class="truncated-text">${truncatedLabel}</span>
+                               </span>`
+                            : `<a href="${item.url}" class="breadcrumb-link" title="${item.label}">
+                                 <span class="truncated-text">${truncatedLabel}</span>
+                               </a>`
                     }
                 </li>
             `;
