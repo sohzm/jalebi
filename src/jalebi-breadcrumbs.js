@@ -164,7 +164,7 @@ class JalebiBreadcrumbs extends HTMLElement {
 
         // Get max elements to display
         const maxElements = parseInt(this.getAttribute('max-elements')) || breadcrumbData.length;
-        
+
         // Get max characters per breadcrumb label
         const maxChars = parseInt(this.getAttribute('max-chars')) || 0;
 
@@ -178,7 +178,7 @@ class JalebiBreadcrumbs extends HTMLElement {
             // Always show the first item
             const firstItem = breadcrumbData[0];
             const firstLabel = this.truncateLabel(firstItem.label, maxChars);
-            
+
             breadcrumbsHTML += `
                 <li class="breadcrumb-item">
                     <a href="${firstItem.url}" class="breadcrumb-link" title="${firstItem.label}">
@@ -332,7 +332,7 @@ class JalebiBreadcrumbs extends HTMLElement {
     renderExpanded() {
         // Get the breadcrumb type (slash or arrow) or default to arrow
         const type = this.getAttribute('type') || 'arrow';
-        
+
         // Get max characters per breadcrumb label
         const maxChars = parseInt(this.getAttribute('max-chars')) || 0;
 
