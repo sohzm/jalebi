@@ -270,6 +270,7 @@ class JalebiInput extends HTMLElement {
                     pointer-events: none;
                     z-index: 1; /* Label behind input */
                     font-size: 12px;
+                    user-select: none;
                 }
                 .input-container:focus-within label,
                 .input-container:has(input:not(:placeholder-shown)) label {
