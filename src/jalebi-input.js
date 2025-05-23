@@ -1,6 +1,7 @@
 class JalebiInput extends HTMLElement {
     static get observedAttributes() {
-        return ['value', 'type', 'required', 'pattern'];
+        // Add 'placeholder' to observed attributes
+        return ['value', 'type', 'required', 'pattern', 'placeholder'];
     }
 
     constructor() {
@@ -11,6 +12,8 @@ class JalebiInput extends HTMLElement {
         this._isFocused = false;
         this._eventsBound = false;
         this._observer = new MutationObserver(this._handleMutations.bind(this));
+        // Initialize placeholder
+        this._placeholder = '';
     }
 
     connectedCallback() {
@@ -25,6 +28,7 @@ class JalebiInput extends HTMLElement {
         this._value = this.getAttribute('value') || '';
         this._required = this.hasAttribute('required');
         this._pattern = this.getAttribute('pattern') || null;
+        this._placeholder = this.getAttribute('placeholder') || ''; // Set placeholder
 
         // Validate initial value
         this.validate();
@@ -64,6 +68,10 @@ class JalebiInput extends HTMLElement {
         } else if (name === 'pattern') {
             this._pattern = newValue || null;
             this.validate();
+            this.updateView();
+        } else if (name === 'placeholder') {
+            // Handle placeholder attribute changes
+            this._placeholder = newValue || '';
             this.updateView();
         }
     }
@@ -124,6 +132,15 @@ class JalebiInput extends HTMLElement {
         if (['text', 'email', 'url', 'tel', 'number'].includes(val)) {
             this.setAttribute('type', val);
         }
+    }
+
+    // Add getter and setter for placeholder
+    get placeholder() {
+        return this._placeholder;
+    }
+
+    set placeholder(val) {
+        this.setAttribute('placeholder', val);
     }
 
     validate() {
@@ -194,6 +211,10 @@ class JalebiInput extends HTMLElement {
         if (input && input.value !== this._value) {
             input.value = this._value;
         }
+        // Update placeholder attribute
+        if (input && this._placeholder) {
+            input.setAttribute('placeholder', this._placeholder);
+        }
         this.updateContainerClasses();
     }
 
@@ -211,8 +232,10 @@ class JalebiInput extends HTMLElement {
 
     createView() {
         const labelElement = this.querySelector('label');
-        const labelText = labelElement ? labelElement.textContent : 'Input';
+        const labelText = labelElement ? labelElement.textContent.trim() : '';
         const inputId = `input-${this._uniqueId}`;
+        // Use placeholder as aria-label fallback when label text is empty
+        const ariaLabel = labelText || this._placeholder || 'Input';
 
         const template = document.createElement('div');
         template.innerHTML = `
@@ -282,18 +305,25 @@ class JalebiInput extends HTMLElement {
                     font-size: 10px;
                 }
                 input::placeholder {
-                    color: transparent;
+                    color: var(--fg-2);
+                    opacity: ${labelText ? '0' : '1'};
+                }
+                input:focus::placeholder {
+                    color: var(--fg-2);
+                    opacity: 1;
                 }
             </style>
             <div class="input-container">
-                <label for="${inputId}">${labelText}</label>
+                <label for="${inputId}" style="${labelText ? '' : 'display: none;'}">
+                    ${labelText || this._placeholder}
+                </label>
                 <input
                     id="${inputId}"
                     type="${this._type}"
-                    aria-label="${labelText}"
+                    aria-label="${ariaLabel}"
                     ${this._required ? 'required' : ''}
                     ${this._pattern ? `pattern="${this._pattern}"` : ''}
-                    placeholder=" "
+                    ${this._placeholder && !labelText ? `placeholder="${this._placeholder}"` : ''}
                 >
             </div>
         `;

@@ -58,6 +58,12 @@
                     "html": "<jalebi-input id=\"demoInputEmail\" type=\"email\" required style=\"width: 200px\" value=\"user@example.com\"><label>Email Address</label></jalebi-input>"
                 },
                 {
+                    "html": "<jalebi-input id=\"demoInputEmail\" type=\"email\" required style=\"width: 200px\" value=\"user@example.com\" placeholder=\"hey@example.com\"><label>Placeholder test</label></jalebi-input>"
+                },
+                {
+                    "html": "<jalebi-input id=\"demoInputEmail\" type=\"email\" required style=\"width: 200px\" value=\"user@example.com\" placeholder=\"hey@example.com\"><label></label></jalebi-input>"
+                },
+                {
                     "html": "<jalebi-input id=\"demoInputText\" type=\"text\" required style=\"width: 200px\" value=\"John Doe\"><label>Full Name</label></jalebi-input>"
                 },
                 {
