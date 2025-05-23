@@ -13,7 +13,7 @@ class JalebiInput extends HTMLElement {
         this._eventsBound = false;
         this._observer = new MutationObserver(this._handleMutations.bind(this));
         // Initialize placeholder
-        this._placeholder = '';
+        this._placeholder = ' ';
     }
 
     connectedCallback() {
