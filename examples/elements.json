@@ -50,6 +50,29 @@
             "code": "<jalebi-spinner size=\"small\"></jalebi-spinner>\n<jalebi-spinner size=\"medium\"></jalebi-spinner>\n<jalebi-spinner thickness=\"4\" size=\"large\"></jalebi-spinner>"
         },
         {
+            "id": "input",
+            "name": "Input",
+            "description": "Enhanced text input with a floating label and validation-based border colors, supporting text, email, url, tel, and number types.",
+            "examples": [
+                {
+                    "html": "<jalebi-input id=\"demoInputEmail\" type=\"email\" required style=\"width: 200px\" value=\"user@example.com\"><label>Email Address</label></jalebi-input>"
+                },
+                {
+                    "html": "<jalebi-input id=\"demoInputText\" type=\"text\" required style=\"width: 200px\" value=\"John Doe\"><label>Full Name</label></jalebi-input>"
+                },
+                {
+                    "html": "<jalebi-input id=\"demoInputUrl\" type=\"url\" style=\"width: 200px\" value=\"https://example.com\"><label>Website URL</label></jalebi-input>"
+                },
+                {
+                    "html": "<jalebi-input id=\"demoInputTel\" type=\"tel\" required style=\"width: 200px\" value=\"+1-555-555-5555\"><label>Phone Number</label></jalebi-input>"
+                },
+                {
+                    "html": "<jalebi-input id=\"demoInputNumber\" type=\"number\" pattern=\"[0-9]{4}\" style=\"width: 200px\" value=\"1234\"><label>Four-digit Code</label></jalebi-input>"
+                }
+            ],
+            "code": "<jalebi-input id=\"myInput\" type=\"email\" required style=\"width: 200px\" value=\"user@example.com\">\n  <label>Email Address</label>\n</jalebi-input>"
+        },
+        {
             "id": "select",
             "name": "Select",
             "description": "Enhanced dropdown selectors with search functionality and group support.",
@@ -264,6 +287,7 @@
         "/src/jalebi-progress.js",
         "/src/jalebi-spinner.js",
         "/src/jalebi-toggle.js",
+        "/src/jalebi-input.js",
         "/src/jalebi-select.js",
         "/src/jalebi-multiselect.js",
         "/src/jalebi-tags.js",
