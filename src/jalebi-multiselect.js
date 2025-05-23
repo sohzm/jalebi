@@ -492,11 +492,9 @@ class JalebiMultiSelect extends HTMLElement {
 
         // Click outside to close
         document.addEventListener('click', e => {
-            if (!this.contains(e.target)) {
-                if (this.opened) {
-                    this.opened = false;
-                    this.updateView();
-                }
+            if (!e.composedPath().includes(this) && this.opened) {
+                this.opened = false;
+                this.updateView();
             }
         });
 
