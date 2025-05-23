@@ -540,6 +540,7 @@
             // Load component scripts
             function loadComponentScripts() {
                 if (componentsData.scripts && componentsData.scripts.length > 0) {
+                    console.log(componentsData);
                     componentsData.scripts.forEach(scriptPath => {
                         const script = document.createElement('script');
                         script.src = scriptPath;

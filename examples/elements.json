@@ -125,6 +125,23 @@
             "code": "<jalebi-timepicker placeholder=\"Select time\" label=\"Time\"></jalebi-timepicker>"
         },
         {
+            "id": "datetimepicker",
+            "name": "DateTimePicker",
+            "description": "A combined date & time picker component that presents a calendar for date selection and an inline time selector (with optional seconds and 12h/24h formats) in a single dropdown.",
+            "examples": [
+                {
+                    "html": "<jalebi-datetimepicker\n  label=\"Appointment\"\n  placeholder=\"Pick date & time\"\n  date-format=\"yyyy-mm-dd\"\n  time-format=\"12h\"\n  show-seconds\n></jalebi-datetimepicker>"
+                },
+                {
+                    "html": "<jalebi-datetimepicker\n  label=\"Meeting\"\n  value=\"2025-05-23 3:30 PM\"\n  date-format=\"dd/mm/yyyy\"\n  time-format=\"12h\"\n></jalebi-datetimepicker>"
+                },
+                {
+                    "html": "<jalebi-datetimepicker\n  label=\"Delivery\"\n  date-format=\"yyyy-mm-dd\"\n  time-format=\"24h\"\n  value=\"2025-05-23 15:45:00\"\n></jalebi-datetimepicker>"
+                }
+            ],
+            "code": "<jalebi-datetimepicker\n  label=\"Date & Time\"\n  placeholder=\"Select date & time\"\n  date-format=\"yyyy-mm-dd\"\n  time-format=\"12h\"\n  show-seconds\n></jalebi-datetimepicker>"
+        },
+        {
             "id": "slider",
             "name": "Slider",
             "description": "A customizable range slider component with support for intervals, steps, and various display options.",
@@ -255,6 +272,7 @@
         "/src/jalebi-radio.js",
         "/src/jalebi-datepicker.js",
         "/src/jalebi-timepicker.js",
+        "/src/jalebi-datetimepicker.js",
         "/src/jalebi-carousel.js",
         "/src/jalebi-tooltip.js",
         "/src/jalebi-tabs.js",
