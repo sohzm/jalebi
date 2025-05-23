@@ -254,7 +254,6 @@
                 align-items: center;
                 justify-content: space-between;
                 margin-bottom: var(--gap-3);
-                display: none;
             }
 
             .component-header h2 {
@@ -501,6 +500,14 @@
                 header.className = 'component-header';
                 header.innerHTML = `<h2>${currentComponent.name}</h2>`;
                 section.appendChild(header);
+
+                // link to github src of that component
+                const githubLink = document.createElement('a');
+                githubLink.href = 'https://github.com/sohzm/jalebi/blob/master/src/jalebi-' + currentComponent.id + '.js';
+                githubLink.target = '_blank';
+                githubLink.textContent = 'Source';
+                githubLink.style.fontSize = '14px';
+                header.appendChild(githubLink);
 
                 // Add component description
                 const description = document.createElement('div');
