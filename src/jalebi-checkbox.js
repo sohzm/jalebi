@@ -83,7 +83,7 @@ class JalebiCheckbox extends HTMLElement {
 
         // Dispatch custom event
         this.dispatchEvent(
-            new CustomEvent('jalebi-change', {
+            new CustomEvent('change', {
                 bubbles: true,
                 composed: true,
                 detail: {
